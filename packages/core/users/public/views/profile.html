@@ -1,0 +1,112 @@
+<div ng-controller="UserProfileCtrl as vm" class="user-info" ng-init="vm.init()">
+    <!--<h1 class="page-title text-center">设置个人信息</h1>-->
+    <div class="row">
+        <div class=" col-sm-12 col-md-4 bg-white bottom-border-1 margin-bottom-1">
+            <div class="media padding-10">
+                <div class="media-left">
+                    <img class=" user-head-lg"  ng-src="{{vm.user.head?vm.user.head:'/users/assets/img/user-default.png'}}">
+                </div>
+                <div class="media-body">
+                    <h4 class="v-photo-margin">{{vm.user.username}}</h4>
+                    <a class="theme-color-4 margin-right-1" ui-sref="user-info">修改个人信息</a>
+                    <a class="theme-color-4" ui-sref="user change password">修改密码</a>
+                </div>
+            </div>
+            <div class="row-seperate"></div>
+            <div class="list-group margin-top-10">
+                <div class="form-group">
+                    <label class="control-label">身份</label>
+                    <span class="padding-top-label margin-left-1 theme-color-1" ng-show="vm.user.userType==='trianee'">学员</span>
+                    <span class="padding-top-label margin-left-1 theme-color-1" ng-show="vm.user.userType==='student'">学生</span>
+                    <span class="padding-top-label margin-left-1 theme-color-1" ng-show="vm.user.userType==='teacher'||vm.user.userType==='trainer'">老师</span>
+                    <span class="padding-top-label margin-left-1 theme-color-1" ng-show="vm.user.userType==='vendor'">出版社</span>
+                    <span class="padding-top-label margin-left-1 theme-color-1" ng-show="vm.user.userType==='parent'">家长</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">手机</label>
+                    <span class="padding-top-label margin-left-1">{{vm.user.mobile.substr(0,3)+'****'+vm.user.mobile.substr(8)}}</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">姓名</label>
+                    <span class="padding-top-label margin-left-1">{{vm.user.name || '未设置'}}</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">性别</label>
+                    <span class="padding-top-label margin-left-1">{{vm.user.profile.gender || '未设置'}}</span>
+                </div>
+                <div class="form-group" ng-if="vm.user.userType==='teacher' || vm.user.userType==='student'">
+                    <label class="control-label">学校</label>
+                    <span class="padding-top-label margin-left-1">{{vm.user.profile.school || '未设置'}}</span>
+                </div>
+                <div class="form-group" ng-if="vm.user.userType==='teacher' || vm.user.userType==='student'">
+                    <label class="control-label">年级</label>
+                    <span class="padding-top-label margin-left-1">{{angular.isArray(vm.user.profile.grade)?vm.user.profile.grade.join(' '):vm.user.profile.grade || '-'}}</span>
+                </div>
+                <div class="form-group" ng-if="vm.user.userType==='vendor'">
+                    <label class="control-label">公司</label>
+                    <span class="padding-top-label margin-left-1">{{vm.user.profile.company || '未设置'}}</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">地址</label>
+                    <span class="padding-top-label margin-left-1">{{vm.user.profile.address.province?vm.user.profile.address.province.text:'-';}}{{vm.user.profile.address.city?' - '+vm.user.profile.address.city.text:'';}}{{vm.user.profile.address.district?' - '+vm.user.profile.address.district.text:'';}}  </span>
+                </div>
+                <div class="form-group" ng-if="vm.user.userType==='parent'">
+                    <label class="control-label">关联</label>
+                    <span ng-if="profile.children" class="padding-top-label margin-left-1 theme-color-1" ng-repeat="child in profile.children">{{child.name}}</span>
+                    <span class="text-muted" ng-if="!profile.children">请点击“修改个人信息”关联您的孩子</span>
+                </div>
+                <!--<div class="form-group" ng-if="vm.user.userType==='teacher'">-->
+                    <!--<a class="btn  btn-border" ui-sref="profile teacher resource"><strong>我的资源</strong></a>-->
+                <!--</div>-->
+                <div class="form-group" ng-if="vm.user.userType==='teacher'">
+                    <label class="control-label">教师认证</label>
+                    <span class="padding-top-label margin-left-1">{{vm.user.profile.certificationStatus?'已认证':'待认证'}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-sm-12 " ng-if="vm.user.userType==='vendor'">
+            <div class="row-right-body bg-white  clearfix min-height-5">
+                <h1 class="sub-title  row">
+                    <span class="title-tag-2"></span>书籍修改记录
+                </h1>
+                <table class="table theme-table-1">
+                    <thead>
+                        <tr>
+                            <th>修改时间</th>
+                            <th>书名</th>
+                            <th>年级</th>
+                            <th>科目</th>
+                            <th>修改内容</th>
+                        </tr>
+                    </thead>
+                    <tbody class="first-body" >
+                        <tr ng-repeat="updated in vm.records.list">
+                            <td>{{updated.time | date:'yyyy-MM-dd HH:mm'}}</td>
+                            <td><a href="#" class="" ui-sref="vendor book({bookId:updated.bookId})">{{updated.name}}</a> </td>
+                            <td>{{updated.grade}}</td>
+                            <td>{{updated.subject}}</td>
+                            <td>{{updated.operation}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="no-result padding-left-right-15" ng-if="vm.records.count===0">
+                    你还没有修改记录
+                </div>
+                <div class="text-center">
+                    <uib-pagination ng-show="vm.records.count && vm.records.count>vm.records.pageItem" total-items="vm.records.count"
+                                    ng-model="vm.records.page"
+                                    max-size="5"
+                                    items-per-page="vm.records.pageItem"
+                                    class="pagination-sm" boundary-link-numbers="true"
+                                    rotate="false" previous-text="上一页" next-text="下一页"
+                                    ng-change="vm.selectPage()"></uib-pagination>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-sm-12 " ng-if="vm.user.userType==='teacher' || vm.user.userType==='student'|| vm.user.userType==='parent'||vm.user.userType==='trainer'||vm.user.userType==='trainee'">
+            <div class="row-right-body bg-white  clearfix min-height-5">
+                <div ng-include="'notification/views/index.html'"></div>
+            </div>
+        </div>
+    </div>
+</div>

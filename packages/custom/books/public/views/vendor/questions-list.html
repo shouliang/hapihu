@@ -1,0 +1,66 @@
+<div class="questions-list ">
+    <div class=" questions-item"
+         ng-repeat="question in questions.list" id="q_{{question._id}}">
+        <div class="panel panel-gray">
+            <div class="panel-heading">
+                <span class="indexNum">{{$index+1}}</span>
+                <span class="questionType">{{question.type}}</span>
+
+                <div class="text-right question-setting-margin">
+                    <div ng-show="questions.editModal" class="btn-group">
+                        <span  class="btn  btn-link v-move-left"  title="上移一位"
+                              ng-click="moveUp(question);">
+                            <span class="glyphicon glyphicon-arrow-up"></span>
+                        </span>
+                        <span class="btn  btn-link v-move-right"  title="下移一位"
+                              ng-click="moveDown(question);">
+                            <span class="glyphicon glyphicon-arrow-down"></span>
+                        </span>
+                    </div>
+                    <a href="" class=" change-style-block"
+                       ui-sref="edit question({topicId:question._id,question:question})">
+                        修改
+                    </a>
+                    <a class="  delete-style-block "
+                       ng-click="deleteQuestion(question);">删除
+                    </a>
+                </div>
+            </div>
+            <div class="panel-body" >
+                <div class="" ng-if="question.image.stem">
+                    <img class="img-responsive" ng-repeat="image in question.image.stem" ng-src="{{image.dataUrl}}">
+                </div>
+                <div ng-if="question.stem" class="question-stem-box" ng-bind-html="question.stem"></div>
+            </div>
+            <div class="panel-footer panel-footer-border">
+                <div class="row">
+                    <div class="question-add-footer">
+                        <span class="v-style-level" ng-show="question.level">{{question.level }}</span>
+                        <span class="" knowledge-hierarchy knowledge-points="question.knowledge"></span>
+                        <!--<span class="v-style-block" ng-repeat="knowledge in question.knowledge" ng-show="question.knowledge.length===1 || knowledge.level>=2">{{knowledge.title}}</span>-->
+                        <span class="pull-right v-question-online"
+                              ng-show="question.online!='online' && !questions.editModal">尚未上线</span>
+                    </div>
+                    <div class="col-md-5 v-right-answer" ><label>正确答案：</label><div ng-if="question.answer" class="question-answer-box" ng-bind-html="question.answer" pop-img pop-content="{{question.answer}}"></div></div>
+                    <div class="col-md-7 v-question-analysis" >
+                        <div class="text-right">
+                            <span class="pull-right btn btn-link theme-color-2 row"
+                                  ng-if="question.analysis"
+                                  ng-click="question.showAnalysis=!question.showAnalysis">
+                                详细解析</span>
+                            <span class="pull-right text-muted padding-top-label" ng-if="!question.analysis" >没有详细解析</span>
+                        </div>
+                        <div class="arrow-box theme-bg-2" ng-show="question.showAnalysis">
+                            <div class="arrow"></div>
+                            <div class="description-details"
+                                 ng-bind-html="question.analysis"  pop-img pop-content="{{question.analysis}}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

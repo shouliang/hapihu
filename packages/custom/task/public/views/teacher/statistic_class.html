@@ -1,0 +1,107 @@
+<div class="bg-white row" data-ng-controller="TaskClassStatisticController as vm" ng-init="vm.init()">
+  <h1 class="page-title"><span class="title-tag-1 fa fa-chevron-left"  ng-click="goBack();"></span>班级作业统计
+    <span class="theme-font-14">{{task.title}}</span>
+    <span class="pull-right margin-right-1">
+      <a class="btn btn-primary btn-border-round" ui-sref="task check({taskId:task._id,classId:selectedClass.classId})">批改作业</a>
+    </span>
+  </h1>
+  <div class="padding-bottom-15 clearfix padding-left-right-15">
+    <div class="btn-group " uib-dropdown>
+      <span  class="btn btn-link theme-color-1" uib-dropdown-toggle>
+        {{selectedClass.name}}
+        <span class="glyphicon glyphicon-triangle-bottom"></span>
+      </span>
+      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-single-button">
+        <li><a href="#" ui-sref="task class statistic({taskId:task._id,classId:''})">全部</a></li>
+        <li ng-repeat="klass in task.to"><a href="#" ui-sref="task class statistic({taskId:task._id,classId:klass.classId})">{{klass.name}}</a></li>
+      </ul>
+    </div>
+    <span class="colum-seperate margin-right-1"></span>
+    <span class="btn btn-border margin-right-1" ui-sref="task statistic({taskId:task._id,classId:selectedClass.classId})">个人报告</span>
+    <span class="btn btn-primary btn-border-round btn-padding margin-right-1" >班级报告</span>
+  </div>
+  <div class="clearfix border-bottom-1 equal">
+    <div class="col-xs-4 block-item block-item-1">
+      <h3 class="">{{selectedClass.grade+selectedClass.name}}</h3>
+      <p>共{{statistics.members || 0}}位学生</p>
+      <p>其中{{statistics.submitters || 0}}位提交作业</p>
+    </div>
+    <div class="col-xs-4 block-item block-item-2">
+      <h3 class="">{{averageRightRate||0}}%</h3>
+      <p>平均正确率</p>
+      <p></p>
+    </div>
+    <div class="col-xs-4 block-item block-item-3">
+      <h3 class="">{{advice.mark}}</h3>
+      <p>作业总评</p>
+      <p> 系统建议：{{advice.content}}</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <!--<div class="member-rightRate col-md-6">-->
+      <!--<canvas id="member-bar" class="chart chart-bar member-rightRate-chart"-->
+              <!--chart-data="member_chartData" chart-labels="member_chartLabels" chart-colors="member_chartColors" chart-options="member_chartOptions">-->
+      <!--</canvas>-->
+    <!--</div>-->
+    <div class="question-rightRate col-md-6">
+      <h4 class="padding-left-right-15">题目正确率</h4>
+      <canvas id="question-bar" class="chart chart-bar question-rightRate-chart"
+              chart-data="chartData" chart-labels="chartLabels" chart-colors="chartColors" chart-options="chartOptions">
+      </canvas>
+    </div>
+    <div class="knowledge-rightRate col-md-6">
+      <h4 class="padding-left-right-15">知识点统计</h4>
+      <canvas id="knowledge-rightRate" class="chart chart-radar knowledge-rightRate-chart"
+              chart-data="chartData2" chart-labels="chartLabels2" chart-colors="chartColors2" chart-options="chartOptions2" chart-series="chartSeries2">
+      </canvas>
+    </div>
+  </div>
+
+  <div class="row-seperate"></div>
+  <h3 class="sub-title"><span class="title-tag-2"></span>作业作答详情</h3>
+  <div class="padding-left-right-15">
+    <uib-accordion close-others="false" class="">
+      <div uib-accordion-group class="panel-default " is-open="topic.open" ng-repeat="question in questions">
+        <uib-accordion-heading style="">
+          <div class="class-detail-title text-center">
+            <div class="col-md-4 padding-10"><span class="indexNum">{{$index+1}}</span>
+              <div class="theme-font-12 margin-top-10">查看详情</div>
+            </div>
+            <div class="col-md-4">
+              <span class="class-wrong">{{question.wrongAnswers.length || 0}}</span>/{{question.wrongAnswers.length+question.rightAnswers.length || 0}}
+              <div class="theme-font-12">未答对人数</div>
+            </div>
+            <div class="col-md-4 task-right-rate theme-font-36" >
+              <div class="theme-font-12">{{question.unRightRate || '-'}}</div>
+              <div class="progress class-progress">
+                <div class="progress-bar progress-bar-success" style="width:{{question.unRightRate || 0}};"></div>
+              </div>
+              <div class="theme-font-12">未答对率</div>
+            </div>
+          </div>
+          <i class="pull-right glyphicon class-fa-setting"
+           ng-class="{'fa fa-caret-up': topic.open, 'fa fa-caret-down': !topic.open}"></i>
+        </uib-accordion-heading>
+        <div>
+          <div class="col-md-8 col-sm-12 class-detail-border">
+            <div class="" ng-if="question.topic.image.stem">
+              <img class="img-responsive" ng-repeat="image in question.topic.image.stem" ng-src="{{image.dataUrl}}">
+            </div>
+            <div ng-if="question.topic.stem" class="question-stem-box" ng-bind-html="question.topic.stem"></div>
+          </div>
+          <div class="col-md-4 col-sm-12 ">
+            <div class="class-question-title">未答对的学生({{question.wrongAnswers.length}})</div>
+            <div class="wrong-question-name">
+              <a class="" ng-repeat="member in question.wrongAnswers" ui-sref="taskExe({taskExeId:member.taskExe})">
+                  {{member.name || member.username}}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </uib-accordion>
+  </div>
+  <div class="row-seperate"></div>
+</div>
+

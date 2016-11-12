@@ -1,0 +1,86 @@
+<div class="bg-white row  margin-bottom-1" data-ng-controller="ChildTasksController as vm" ng-init="vm.init();">
+    <h1 class="page-title"><span class="title-tag-1"></span>孩子作业
+      <span class="pull-right note-about">
+            <span class="page-note-about">关于孩子作业</span>
+            <span  uib-popover="{{'只有关联了孩子才可以看到孩子作业，请在个人信息中设置'}}"
+                   popover-trigger="mouseenter" popover-placement="bottom"
+                   class="glyphicon glyphicon-question-sign theme-color-1"></span>
+      </span>
+    </h1>
+    <div class="condition-list">
+        <div class="form-group clearfix" ng-if="userChildren.length!==0">
+            <label class="control-label col-sm-1 text-center">姓名</label>
+            <div class="col-sm-11">
+                <span class="search-condition" ng-repeat="child in userChildren"
+                      ng-class="{'active':query.childId===child._id}"
+                      ng-click="query.childId=child._id;vm.queryFetch();">{{child.name}}</span>
+            </div>
+        </div>
+    </div>
+    <div ng-show="tasks.count===0" class="row-seperate"></div>
+    <div class="notask-teacher" ng-show="tasks.count===0">
+        <img class="img-responsive notask-teacher-img" src="theme/assets/img/noTask-teacher.png">
+        <h4>孩子作业暂无内容</h4>
+        <p>您的孩子还没有作业内容，赶快让他（她）加入班级领取作业吧～</p>
+    </div>
+    <div ng-show="tasks.count!==0" class="row-seperate"></div>
+    <div class="task-list clearfix ">
+        <div class="col-md-6 " ng-repeat="task in tasks.list" ng-class="{'md-padding-right-5':$index%2===0,'md-padding-left-5':$index%2===1}">
+            <div class="panel panel-default task-item margin-bottom-none" >
+                <div class="label-corner-right" ng-show="$index===0 && tasks.page===1">最新</div>
+                <div class="panel panel-heading">
+                    <a class="all-ellipsis" ng-if="task.done" ui-sref="child taskExe({taskExeId:task.taskExe._id,childrenId:query.childId})">{{task.title}}</a>
+                    <a class="all-ellipsis " ng-if="!task.done" ui-sref="child task({taskId:task._id})">{{task.title}}</a>
+            <span class="pull-right" ng-show="task.done">
+              <span class="text-muted" >已完成</span>
+            </span>
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-6">
+                                <div ng-if="!task.done">
+                                    <p><span class="btn btn-danger">未完成</span></p>
+                                    <p class="text-muted">截至时间：{{task.endDate | date:'MM-dd'}}</p>
+                                </div>
+                                <div ng-if="task.done">
+                                    <p >正确率：<span class="btn btn-success">{{task.taskExe.statistics.rightRate||0}}%</span> </p>
+                                    <p class="">总体评价：{{task.advice.mark||"暂无评价"}}</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-xs-6 text-right padding-top-10">
+                                <p>共{{task.content.topics.length}}题</p>
+                                <p ng-if="task.done">{{task.taskExe.created | date:'MM-dd'}}日完成</p>
+                            </div>
+                        </div>
+                        <div class="border-top-1">
+                            <a href="" class="btn btn-border btn-question-border task-subject" ui-sref="child tasks({subject:task.content.subject})">{{task.content.subject}}</a>
+                            <div class="pull-right">
+                                <a  ng-if="!task.done" class="btn btn-black btn-link padding-right-0" href="#" ui-sref="child task({taskId:task._id})">查看作业</a>
+                                <a ng-if="task.done" class="btn btn-primary-active btn-link padding-right-0" href="#" ui-sref="child taskExe({taskExeId:task.taskExe._id,childrenId:query.childId})">查看统计</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 hidden-xs book-thumb">
+                        <img class="img-responsive" ng-show="task.content.book.cover" ng-src="{{task.content.book.cover}}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center margin-top-10">
+        <uib-pagination ng-if="tasks && tasks.count>tasks.pageItem"
+                        total-items="tasks.count"
+                        ng-model="tasks.page"
+                        max-size="maxSize"
+                        items-per-page="tasks.pageItem"
+                        class="pagination-sm"
+                        boundary-link-numbers="true"
+                        rotate="false" previous-text="上一页"
+                        next-text="下一页"
+                        ng-change="vm.selectPage()">
+        </uib-pagination>
+    </div>
+</div>
+

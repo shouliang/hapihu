@@ -1,0 +1,116 @@
+<div ng-controller="UserInfoCtrl as profile" class="bg-white row user-info" >
+  <h1 class="page-title text-center">设置个人信息</h1>
+  <form data-ng-submit="profile.save('regist')" class="profileForm form-horizontal">
+    <div class="col-md-6 padding-bottom-15">
+      <h1 class=" base-info-line">基本信息 <span class="asterisk-font">带<span class="asterisk-set">*</span>为必填项</span></h1>
+      <div class="form-group">
+        <label for="name" class="control-label col-sm-2"><span class="asterisk-set">*</span>姓名</label>
+        <div class="col-sm-10">
+          <input class="form-control" id="name" type="text" name="name" ng-model="profile.user.name" placeholder="真实姓名"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">性别</label>
+        <div class="col-sm-10">
+          <label class="radio-inline">
+            <input ng-model="profile.user.profile.gender" type="radio" name="gender" id="gender1" value="男">
+            男
+          </label>
+          <label class="radio-inline">
+            <input ng-model="profile.user.profile.gender" type="radio" name="gender" id="gender2" value="女">
+            女
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="grade" class="control-label col-sm-2"><span class="asterisk-set">*</span>地址</label>
+        <div class="col-sm-10">
+          <div id="cityselector" select-result='profile.user.profile.address' select-class='city-selector' city-select set-sel-city="setSelCity(obj)" init-city="profile.initAddress"></div>
+        </div>
+      </div>
+      <div class="form-group p-relate-border" ng-if="profile.user.userType ==='parent'">
+        <label class="control-label col-sm-2"><span class="asterisk-set">*</span>关联</label>
+        <div class="col-sm-10 p-relate-margin" ng-if="pro.children">
+          <span class="padding-top-label margin-left-1 theme-color-1" ng-repeat="child in pro.children">{{child.name}}</span>
+        </div>
+        <div class="col-sm-10 p-relate-margin" ng-if="pro.children.length===0">
+          <span class="theme-color-1 margin-right-1">未关联</span><span class="text-muted">(您可以关联孩子，实时了解他(她)的学习状况)</span>
+        </div>
+      </div>
+      <div class="form-group" ng-if="profile.user.userType =='parent'">
+        <label class="control-label col-sm-2">关联孩子</label>
+        <div class="col-sm-10">
+          <input class="p-relate-input"  name="childName" id="childName"
+                  type="text" ng-model="childName" placeholder="孩子姓名"/>
+          <input  class="p-relate-input" name="childMobile" id="childMobile"
+                  type="text" ng-model="childMobile" placeholder="孩子注册时手机号"/>
+          <span class="btn btn-primary btn-border-round p-btn-padding" ng-click="profile.relateChild(childName,childMobile)">确认关联</span>
+        </div>
+      </div>
+      <div class="form-group" ng-if="profile.user.userType=='student' || profile.user.userType=='teacher'">
+        <label for="grade" class="control-label col-sm-2">学校</label>
+        <div class="col-sm-10">
+          <span school-auto-input="" school-location="profile.user.profile.address" ng-model="profile.user.profile.school" ng-object="profile.selectedSchoolObject" ></span>
+        </div>
+      </div>
+      <div class="form-group" ng-if="profile.user.userType=='student' || profile.user.userType=='teacher'">
+        <label for="grade" class="control-label col-sm-2">年级</label>
+        <div class="col-sm-10">
+          <select  class="form-control" id="grade" type="text" name="grade" ng-model="profile.user.profile.grade" placeholder="选择年级" ng-options="grade.value as grade.label for grade in GRADES">
+            <option value="" disabled>-- 请选择正确的年级 --</option>
+            <!--<option ng-repeat="grade in profile.GRADES" value="{{grade.value}}">{{grade.label}}</option>-->
+          </select>
+        </div>
+      </div>
+      <div class="" ng-if="profile.user.userType=='teacher'">
+        <h3 class="sub-title">教师资格证 <span class="small">验证后拥有更多权限及服务</span></h3>
+        <div class="form-group">
+          <label for="certification" class="control-label col-sm-2">资格证</label>
+          <div class="col-sm-10">
+            <div class="input-group">
+              <input id="certification" class="form-control col-sm-6" name="upload" type="file" nv-file-select="" uploader="profile.uploader">
+              <span class="input-group-addon btn " ng-show="profile.uploader.queue.length>0" ng-click="profile.uploader.uploadAll()">上传</span>
+            </div>
+            <div ng-show="profile.user.profile.certification" class="row">
+              <img class="img-responsive col-sm-6" ng-src="{{profile.user.profile.certification}}">
+            </div>
+            <div class="progress" ng-show="profile.uploader.isUploading ">
+              <div class="progress-bar" role="progressbar" ng-style="{ 'width': profile.uploader.queue[0].progress + '%' }"></div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label  class=" col-sm-2 text-right">验证状态</label>
+          <div class="col-sm-10">
+            <span class="text-danger" ng-if="!profile.user.profile.certificationStatus">未验证</span>
+            <span class="text-info" ng-if="profile.user.profile.certificationStatus">{{profile.user.profile.certificationStatus}}</span>
+          </div>
+        </div>
+      </div>
+      <div ng-if="profile.user.userType=='vendor'">
+        <div class="form-group" >
+          <label for="company" class="control-label col-sm-2">公司</label>
+          <div class="col-sm-10">
+            <input id="company" class="form-control" type="text" ng-model="profile.user.profile.company" placeholder="公司名称">
+          </div>
+        </div>
+      </div>
+      <div class="form-group save">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-primary">保存,下一步</button>
+        </div>
+      </div>
+      <div class="alert alert-danger col-sm-offset-2 col-sm-10" ng-show="profile.err">{{profile.err}}</div>
+      <div class="alert alert-success col-sm-offset-2 col-sm-10" ng-show="profile.tip">{{profile.tip}}</div>
+
+   </div>
+    <div class="col-md-6 theme-bg-0 margin-top-neg-15">
+      <h3 class="sub-title theme-color-1">头像</h3>
+      <input class="" id="head" type="file" name="head" />
+      <div class="user-head-box">
+        <img-crop image="myImage" result-image="newUserHead"></img-crop>
+      </div>
+    </div>
+  </form>
+</div>
+

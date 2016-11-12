@@ -1,0 +1,21 @@
+<div class="bg-white row" data-ng-controller="AdminTaskExeImgController as vm" ng-init="vm.init();">
+  <h1 class="page-title"><span class="title-tag-1"></span>用户上传的作业
+    <span class="pull-right margin-right-1">
+      <span class="btn btn-success" ng-click="vm.loadUnCompleted()">加载未完成任务</span>
+    </span>
+  </h1>
+  <div class="text-center margin-top-10">
+    <uib-pagination ng-if="tasks && tasks.count>tasks.pageItem"
+        total-items="tasks.count"
+        ng-model="tasks.page"
+        max-size="maxSize"
+        items-per-page="tasks.pageItem"
+        class="pagination-sm"
+        boundary-link-numbers="true"
+        rotate="false" previous-text="上一页"
+        next-text="下一页"
+        ng-change="vm.selectPage()">
+    </uib-pagination>
+  </div>
+</div>
+

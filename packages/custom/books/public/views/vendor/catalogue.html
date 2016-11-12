@@ -1,0 +1,101 @@
+<div class="" data-ng-controller="VendorBookCatalogueController as vm">
+  <!-- Nested node template -->
+  <script type="text/ng-template" id="nodes_renderer.html">
+    <div class="tree-node " ng-class="{'border-primary':!node.title}">
+      <div class="pull-left" ui-tree-handle title="移动">
+        <span class="fa fa-arrows"></span>
+      </div>
+      <div  class="tree-node-content vendor-menu-ellipsis " >
+        <!--<span class="btn-xs "-->
+           <!--ng-if="node.nodes && node.nodes.length > 0"-->
+           <!--data-nodrag >-->
+          <!--<span class="tree-node-icon-space"-->
+                <!--&gt;</span>-->
+          <!--<a href="#" class="node-title node-title-setting v-fontWeight"-->
+             <!--ng-if="node.nodes && node.nodes.length > 0"-->
+             <!--editable-text="node.title">{{ node.title || 'empty' }}</a>-->
+          <a href="#" class="node-title node-title-setting"
+             editable-text="node.title">{{ node.title || 'empty' }}</a>
+          <span class="fa" ng-hide=""
+                ng-class="{ 'fa fa-caret-down': collapsed,
+                'fa fa-caret-up': !collapsed }" ng-click="toggle(this)" ng-if="node.nodes && node.nodes.length > 0">
+          </span>
+        <!--</span>-->
+        <span class="pull-right cata-btn "
+           data-nodrag ng-click="removeItem(this)">
+          <span class="fa fa-times-circle fa-2x theme-color-3 cata-btn-remove"></span>
+        </span>
+        <span class="pull-right cata-btn "
+           data-nodrag ng-click="newSubItem(this)">
+          <span class="fa fa-plus-circle fa-2x theme-color-2 cata-btn-add"></span>
+        </span>
+      </div>
+    </div>
+    <ol ui-tree-nodes="" ng-model="node.nodes"
+        ng-class="{hidden: collapsed}">
+      <li ng-repeat="node in node.nodes"
+          ui-tree-node ng-include="'nodes_renderer.html'">
+      </li>
+    </ol>
+  </script>
+  <div class="row">
+    <div class=" col-md-7 bottom-border-1 bg-white margin-bottom-1">
+      <div class="loading" ng-init="vm.init()"
+           ng-hide="vm.book">
+      </div>
+      <h2 class="page-title row">
+        <!--<a class="btn fa fa-arrow-left btn-back" ></a>-->
+        <span class="title-tag-1 fa fa-chevron-left" ng-click="igoBack();"></span>目录编辑
+        <span class="theme-font-16" >{{vm.book.name}}</span>
+        <span class="btn btn-primary pull-right btn-border-round" ng-click="vm.saveCatalogue();">保存</span>
+      </h2>
+      <div class="margin-20">
+      <span class="btn btn-border " ng-click="vm.addRootCata()">添加一级目录</span>
+      <span class="btn btn-link theme-color-4 " ng-click="collapseAll();">全部折叠</span>
+      <span class="btn btn-link theme-color-4  " ng-click="expandAll();">全部展开</span>
+      </div>
+      <div ui-tree id="tree-root" class="menu-edit-modal">
+        <ol ui-tree-nodes ng-model="vm.nodes">
+          <li ng-repeat="node in vm.nodes" ui-tree-node
+              ng-include="'nodes_renderer.html'"></li>
+        </ol>
+      </div>
+      <div class="margin-top-20" id="inputCatalogue" >
+        <textarea class="form-control border-primary" rows="5"
+                  placeholder="添加新目录" data-ng-model="newCatalogue">
+        </textarea>
+        <br/>
+        <span class="btn btn-primary btn-border-round" ng-click="vm.addNewCatalogue();">提交一级目录</span>
+        <span class="tip-information text-muted">支持批量导入，每行一个，子目录前加空格表示层级</span>
+      </div>
+      <p> </p>
+    </div>
+    <div class="col-md-5 ">
+      <div class="notice bg-white notice-border-right row-right-body form-bottom">
+        <h2 class="sub-title ">
+          <img class="img-responsive icon-img" src="books/assets/img/icons/vendor-prompt.png">
+          提示
+        </h2>
+        <div class="">
+          <p class="text-muted">
+            1、点击“添加一级目录”可添加一级目录，在输入框内可以一次添加多行，
+            一行一个目录，子目录采用空格缩进，比如：
+          <pre class="bg-gray">第一章
+ 第一节
+ 第二节</pre>
+            <div class="alert label-border text-muted">第一行目录前不能有空格</div>
+          </p>
+          <p class="text-muted">
+            2、鼠标按住目录前的符号
+            <span class="fa fa-arrows">
+            </span>
+            可以上下调整目录顺序，左右调整目录层级
+          </p>
+          <p class="text-muted">3、所有对目录的调整，只有点击“<span class="theme-color">保存</span>”按钮后才最终生效</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,38 @@
+<div class="bg-white row" data-ng-controller="EditClassController as vm">
+  <div class="loading" ng-init="vm.init()" ng-hide="klass"></div>
+  <h1 class="page-title"><a class="btn fa fa-arrow-left btn-back" ng-click="goBack();"> | </a>班级修改</h1>
+  <div class="form-horizontal col-md-8">
+    <div class="form-group" >
+      <label  class="col-md-2 control-label">名称</label>
+      <div class="col-md-10">
+        <input name="title" type="text" class="form-control" data-ng-model="klass.name" >
+      </div>
+    </div>
+    <div class="form-group" >
+      <label  class="col-md-2 control-label">学校</label>
+      <div class="col-md-10">
+        <input name="title" type="text" class="form-control" data-ng-model="klass.school.name"  readonly>
+      </div>
+    </div>
+    <div class="form-group" >
+      <label  class="col-md-2 control-label">年级</label>
+      <div class="col-md-10">
+        <input name="title" type="text" class="form-control" data-ng-model="klass.grade"  readonly>
+      </div>
+    </div>
+    <div class="form-group" >
+      <label  class="col-md-2 control-label">状态</label>
+      <div class="col-md-10">
+        <select class="form-control" ng-model="klass.status" ng-options="status for status in ['','confirmed','unconfirmed']"></select>
+      </div>
+    </div>
+    <div class="form-group" >
+      <label  class="col-md-2 control-label"></label>
+      <div class="col-md-10">
+        <input type="button" class="btn btn-primary" value="保存" ng-click="vm.saveClass();">
+      </div>
+    </div>
+  </div>
+
+</div>
+

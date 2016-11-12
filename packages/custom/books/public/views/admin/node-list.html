@@ -1,0 +1,25 @@
+<div class="tree-node vendor-menu-ellipsis" ng-class="{'active':vm.selectedNode && this.$modelValue === vm.selectedNode.node }" >
+  <span  class="tree-node-content" ng-click="toggle(this);selectNode(this);">
+    <a class="cursor-hand node-title-setting"  ng-click="" title="{{ node.name}}">
+      {{ node.name || '' }}
+    </a>
+       <!--<a class="cursor-hand " ng-if="node.nodes && node.nodes.length === 0" ng-click="selectNode(this);">-->
+      <!--{{ node.title || 'empty' }}-->
+    <!--</a>-->
+  </span>
+  <a class="fa expand-nodes"
+     ng-if="node.childrens && node.childrens.length > 0"
+     data-nodrag ng-click="toggle(this)">
+      <span class=""
+            ng-class="{ 'fa fa-caret-down': collapsed,
+           'fa fa-caret-up': !collapsed }">
+      </span>
+  </a>
+</div>
+<ol ui-tree-nodes="" ng-model="node.childrens"
+    ng-class="{hidden: collapsed}" >
+  <li ng-repeat="node in node.childrens"
+      ui-tree-node data-collapsed="!node.expanded"
+      ng-include="'books/views/admin/node-list.html'" >
+  </li>
+</ol>

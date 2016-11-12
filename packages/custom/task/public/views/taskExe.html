@@ -1,0 +1,84 @@
+<div class="bg-white row" data-ng-controller="TaskExeController as vm" ng-init="vm.init()">
+  <h1 class="page-title"><span class="title-tag-1 fa fa-chevron-left" ng-click="goBack();"></span>个人作业统计
+    <span class="theme-font-16">{{task.title}}</span>
+    <span class="pull-right">
+      <a class="btn btn-link theme-color-1"
+         ui-sref="teacher book({bookId:task.content.bookId,bookType:'teacherBook',
+       path:task.content.path.join(',')})"><span class="fa fa-location-arrow"></span> 书中位置</a>
+    </span>
+  </h1>
+  <div class="margin-top-neg-15 clearfix border-bottom-1 equal">
+    <div class="col-xs-4 block-item block-item-1">
+      <h3 class="">{{taskExe.user.name}}</h3>
+      <p>第{{taskExe.submitOrder+1 || '1'}}位提交</p>
+      <p>提交时间：{{taskExe.created | date:'MM-dd HH:mm'}}</p>
+    </div>
+    <div class="col-xs-4 block-item block-item-2">
+      <h3 class="">{{taskExe.statistics.rightRate}}%</h3>
+      <p>正确率</p>
+      <p>总共完成 {{taskExe.statistics.total}} 道，已经批改了 <span class="" ng-class="{'theme-color-1':taskExe.statistics.mark<taskExe.statistics.total}">{{taskExe.statistics.mark}}</span> 道 </p>
+    </div>
+    <div class="col-xs-4 block-item block-item-3">
+      <h3 class="">{{advice.mark}}</h3>
+      <p>作业总评</p>
+      <p> 系统建议：{{advice.content}}</p>
+    </div>
+  </div>
+  <h4 class="padding-left-right-15">学习目标
+      <span class="btn btn-link theme-color-4 glyphicon " ng-class="{'glyphicon-triangle-bottom':!vm.showAim,'glyphicon-triangle-top':vm.showAim}" ng-click="vm.showAim=!vm.showAim"></span>
+  </h4>
+  <div class="aim-details padding-left-right-15" ng-show="vm.showAim">
+    <pre>{{task.aim}}</pre>
+  </div>
+  <div class="row-seperate"></div>
+  <h3 class="sub-title"><span class="title-tag-2"></span>题目列表（{{questions.count || "0"}}）</h3>
+  <div class="padding-left-right-15 bottom-border-1" ng-include="'task/views/task-questions-list.html'"></div>
+  <div class="row-seperate"></div>
+  <h3 class="sub-title"><span class="title-tag-3"></span>个人总结</h3>
+  <div class="aim-details padding-left-right-15">
+    <pre class="">{{ taskExe.remark || '无个人总结' }}</pre>
+  </div>
+  <div class="row-seperate"></div>
+  <h3 class="sub-title"><span class="title-tag-2"></span>家长点评</h3>
+  <div class="no-result " ng-show="taskExe.comments.length===0">
+    家长还没有点评
+  </div>
+  <ui class="comments media-list ">
+    <li class="media" ng-if="comment.type==='parent'"  ng-repeat="comment in taskExe.comments">
+      <div class="media-left">
+        <img class="media-object" ng-src="{{comment.head}}" ng-show="comment.head">
+      </div>
+      <div class="media-body">
+        <h4>{{comment.username}} <small>{{comment.created | date:'MM-dd HH:mm'}}</small></h4>
+        <pre class="theme-pre">{{comment.comment}}</pre>
+      </div>
+    </li>
+  </ui>
+  <div class="row-seperate"></div>
+  <h3 class="sub-title"><span class="title-tag-1"></span>老师点评</h3>
+  <div class="padding-left-right-15">
+    <form class="form-horizontal padding-left-right-15">
+      <div class="form-group margin-bottom-1">
+        <textarea ng-model="newComment" class="form-control" placeholder="请作点评"></textarea>
+      </div>
+      <div class="form-group">
+        <span class="btn btn-primary btn-border-round"  ng-click="vm.changeTaskExe('comment');">提交点评</span>
+      </div>
+    </form>
+  </div>
+  <ui class="comments media-list " >
+    <li class="media" ng-repeat="comment in taskExe.comments">
+      <div ng-if="comment.type==='teacher'">
+        <div class="media-left">
+          <img class="media-object" ng-src="{{comment.head}}" ng-show="comment.head">
+        </div>
+        <div class="media-body">
+          <h4>{{comment.username}} <small>{{comment.created | date:'MM-dd HH:mm'}}</small></h4>
+          <pre class="theme-pre">{{comment.comment}}</pre>
+        </div>
+      </div>
+    </li>
+  </ui>
+  <div class="row-seperate"></div>
+</div>
+

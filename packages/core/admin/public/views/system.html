@@ -1,0 +1,10 @@
+
+<div data-ng-controller="SystemController as vm" id="admin-system-page">
+    <ul class="nav nav-tabs nav-admin-system" role="tablist">
+        <li class="submenu" ng-class="{active:submenu.selected=='base'}" ng-click="submenu.selected='base'"><a ui-sref="system.base">基本配置</a></li>
+        <li class="submenu"  ng-class="{active:submenu.selected=='zones'}"  ng-click="submenu.selected='zones'"><a ui-sref="system.zones">地区管理</a></li>
+        <li class="submenu"  ng-class="{active:submenu.selected=='schools'}"  ng-click="submenu.selected='schools'"><a ui-sref="system.schools">学校管理</a></li>
+        <li class="submenu"  ng-class="{active:submenu.selected=='companies'}"  ng-click="submenu.selected='companies'"><a ui-sref="system.companies">公司管理</a></li>
+    </ul>
+    <div class="tab-content" ui-view=""></div>
+</div>

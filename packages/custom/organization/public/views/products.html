@@ -1,0 +1,54 @@
+<div class="" ng-controller="OrganizationProductsController as vm" ng-init="vm.init()">
+  <div class="banner-teacher-box">
+    <img class="img-responsive" src="organization/assets/img/banner.png">
+  </div>
+  <div class="row theme-equal bg-gray-1 padding-top-15">
+    <div class="col-md-2 menu-right " data-spy="affix" data-offset-top="60" data-offset-bottom="200">
+      <div ng-include="'organization/views/right-menu.html'"></div>
+    </div>
+    <div class="col-md-10 bg-white" ng-if="school">
+      <h1 class="page-title">业务类型</h1>
+      <p>当前共有{{school.profile.products.length || 0}}项业务</p>
+      <table class="table theme-table-1">
+        <thead>
+          <tr>
+            <th class="col-md-3">名称</th>
+            <th class="col-md-6">简述</th>
+            <th class="col-md-3">操作</th>
+          </tr>
+        </thead>
+        <tr ng-repeat="product in school.profile.products">
+          <td>
+                <span  editable-text="product.name" e-name="name" e-form="rowform" onbeforesave="" e-required>
+                  {{ product.name || 'empty' }}
+                </span>
+          </td>
+          <td>
+                <span  editable-text="product.desc" e-name="desc" e-form="rowform" onbeforesave="" e-required>
+                  {{ product.desc || 'empty' }}
+                </span>
+          </td>
+          <td>
+            <form editable-form name="rowform" onaftersave="vm.saveProduct($data, product)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="newProduct == product">
+              <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+                保存
+              </button>
+              <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
+                取消
+              </button>
+            </form>
+            <div class="buttons" ng-show="!rowform.$visible">
+              <button class="btn btn-default" ng-click="rowform.$show()">修改</button>
+              <button class="btn btn-default" ng-click="vm.removeItem(product,$index)">删除</button>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <p>
+        <span class="btn btn-info" ng-click="vm.addItem()">添加业务</span>
+        <span class="btn btn-primary" ng-click="vm.saveSchool()">保存修改</span>
+      </p>
+    </div>
+  </div>
+
+</div>

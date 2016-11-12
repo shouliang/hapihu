@@ -1,0 +1,23 @@
+<div class="bg-white row" data-ng-controller="ManageClassController as vm" ng-init="vm.init()">
+  <h1 class="page-title"><a class="btn fa fa-arrow-left btn-back" ng-click="goBack();"> | </a>{{cclass.name}}&nbsp;&nbsp;&nbsp;&nbsp;<span class="small">{{cclass.school.name}}.{{cclass.grade}}</span> <span class="pull-right"><small class="text-danger" ng-if="cclass.status!=='confirmed'">待审核</small> <a href="" ui-sref="edit class({classId:cclass._id})" class="btn btn-info">修改</a></span></h1>
+  <h3>班级用户<span class="label label-default">{{cclass.members.length}}</span></h3>
+  <table class="table">
+    <thead>
+      <th class="col-xs-2">ID</th>
+      <th class="col-xs-2">用户名</th>
+      <th class="col-xs-2">姓名</th>
+      <th class="col-xs-2">状态</th>
+      <th class="col-xs-2">操作</th>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in cclass.members">
+        <td>{{item.userId}}</td>
+        <td>{{item.username}}</td>
+        <td>{{item.name}}</td>
+        <td ng-class="{'text-danger':item.status.indexOf('成功')===-1}">{{item.status}}</td>
+        <td><span class="btn btn-info btn-sm" ng-click="vm.updateClass(item,'check_member')" ng-if="item.status.indexOf('成功')===-1">审核通过</span>&nbsp;&nbsp; <span class="btn btn-default btn-sm" ng-click="vm.updateClass(item,'remove_member')">踢出班级</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

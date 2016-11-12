@@ -1,0 +1,85 @@
+<div class="" data-ng-controller="VendorBooksController as vm">
+  <div class="loading" ng-init="vm.init()" ng-hide="vm.books"></div>
+  <div class="row bg-white border-top">
+    <h1 class="page-title bg-white">
+      <span class="title-tag-1"></span>
+      我的图书
+    <span class="theme-font-16">当前总共有
+      <span class="theme-color vendor-book-num">
+        {{vm.books.count?vm.books.count:0}}
+      </span>本书
+    </span>
+    <span class="pull-right btn btn-primary btn-lg  btn-border-round"
+          ui-sref="create book">添加新书</span>
+    </h1>
+
+    <div class="form-group clearfix" ng-if="vm.booksGroup.grade" >
+      <label class="col-sm-1 text-center control-label">年级</label>
+      <div class="col-sm-11 query-condition-box">
+        <span class="search-condition"  ng-class="{'active':!vm.query.grade}" ng-click="vm.query.grade=null;vm.queryFetch();">全部</span>
+        <span class="search-condition" ng-repeat="grade in vm.booksGroup.grade | gradeOrder:'name'" ng-class="{'active':vm.query.grade===grade.name}" ng-click="vm.query.grade=grade.name;vm.queryFetch();">{{grade.name}}</span>
+      </div>
+    </div>
+    <div class="form-group clearfix" ng-if="vm.booksGroup.subject">
+      <label class="col-sm-1 text-center control-label">科目</label>
+      <div class="col-sm-11 query-condition-box">
+        <span class="search-condition"  ng-class="{'active':!vm.query.subject}" ng-click="vm.query.subject=null;vm.queryFetch();">全部</span>
+        <span class="search-condition" ng-repeat="subject in vm.booksGroup.subject" ng-class="{'active':vm.query.subject==subject.name}" ng-click="vm.query.subject=subject.name;vm.queryFetch();">{{subject.name}}</span>
+      </div>
+    </div>
+    <div class="form-group clearfix" ng-if="vm.booksGroup.edition">
+      <label class="col-sm-1 text-center control-label">版本</label>
+      <div class="col-sm-11 query-condition-box">
+        <span class="search-condition"  ng-class="{'active':!vm.query.edition}" ng-click="vm.query.edition=null;vm.queryFetch();">全部</span>
+        <span class="search-condition" ng-repeat="edition in vm.booksGroup.edition" ng-class="{'active':vm.query.edition==edition.name}" ng-click="vm.query.edition=edition.name;vm.queryFetch();">{{edition.name}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="row-seperate"></div>
+  <div class="row bg-white book-list">
+    <div class="col-xs-12 notask-teacher" ng-show="vm.books.count===0">
+      <img class="img-responsive notask-teacher-img" src="theme/assets/img/noBooks-teacher.png">
+      <h4>荒废无物的书架</h4>
+      <p>赶紧去给您的书架添加新书吧～</p>
+      <a class="btn btn-border" ui-sref="create book">添加图书</a>
+    </div>
+    <div class="col-sm-6 col-md-3 book-list-item"
+         ng-repeat="book in vm.books.list ">
+      <div class="thumbnail">
+        <img class="img-responsive cursor-hand book-cover" style="background-image: url({{book.cover}});" title="{{book.name}}"
+             ng-src="{{book.cover}}"
+             alt="哈皮虎图书封面" ui-sref="vendor book({bookId:book._id})">
+        <div class="caption">
+          <h4 ><a href="" title="{{book.name}}" ui-sref="vendor book({bookId:book._id})">{{book.name}}</a></h4>
+          <div class="row">
+            <div class="col-xs-12  text-muted">
+              {{book.grade}}-{{book.session }}-{{book.subject}}-{{book.edition}}
+            </div>
+            <div class="col-xs-12 text-muted">
+              {{book.created | date:'MM-dd'}}日上传
+            </div>
+            <div class=" col-xs-6  text-muted">
+              <span class="theme-font-14" ng-show="book.online==='online'">已上线</span>
+              <span class="text-warning theme-font-14" ng-show="book.online!=='online'">尚未上线</span>
+            </div>
+            <div class="col-xs-6 text-right">
+              <a class="theme-color-active theme-font-16 " ui-sref="edit book({bookId:book._id})">管理</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--add pagination-->
+  <div class="text-center">
+    <uib-pagination ng-show="vm.books.count && vm.books.count>vm.books.pageItem" total-items="vm.books.count"
+                    ng-model="vm.books.page"
+                    max-size="5"
+                    items-per-page="vm.books.pageItem"
+                    class="pagination-sm" boundary-link-numbers="true"
+                    rotate="false" previous-text="上一页" next-text="下一页"
+                    ng-change="vm.selectPage()"></uib-pagination>
+
+  </div>
+</div>

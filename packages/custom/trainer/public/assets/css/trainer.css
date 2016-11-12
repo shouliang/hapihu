@@ -1,0 +1,12 @@
+.trainer-example span {
+    font-weight: bold;
+}
+.input-score{
+    width: 100px;
+    margin-left: 120px;
+    margin-top: -33px;
+    margin-bottom: 10px;
+    border: 1px solid #ffcb6d;
+    border-radius: 35px !important;
+    outline: none;
+}

@@ -1,0 +1,71 @@
+<div class="" data-ng-controller="TrainerIndexController as vm" ng-init="vm.init()">
+  <div class="banner-teacher-box">
+    <img class="img-responsive" src="trainer/assets/img/banner.png">
+  </div>
+  <div class="row">
+    <div class="col-md-8  bg-white row-left">
+      <h3 class="sub-title row"><span class="title-tag-1"></span>一对一辅导</h3>
+      <table class="table theme-table-1 ">
+        <thead>
+        <th>用户名 </th>
+        <th>姓名</th>
+        <th>测试 </th>
+        <th>报告</th>
+        <th>历史试卷</th>
+        <th>错题本</th>
+        </thead>
+        <tr ng-repeat="member in  members.list">
+          <td>{{member.username||'用户名'}}</td>
+          <td class="text-muted">{{member.name||'姓名'}}</td>
+          <td>
+            <a ui-sref="trainer student examinations({userId:member.userId})">布置测试</a>
+          </td>
+          <td>
+            <a ui-sref="trainer student statistic({userId:member.userId})">查看报告</a>
+          </td>
+          <td><a ui-sref="trainer student list({userId:member.userId})">历史试卷</a></td>
+          <td>
+            <a href="#"   ui-sref="trainer student collectionNoteBook({userId:member.userId})">错题本</a>
+          </td>
+        </tr>
+      </table>
+      <div class="row-seperate has-border-top"></div>
+      <h3 class="sub-title row"><span class="title-tag-2"></span>我的班级</h3>
+      <table class="table theme-table-1 " >
+        <thead>
+        <th>班级</th>
+        <th>学员 </th>
+        <th>布置测试</th>
+        </thead>
+        <tr ng-repeat="klass  in  klasses.list">
+          <td ><a ui-sref="trainer klass detail({klassId:klass._id})">{{klass.name||'班级'}}</a></td>
+          <td class="text-muted"><span ng-repeat="member in  klass.members" class="margin-right-1">{{member.username||'学员'}}</span></td>
+          <td>
+            <a ui-sref="trainer student examinations({klassId:klass._id})">布置测试</a>
+          </td>
+        </tr>
+        <div class="col-xs-12 notask-teacher" ng-if="klasses.conut===0">
+          <img class="img-responsive notask-teacher-img" src="theme/assets/img/noBooks-teacher.png">
+          <h4>暂时没有班级</h4>
+          <p>赶紧去加入辅导机构领取班级吧～</p>
+        </div>
+      </table>
+      <div class="row-seperate has-border-top"></div>
+    </div>
+    <div class="col-md-4  row-right ">
+      <div class="bg-white row-right-body bottom-border-1">
+        <h3 class="sub-title has-top-border row"><span class="title-tag-3"></span>最新消息<span class="">{{user.newNotifications.length?'（'+user.newNotifications.length+'）':''}}</span>
+          <span class="pull-right margin-right-1">
+            <span class=" btn theme-color-4 fa fa-refresh" ng-class="{'fa-spin':vm.notificationLoading}" ng-click="vm.checkNotification()"></span>
+          </span>
+        </h3>
+        <div class="list-group list-group-border-bottom">
+          <a href="#" ui-sref="my notification" class="list-group-item" ng-repeat="notification in user.newNotifications  | orderBy:'-'" title="{{notification.title}}"><span class="all-ellipsis">{{notification.title}}</span><span class="pull-right">{{notification.created | limitTo:10}}</span></a>
+          <div class="margin-top-20"><a ng-show="user.newNotifications.length > 0"  class="btn btn-border btn-lg" ng-click="vm.clearNew()" >我知道了</a></div>
+          <div class="text-muted" ng-show="!user.newNotifications || user.newNotifications.length===0">当前没有新通知</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

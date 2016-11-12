@@ -1,0 +1,53 @@
+<div class="bg-white row" data-ng-controller="TaskExamListController as vm" ng-init="vm.init();">
+  <h1 class="page-title"><span class="title-tag-1"></span>历史考试</h1>
+  <div class="row-seperate"></div>
+      <div class="task-list clearfix">
+        <div class="notask-teacher" ng-show="!tasks.count">
+          <img class="img-responsive notask-teacher-img" src="theme/assets/img/noTask-teacher.png">
+          <h4>历史考试暂无内容</h4>
+        </div>
+        <div class="col-md-6 " ng-repeat="task in tasks.list" ng-init="initTask(task)" ng-class="{'padding-right-5':$index%2===0,'padding-left-5':$index%2===1}">
+            <div class="panel panel-default task-item margin-bottom-none" >
+              <div class="label-corner-right" ng-show="$index===0 && tasks.page===1">最新</div>
+              <div class="panel panel-heading">
+                <a href=""  ui-sref="teacher task({taskId:task._id})">{{task.title}}</a>
+                <span class="pull-right" >
+                  <span class="" ng-class="{'text-muted':task.status,'theme-color-1':!task.status}">{{task.status || '待批改'}}</span>
+                  <!--<span class="theme-color-1" ng-show="task.status!=='已批改'">待批改</span>-->
+                </span>
+              </div>
+              <div class="panel-body">
+                <div class="col-xs-10">
+                  <div class="row">
+                    <div class="col-xs-6">
+                      <p class=" ">已提交：<strong class="text-primary">{{task.executed.length}}</strong>人</p>
+                      <p class="">总人数：<strong>{{task.accepters.length}}</strong>人</p>
+                    </div>
+                    <div class="col-xs-6 text-right">
+                      <p class="text-muted ">发布日期：{{task.created | date:'MM-dd'}}</p>
+                      <p class="text-muted ">截至日期：{{task.endDate | date:'MM-dd'}}</p>
+                    </div>
+                  </div>
+
+                  <div class="border-top-1">
+                      <div class="pull-left t-klass-setting">
+                          <a href="" class="btn btn-black  btn-link padding-left-0 " ng-repeat="klass in task.mySchoolClasses" ui-sref="task schooler statistic({taskId:task._id,classId:klass.classId})">{{klass.name}}</a>
+                      </div>
+                      <div class="pull-right ">
+                         <a class="btn btn-primary-active btn-link" href="#" ui-sref="task statistic({taskId:task._id})">作业统计</a>
+                         <a class="btn btn-black btn-link padding-right-0" href="#" ui-sref="task check ({taskId:task._id})">批改作业</a>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-xs-2 hidden-xs book-thumb">
+                  <img class="img-responsive" ng-show="task.content.book.cover" ng-src="{{task.content.book.cover}}">
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+  <div class="text-center margin-top-10">
+    <uib-pagination ng-if="tasks && tasks.count>tasks.pageItem" total-items="tasks.count" ng-model="tasks.page" max-size="10" items-per-page="tasks.pageItem" class="pagination-sm" boundary-link-numbers="true" rotate="false" previous-text="上一页" next-text="下一页" ng-change="vm.selectPage()"></uib-pagination>
+  </div>
+</div>
+

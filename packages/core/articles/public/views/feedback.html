@@ -1,0 +1,34 @@
+<div class="bg-white row" data-ng-controller="FeedbackController as vm" ng-init="vm.init()">
+    <img class="img-responsive img-banner-feedback" src="system/assets/img/banner-feedback.png">
+    <form id="feedbackForm" class="bg-white col-md-12 feedback-form bottom-border-1 footer-feedback-bottom clearfix" name="feedbackForm" >
+        <div class="home-title-setting feedback-caption clearfix ">
+            <img class="img-responsive " src="system/assets/img/home-feedback.png">
+            <div class="feedback-subtitle theme-font-16">
+                <p>我们怀一虔诚之心，做真正有用、好用的学习平台</p>
+                <p>期望得到您的帮助，告诉我们您的使用感受和改进建议</p>
+            </div>
+        </div>
+        <div class="form-group col-md-4 ">
+            <input name="username" type="text"  class="input-border"
+               id="username" placeholder="姓名 / Name" data-ng-model="feedback.name">
+        </div>
+        <div class="form-group col-md-4 ">
+            <input name="telephone" type="text"  class="input-border"
+                   id="telephone" placeholder="电话 / Telephone" data-ng-model="feedback.mobile">
+        </div>
+        <div class="form-group col-md-4 ">
+            <input name="email" type="text"  class="input-border"
+                   id="email" placeholder="邮箱 / E-mail" data-ng-model="feedback.email">
+        </div>
+        <div class="form-group col-md-12 margin-top-20 ">
+            <textarea name="content" type="text"  class="textarea-border col-md-12 padding-left-0" required
+                   id="content" placeholder="建议 / Proposal" data-ng-model="feedback.content" rows="4"></textarea>
+        </div>
+
+        <div class="text-center margin-top-20">
+            <button class="btn btn-primary btn-padding btn-border-round" ng-click="vm.submit()">提交意见</button>
+        </div>
+
+    </form>
+
+</div>

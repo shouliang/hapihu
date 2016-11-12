@@ -1,0 +1,155 @@
+<div class="" data-ng-controller="UnionerPaperController as vm" >
+  <div class="loading" ng-init="vm.init()" ng-hide="vm.book"></div>
+  <div class="row">
+
+    <div class="col-md-12 bg-white teacher-notask">
+      <div class="form-group" ng-if="vm.books.count ===0">
+        <h3 class="sub-title row"><span class="title-tag-1"></span>发布考试</h3>
+        <div class="text-center">
+          <img class="img-responsive notask-teacher-img" src="theme/assets/img/noBooks-teacher.png">
+          <h4>荒废无物的书架</h4>
+          <p>添加新书才可以布置作业哦～</p>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-4 book-menu bg-white bottom-border-1"  ng-if="vm.book">
+      <div class="book-selector " ng-if="vm.books.list && vm.books.list.length > 0">
+          <select class="form-control" ng-model="vm.selectedBook" ng-change="vm.changeBook();">
+            <option ng-repeat="book in vm.books.list"  value="{{book._id}}">{{book.name}}</option>
+          </select>
+      </div>
+      <div class="row-seperate"></div>
+      <div class="book-menu" >
+        <h1 class="page-title row">
+          <span class="title-tag-1"></span>
+          目录
+        </h1>
+        <div class="book-menu-btn">
+          <span ng-show="expandAll" class="btn btn-link theme-color-4"
+                ng-click="$broadcast('angular-ui-tree:collapse-all');expandAll=!expandAll;">
+            <span class="glyphicon glyphicon-resize-horizontal"></span>全部折叠
+          </span>
+          <span ng-show="!expandAll" class="btn btn-link theme-color-4"
+                ng-click="$broadcast('angular-ui-tree:expand-all');expandAll=!expandAll;">
+            <span class="glyphicon glyphicon-resize-vertical"></span>全部展开
+          </span>
+        </div>
+        <div class="book-about" >
+          <span class="cursor-hand"  ng-class="{'theme-color':!vm.selectedNode.node}" ng-click="vm.selectedNode.node=null">本书概述</span>
+        </div>
+        <div ui-tree id="tree-root" data-drag-enabled="false" >
+          <ol ui-tree-nodes ng-model="vm.book.nodes">
+            <li ng-repeat="node in vm.book.nodes" ui-tree-node data-collapsed="!node.expanded" ng-include="'books/views/vendor/book-menu.html'"  ng-init="node.expanded=true"></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8 book-content" ng-if="vm.books.count !==0">
+      <div class="row-right-body bg-white clearfix margin-bottom-1 bottom-border-1 min-height-100">
+        <div class=" " ng-show="!vm.selectedNode.node && vm.book">
+          <ol class="breadcrumb book-summary-breadcrumb">
+            <img class="img-responsive icon-img" src="books/assets/img/icons/vendor-book.png">
+            <li class="latest-change">书籍简介</li>
+          </ol>
+          <div class="book-info">
+            <div class="col-sm-9">
+              <h1 class="book-name">{{vm.book.name}}</h1>
+              <div class="tags margin-bottom-1">
+                <span class="tag-grade">{{vm.book.grade}}</span>
+                <span class="tag-grade">{{vm.book.session}}</span>
+                <span class="tag-subject">{{vm.book.subject}}</span>
+              </div>
+              <div class="book-description"
+                   ng-if="vm.book.summary">{{vm.book.summary}}</div>
+            </div>
+            <div class="col-sm-3">
+              <img class="img-responsive" ng-src="{{vm.book.cover}}">
+            </div>
+          </div>
+        </div>
+        <div class="" ng-if="vm.selectedNode.node">
+          <div class="bar-color row">
+            <span class="theme-bg-3"></span>
+            <span class="theme-bg-1"></span>
+            <span class="theme-bg-2"></span>
+          </div>
+          <ol class="breadcrumb title-margin" >
+            <li ng-repeat="inode in vm.selectedNode.parents">{{inode.title}}</li>
+            <li class="">{{vm.selectedNode.node.title}}</li>
+          </ol>
+          <h3 class="sub-title row"><span class="title-tag-3"></span>考试说明</h3>
+          <div class="aim-details">
+            <pre>{{ vm.selectedNode.node.aim || '无说明' }}</pre>
+          </div>
+          <div class="row-seperate"></div>
+          <div class="resources-list">
+            <div class="col-md-1 col-xs-2" ng-repeat="resource in vm.selectedNode.resoucesObjects">{{resource.title}}</div>
+          </div>
+          <div class="row-seperate"></div>
+          <h3 class="sub-title  row"><span class="title-tag-2"></span>题目列表 （{{questions.count || "0"}}）
+            <span class="theme-color theme-font-16" ng-click="vm.selectAllQ()"><span class="fa check-question " ng-class="{'fa-circle-thin':!selectedAllQ,'fa-check-circle':selectedAllQ}" ></span> 全选</span>
+          </h3>
+          <p></p>
+          <div class="" ng-include="'teacher/views/unioner/questions-list.html'"></div>
+          <div class="row-seperate"></div>
+          <div class="sub-title  row"><span class="title-tag-1"></span>考试设置</div>
+          <div class="form-horizontal form-group-list">
+            <div class="form-group form-group-list-item">
+              <label  class="col-sm-3 control-label">考试标题</label>
+              <div class="col-sm-9">
+                <span id="taskTitle"  editable-text="task.title" e-required>
+                  {{ task.title || 'empty' }}
+                </span>
+              </div>
+            </div>
+            <div class="form-group form-group-list-item">
+              <label  class="col-sm-3 control-label">考试说明</label>
+              <div class="col-sm-9">
+                <div id="taskAim" class="cursor-hand aim-details margin-bottom-none" editable-textarea="task.aim"  e-rows="2" e-cols="40">
+                  <pre class="theme-font-14">{{ task.aim || '无目标' }}</pre>
+                </div>
+              </div>
+            </div>
+            <div class="form-group form-group-list-item">
+              <label  class="col-sm-3 control-label">题目数量</label>
+              <div class="col-sm-9 padding-top-label">{{task.content.topics.length}}</div>
+            </div>
+            <div class="form-group form-group-list-item">
+              <label  class="col-sm-3 control-label">选中班级</label>
+              <div class="col-sm-9 ">
+                <div ng-repeat="school in schools">
+                  <div>
+                    <strong class="margin-right-1">{{school.name}}</strong> 年级：<select ng-model="school.selectedGrade" ng-options="grade.name for  grade in school.grades"></select>
+                  </div>
+                  <div class="btn-collect margin-bottom-1">
+                    <span class="btn border-radio-0 margin-right-1" ng-class="{'btn-primary':!klass.ignore,'btn-default':klass.ignore}" ng-click="klass.ignore=!klass.ignore" ng-repeat="klass in school.selectedGrade.classes">{{klass.name}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group form-group-list-item">
+              <label  class="col-sm-3 control-label">考试日期</label>
+              <div class="col-sm-5">
+                <div class="input-group">
+                  <input type="text" class="form-control" uib-datepicker-popup ng-model="task.endDate" is-open="datePopup.opened" datepicker-options="dateOptions" ng-required="true" current-text="今天" clear-text="清除" close-text="关闭" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="datePopup.opened=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group form-group-list-item text-center">
+              <span class="btn btn-primary btn-padding btn-border-round" ng-click="vm.publish()">发布考试</span>
+            </div>
+          </div>
+          <div class="alert alert-info" ng-if="questions.list.length===0">
+            此处内容可能正在审核中，稍后会正常展示
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

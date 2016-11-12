@@ -1,0 +1,20 @@
+<div class="" data-ng-controller="StudentTaskController as vm" ng-init="vm.init()">
+    <div class="row  bg-white ">
+        <h1 class="page-title">
+            <span class="title-tag-1 fa fa-chevron-left" ng-click="goBack()"></span>孩子作业
+            <span class="s-task-title text-muted">{{task.title}}</span>
+        </h1>
+        <h4 class="padding-left-right-15">学习目标</h4>
+        <div class="aim-details padding-left-right-15" >
+            <pre>{{task.aim||'暂无目标'}}</pre>
+        </div>
+        <div class="s-task-line text-muted">以下是您孩子的作业。</div>
+    </div>
+    <div class="row-seperate "></div>
+    <div class="row bg-white border-top bottom-border-1">
+        <h3 class="sub-title "><span class="title-tag-2"></span>题目列表
+            <span class="">（{{questions.count || "0"}}）</span></h3>
+        <div class="" ng-include="'books/views/student/questions-list.html'"></div>
+    </div>
+</div>
+

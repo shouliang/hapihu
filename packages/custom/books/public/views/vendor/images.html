@@ -1,0 +1,129 @@
+<div class="bg-white row" data-ng-controller="VendorBookImagesController as vm" ng-init="vm.init()">
+  <h1 class="page-title"><span class="title-tag-1 fa fa-chevron-left" ui-sref="vendor book({bookId:vm.book._id})"></span>书籍内容管理
+    <span class="theme-font-16">{{vm.book.name}}</span>
+
+  </h1>
+  <div class="upload-images-box clearfix bottom-border-1" nv-file-drop="" uploader="uploader" filters="imageFilter">
+    <div class="col-md-3">
+      <h3 class="">选择图片<span class="text-muted theme-font-14">(支持多选)</span></h3>
+      <div ng-show="uploader.isHTML5">
+        <!-- 3. nv-file-over uploader="link" over-class="className" -->
+        <div class="well my-drop-zone" nv-file-over="" uploader="uploader">
+          把图片拖到此处
+        </div>
+      </div>
+      <input class="form-control" type="file" nv-file-select="" uploader="uploader" multiple  /><br/>
+    </div>
+
+    <div class="col-md-9 margin-bottom-2">
+      <p>上传列表，数目: {{ uploader.queue.length || 0 }} <span class="text-muted theme-font-14">(每次最多40张)</span></p>
+      <table class="table">
+        <thead>
+        <tr>
+          <th width="10%">页码 <span class="fa fa-pencil theme-color-1" ng-click="vm.autoPage()" title="根据第一个自动编号"></span></th>
+          <th width="10%">预览</th>
+          <th width="20%">文件名</th>
+          <th ng-show="uploader.isHTML5">大小</th>
+          <th ng-show="uploader.isHTML5">进度</th>
+          <th>状态</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in uploader.queue">
+          <td class="form-group">
+            <input class="form-control" ng-model="item.formData[0]" placeholder="页码">
+          </td>
+          <td>
+            <img class="img-responsive upload-thumbmail" ng-if="item.formData[1]" ng-src="{{item.formData[1]}}" popover-placement="right" uib-popover-html="'<img class=&quot;img-responsive&quot; src=&quot;'+item.formData[1]+'&quot;>'">
+          </td>
+          <td><strong>{{ item.file.name }}</strong></td>
+          <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+          <td ng-show="uploader.isHTML5">
+            <div class="progress" style="margin-bottom: 0;">
+              <div class="progress-bar progress-bar-success" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+            </div>
+          </td>
+          <td class="text-center">
+            <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+            <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+            <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+          </td>
+          <td nowrap>
+            <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+              <span class="glyphicon glyphicon-upload"></span> 上传
+            </button>
+            <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel();" ng-disabled="!item.isUploading">
+              <span class="glyphicon glyphicon-ban-circle"></span> 取消
+            </button>
+            <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove();">
+              <span class="glyphicon glyphicon-trash"></span> 删除
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <div>
+        <div>
+          上传进度
+          <div class="progress" style="">
+            <div class="progress-bar progress-bar-success" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-success " ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+          <span class="glyphicon glyphicon-upload"></span> 全部上传
+        </button>
+        <button type="button" class="btn btn-black " ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
+          <span class="glyphicon glyphicon-ban-circle"></span> 全部取消
+        </button>
+        <button type="button" class="btn btn-primary " ng-click="vm.saveToBook()" ng-show="uploader.queue.length && !uploader.getNotUploadedItems().length ">
+          <span class="glyphicon glyphicon-trash"></span> 保存到书
+        </button>
+
+
+      </div>
+
+    </div>
+
+  </div>
+  <div class="row-seperate clearfix"></div>
+  <div class="">
+    <h3 class="sub-title"><span class="title-tag-2"></span>本书图片（{{vm.bookImages.count || 0}}）</h3>
+    <div class="col-xs-12 notask-teacher" ng-if="vm.bookImages.count===0">
+        <h4>暂无本书图片</h4>
+        <p>赶紧去给您的书添加新的图片吧～</p>
+    </div>
+
+      <div class="row">
+      <div class="col-sm-4 col-md-3" ng-repeat="image in vm.bookImages.list">
+        <div class="thumbnail">
+          <img ng-src="{{image.url}}" alt="{{image.pageNum}}">
+          <div class="caption">
+            <h4 class="text-center" title="第{{image.pageNum}}页"><span editable-text="image.pageNum" onbeforesave="vm.saveImg(image)">{{image.pageNum}}</span></h4>
+            <div class="clearfix">
+              <span class="line-height-30" ng-show="image.width">{{image.width}} X {{image.height}}</span>
+              <span class="pull-right image-mark-box">
+                <img class="image-mark-thumbmail" ng-if="image.mark.imgData" ng-src="{{image.mark.imgData}}" popover-placement="top" uib-popover-html="'<img class=&quot;img-responsive&quot; src=&quot;'+image.mark.imgData+'&quot;>'">
+                <span class="btn btn-sm btn-link" ng-url="image.url" crop-img on-success="getCropResult(result,image)">标注</span>
+                <span class="btn btn-sm btn-link" ng-click="vm.deleteImg(image)">删除</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center clearfix">
+      <uib-pagination ng-show="vm.bookImages.count && vm.bookImages.count>vm.bookImages.pageItem" total-items="vm.bookImages.count"
+                      ng-model="vm.bookImages.page"
+                      max-size="5"
+                      items-per-page="vm.bookImages.pageItem"
+                      class="pagination-sm" boundary-link-numbers="true"
+                      rotate="false" previous-text="上一页" next-text="下一页"
+                      ng-change="vm.selectPage()"></uib-pagination>
+
+    </div>
+  </div>
+</div>
+
+

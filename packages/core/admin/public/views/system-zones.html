@@ -1,0 +1,21 @@
+
+<div data-ng-controller="SystemZonesController as sz"   id="admin-zones-page">
+
+    <h3 class="" >系统地址管理 <a class="btn btn-default pull-right" ng-click="sz.loadDefault()">导入初始化数据</a></h3>
+    <hr>
+    <div class="zones">
+        <div class="province row" data-ng-repeat="(k,province) in zones track by province._id">
+            <h3>{{province.name}}</h3>
+            <span class="citys "  data-ng-repeat="(m,city) in province.sons track by city._id">
+                <span class="city btn btn-default" ng-class="{active:distictHide[city.postcode]}" ng-click="distictHide[city.postcode]=!distictHide[city.postcode]">{{city.name}}</span>
+                <div class="well well-sm row" ng-class="{hidden:!distictHide[city.postcode]}">
+                    <span class="distict col-sm-2" data-ng-repeat="(n,disctict) in city.sons track by disctict._id">{{disctict.name}}</span>
+                </div>
+            </span>
+        </div>
+    </div>
+    <form class="form-horizontal">
+
+    </form>
+
+</div>

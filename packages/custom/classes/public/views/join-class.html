@@ -1,0 +1,128 @@
+<div class="bg-white row min-height-100" ng-controller="JoinClassesController as vm" ng-init="vm.init()">
+    <h1 class="page-title"><span class="title-tag-1 fa fa-chevron-left" ng-click="goBack();"></span>加入/退出班级
+        <div class="form-inline  margin-right-1 a-class-out">
+            <div class="form-group">
+                <div class="input-group-round border-primary">
+                    <input class="form-control xs-joinClass-input" type="text" ng-model="confirmCode" placeholder="通过班级ID直接加入">
+                    <input type="button"  class="form-control btn btn-primary"  ng-click="vm.joinClass(null,confirmCode)" value="直接加入">
+                </div>
+            </div>
+            <div class="form-group theme-font-16">
+                <span class="theme-color-1 fa fa-question-circle-o padding-left-0 a-class-popover" uib-popover="已加入的班级成员都可以在“我的班级”查看到此信息" popover-trigger="mouseenter" popover-title="如果获取“班级ID”" ></span>
+            </div>
+        </div>
+    </h1>
+    <table ng-if="user.profile.classes.length!==0 && user.profile.classes" class="table theme-table-1 margin-top-neg-15 a-table-padding">
+        <thead>
+            <th class="col-sm-3">学校名称</th>
+            <th class="col-sm-3">年级</th>
+            <th class="col-sm-2">班级</th>
+            <th class="col-sm-2">加入班级状态</th>
+            <th class="col-sm-2">操作</th>
+        </thead>
+        <tr  ng-repeat="klass in user.profile.classes" ng-class="{'theme-bg-0':klass.isNew}">
+            <td >{{klass.school.name}}</td>
+            <td class="col-sm-3">{{klass.grade}}</td>
+            <td >{{klass.name}}</td>
+            <td ng-class="{'theme-color-3':klass.status.indexOf('成功')===-1}">{{klass.status}}</td>
+            <td ><span class="btn btn-link theme-color-1 btn-sm" ng-click="vm.outClass(klass)">退出</span></td>
+        </tr>
+    </table>
+    <div class="no-result margin-top-neg-15 notask-teacher" ng-if="user.profile.classes.length===0">
+        <h4>您还没有加入班级</h4>
+        <p>赶快新建班级或者添加验证码加入班级吧～</p>
+    </div>
+    <div class="row-seperate"></div>
+    <h3 class="sub-title"><span class="title-tag-2"></span>选择学校加入</h3>
+    <div class="list-group margin-top-neg-15 list-group-border-bottom">
+        <div class="form-inline list-group-item">
+            <div class="form-group">
+                <div id="cityselector" select-result='vm.search.address' select-class='city-selector' city-select></div>
+            </div>
+            <div class="form-group">
+                <span school-auto-input="" school-location="vm.search.address" ng-model="vm.search.keyword" ng-object="vm.selectedSchoolObject" school-selected="vm.selectedSchool()"></span>
+            </div>
+            <div class="form-group">
+                <span class="btn btn-primary" ng-click="vm.searchSchools();">查询</span>
+            </div>
+            <div class="form-group">
+                <span class="text-muted">  没有找到学校？</span>
+                <span class="cursor-hand btn-link theme-color-1" add-school new-school="vm.selectedSchool" on-success="vm.addNewSchool(newSchool);">新建学校</span>
+            </div>
+        </div>
+        <div class="list-group-item ">
+            <div class="btn-collect clearfix">
+                <div class="col-md-3 col-sm-6" ng-repeat="school in schools.list">
+                    <span class="btn btn-border text-ellipsis " ng-class="{'btn-link':vm.schoolSelected!==school,'btn-primary':vm.schoolSelected===school}" ng-click="vm.schoolSelected=school;">{{school.name}}</span>
+                </div>
+            </div>
+
+            <!--<div paging-->
+                 <!--class="small"-->
+                 <!--page="schools.page"-->
+                 <!--page-size="schools.pageItem"-->
+                 <!--total="schools.count"-->
+                 <!--pg-href="#"-->
+                 <!--adjacent="3"-->
+                 <!--text-first="首页"-->
+                 <!--text-last="末页"-->
+                 <!--text-next="下一页"-->
+                 <!--text-prev="上一页"-->
+                 <!--text-title-first="首页"-->
+                 <!--text-title-last="末页"-->
+                 <!--text-title-next="下一页"-->
+                 <!--text-title-prev="上一页"-->
+                 <!--text-title-page="{page}"-->
+                 <!--hide-if-empty="true"-->
+                 <!--show-prev-next="true"-->
+                 <!--show-first-last="true"-->
+                 <!--ul-class="pagination"-->
+                 <!--active-class="active"-->
+                 <!--disabled-class="disabled"-->
+                 <!--paging-action="vm.changePage('Paging Clicked', page,pageItem, pageSize, total)">-->
+            <!--</div>-->
+            <div class="text-center">
+                <uib-pagination ng-show="schools.count && schools.count>schools.pageItem" total-items="schools.count"
+                                ng-model="schools.page" max-size="5"
+                                items-per-page="schools.pageItem" class="pagination-sm" boundary-link-numbers="true"
+                                rotate="false" previous-text="上一页" next-text="下一页"
+                                ng-change="vm.selectPage()"></uib-pagination>
+            </div>
+        </div>
+        <div class="form-inline list-group-item" ng-show="vm.schoolSelected">
+            <div class="form-group">
+                <select class="form-control" ng-model="vm.gradeSelected" ng-options="grade.name for grade in vm.schoolSelected.grades" placeholder="选择年级">
+                    <option class="" disabled value="">--年级--</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <select class="form-control" ng-model="vm.classSelected" ng-options="klass.name for klass in vm.gradeSelected.classes" placeholder="选择班级">
+                    <option class="" disabled value="">--班级--</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <span class="btn btn-primary " ng-click="vm.inClass(vm.classSelected);">加入班级</span>
+            </div>
+            <!--<div class="" ng-repeat="">-->
+                <!--<h4>{{grade.name}}</h4>-->
+                <!--<div class="row">-->
+                    <!--<span  class="btn btn-link col-sm-2 col-xs-4 text-ellipsis"  ng-repeat="klass in grade.classes" ng-click="vm.inClass(klass)">{{klass.name}}</span>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="form-group">
+                ——没有找到班级？<span class="cursor-hand cursor-hand btn-link theme-color-1" add-class to-school="vm.schoolSelected" new-class="vm.newClass" on-success="vm.addClassSuccess(newClass);">创建班级</span>
+            </div>
+            <div class="text-danger margin-top-10" ng-if="!vm.schoolSelected.grades || vm.schoolSelected.grades.length===0">这个学校还没有班级<span class="text-muted">（指已经审核成功）</span></div>
+            <div class="" ng-if="vm.schoolSelected.tmpClasses && vm.schoolSelected.tmpClasses.length>0 ">
+                <h4 class="">尚未审核的班级</h4>
+                <div class="row">
+                    <span  class="btn btn-link theme-color-4 col-sm-2 col-xs-4 text-ellipsis"  ng-repeat="klass in schoolSelected.tmpClasses" ng-click="vm.inClass(klass)">{{klass.grade+'/'+klass.name}}</span>
+                </div>
+            </div>
+        </div>
+        <!--<p class="padding-left-right-15 margin-top-10">-->
+            <!--<span class="btn btn-primary btn-padding btn-border-round" ng-click="vm.updateClass()">保存</span>-->
+            <!--<a class="btn btn-border" ng-click="goBack();"> 返回 </a>-->
+        <!--</p>-->
+    </div>
+</div>

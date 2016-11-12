@@ -1,0 +1,104 @@
+<div class="" ng-controller="OrganizationKlassController as vm" ng-init="vm.init()">
+  <div class="banner-teacher-box">
+    <img class="img-responsive" src="organization/assets/img/banner.png">
+  </div>
+  <div class="row theme-equal bg-gray-1 padding-top-15">
+    <div class="col-md-2 menu-right " data-spy="affix" data-offset-top="60" data-offset-bottom="200">
+      <div ng-include="'organization/views/right-menu.html'"></div>
+    </div>
+    <div class="col-md-10 bg-white">
+      <h1 class="page-title">班级：{{klass.name}}</h1>
+      <h3>老师</h3>
+      <table class="table theme-table-1">
+        <thead>
+        <tr>
+          <th class="col-md-2">帐号名</th>
+          <th class="col-md-3">姓名</th>
+          <th class="col-md-3">科目</th>
+          <th class="col-md-3">管理</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in klass.managers">
+            <td>{{item.username}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.subject}}</td>
+            <td><span class="btn btn-default" ng-click="deleteTrainer(item)">删除</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <p><span class="btn btn-info" ng-click="selectTrainer()">添加老师</span></p>
+      <p><hr></p>
+      <h3>学员</h3>
+      <p>当前班级共有{{klass.classes.length}}名学员</p>
+      <table class="table theme-table-1">
+        <thead>
+          <tr>
+            <th class="col-md-1">#</th>
+            <th class="col-md-3">帐号名</th>
+            <th class="col-md-2">姓名</th>
+            <th class="col-md-3">报告</th>
+            <th class="col-md-3">管理</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in klass.members">
+            <td>{{$index+1}}</td>
+            <td>{{item.username}}</td>
+            <td>{{item.name}}</td>
+            <td><span class="btn btn-link">查看报告</span></td>
+            <td><span class="btn btn-default" ng-click="deleteMember(item)">删除</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="theme-bg-0 form-inline padding-10">
+        <h4>添加新学员</h4>
+        <div class="form-group">
+          <label class="control-label">帐号名</label>
+          <input class="form-control" type="text" placeholder="帐号名" ng-model="newMember.username">
+          <span class="btn btn-info" ng-click="addNewMember()">添加学员</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/ng-template" id="selectTrainer.html">
+  <div class="bar-color-top"></div>
+  <div class="modal-header">
+    <h3 class="modal-title" >选择老师</h3>
+  </div>
+  <div class="modal-body" >
+    <div class="form-inline">
+      <div class="form-group">
+        <label>科目筛选</label>
+        <select class="form-control"  ng-model="query.subject" placeholder="科目" ng-options="g for g in ['全部','数学','物理','化学','语文','英语']" ng-change="changeSubject()"></select>
+      </div>
+    </div>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th class="col-md-2">帐号名</th>
+        <th class="col-md-2">姓名</th>
+        <th class="col-md-2">科目</th>
+        <th class="col-md-2">选中</th>
+      </tr>
+      </thead>
+      <tr ng-repeat="item in trainers">
+        <td class="">{{item.username}}</td>
+        <td class="">{{item.name}}</td>
+        <td class="">{{item.profile.subject}}</td>
+        <td class=""><input class="" type="checkbox" ng-model="item.selected"/></td>
+      </tr>
+    </table>
+
+  </div>
+  <div class="modal-footer">
+    <div class="col-xs-6 text-center">
+      <span class="btn btn-link theme-color-1"  ng-click="ok()">确定</span>
+    </div>
+    <div class="col-xs-6 text-center">
+      <span class="btn btn-link theme-color-4"  ng-click="cancel()">取消</span>
+    </div>
+  </div>
+</script>

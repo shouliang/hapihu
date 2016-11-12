@@ -1,0 +1,52 @@
+<div data-ng-controller="ParentController as vm" ng-init="vm.init()">
+    <div class="banner-teacher-box">
+        <img class="img-responsive" src="theme/assets/img/banner-student.png">
+    </div>
+    <div class="row">
+        <div class="col-md-8 bg-white bottom-border-1 row-left">
+            <h3 class="sub-title row"><span class="title-tag-1"></span>最近消息</h3>
+            <div class="col-md-12 notask-teacher bg-white notification-margin" ng-show="notifications.count===0">
+                <img class="img-responsive notask-teacher-img" src="notification/assets/img/notification.png">
+                <h4>暂无通知消息～</h4>
+                <p>您现在还没有收到任何新消息～</p>
+            </div>
+            <div class="list-group ">
+                <div class="list-group-border-bottom notification-item col-md-12 bg-white" ng-class="{'panel-default':notification.status!=='unread','panel-danger':notification.status==='unread'}" ng-repeat="notification in notifications.list" ng-if="$index<20">
+                    <img class="img-responsive list-group-img col-xs-2 col-sm-1" src="theme/assets/img/icons/icon-notification-1.png">
+                    <div class="list-group-content col-xs-10 col-sm-11">
+                        <span class="pull-right text-muted margin-right-1" >{{notification.created | date: 'MM-dd HH:mm'}}</span>
+                        <div class="text-muted">
+                            <span class="theme-color-1 ">{{notification.from.name}}</span> 发给你一条新消息
+                        </div>
+                        <!--<a class="btn btn-border btn-sm pull-right " ui-sref="parent-teacher sendMessage({messageFromId:notification.from.userId})">回复</a>-->
+                        <h4>{{notification.title}}</h4>
+                    </div>
+                </div>
+                <!--<div class="more-box text-center margin-top-neg-15" ng-show="notifications.list.length>19">-->
+                    <!--<a  class="btn btn-link theme-color-4" ui-sref="child tasks">更多</a>-->
+                <!--</div>-->
+            </div>
+        </div>
+        <div class="col-md-4 row-right">
+            <div class="bg-white row-right-body bottom-border-1">
+                <h3 class="sub-title row"><span class="title-tag-2"></span>您的孩子</h3>
+                <div class="notask-teacher" ng-if="mychildren.children.length===0">
+                    <img class="img-responsive notask-teacher-img" src="notification/assets/img/notification.png">
+                    <h4>您还没有关联孩子</h4>
+                    <a class="btn btn-border" ui-sref="user-info">去关联</a>
+                </div>
+                <div class="clearfix btn-collect">
+                    <a  ui-sref="child tasks" class="btn btn-border btn-lg" ng-repeat="child in mychildren.children">{{child.name}}</a>
+                </div>
+                <h3 class="sub-title has-top-border row"><span class="title-tag-2"></span>联系人</h3>
+                <div class="notask-teacher" ng-if="contacts.length===0">
+                    <img class="img-responsive notask-teacher-img" src="notification/assets/img/notification.png">
+                    <h4>您还没有联系人</h4>
+                </div>
+                <div class="list-group list-group-border-bottom">
+                    <a href="#" ui-sref="parent-teacher sendMessage({messageFromId:contact.userId,messageFromName:contact.name})" class="list-group-item" ng-repeat="contact in contacts" ><span>{{contact.name||'老师姓名'}}</span><span class="pull-right">{{contact.student.name }}<span class="text-muted margin-left-1">{{contact.grade}}</span>的老师</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

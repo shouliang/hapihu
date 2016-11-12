@@ -1,0 +1,94 @@
+<div class="" ng-controller="OrganizationTrainersController as vm" ng-init="vm.init()">
+  <div class="banner-teacher-box">
+    <img class="img-responsive" src="organization/assets/img/banner.png">
+  </div>
+  <div class="row theme-equal bg-gray-1 padding-top-15">
+    <div class="col-md-2 menu-right " data-spy="affix" data-offset-top="60" data-offset-bottom="200">
+      <div ng-include="'organization/views/right-menu.html'"></div>
+    </div>
+    <div class="col-md-10 bg-white">
+      <h1 class="page-title">老师管理</h1>
+      <p>当前共有{{school.profile.trainers.length || 0}}位在职老师</p>
+      <table class="table theme-table-1">
+        <thead>
+          <tr>
+            <th class="col-md-2">帐号名</th>
+            <th class="col-md-2">姓名</th>
+            <th class="col-md-2">科目</th>
+            <th class="col-md-2">录入时间</th>
+            <th class="col-md-2">业务</th>
+            <th class="col-md-2">管理</th>
+          </tr>
+        </thead>
+        <tr ng-repeat="item in school.profile.trainers">
+          <td class="">{{item.username}}</td>
+          <td class="">{{item.name}}</td>
+          <td class="">{{item.profile.subject}}</td>
+          <td class="">{{item.created|date:'MM-dd HH:mm'}}</td>
+          <td class="">{{item.profile.products}}</td>
+          <td class=""><span class="btn btn-default" ng-click="vm.deleteItem(item)">删除</span></td>
+        </tr>
+      </table>
+      <p>
+        <span class="btn btn-info" ng-click="vm.addItem()">添加老师</span>
+      </p>
+    </div>
+  </div>
+
+</div>
+<script type="text/ng-template" id="addNewTrainer.html">
+  <div class="bar-color-top"></div>
+  <div class="modal-header">
+    <h3 class="modal-title" >添加老师</h3>
+  </div>
+  <div class="modal-body" >
+      <div class="form-horizontal">
+        <div class="form-group">
+          <label class="col-sm-2 control-label"> 用户名</label>
+          <div class="col-sm-10">
+            <input class="form-control" ng-model="newUser.username" ng-disabled="vm.action==='update'" placeholder="用户名">
+          </div>
+        </div>
+        <div class="form-group" ng-show="vm.action!='update'">
+          <label class="col-sm-2 control-label"> 密码</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" ng-model="newUser.password"  placeholder="密码">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="name" class="control-label col-sm-2">姓名</label>
+          <div class="col-sm-10">
+            <input class="form-control" id="name" type="text" name="name" ng-model="newUser.name" placeholder="真实姓名"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="name" class="control-label col-sm-2">性别</label>
+          <div class="col-sm-10">
+            <select class="form-control"  ng-model="newUser.profile.gender" placeholder="真实姓名" ng-options="g for g in ['男','女']"></select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="name" class="control-label col-sm-2">手机</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="text" name="mobile" ng-model="newUser.mobile" placeholder="手机号码"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="name" class="control-label col-sm-2">科目</label>
+          <div class="col-sm-10">
+            <select class="form-control"  ng-model="newUser.profile.subject" placeholder="科目" ng-options="g for g in ['数学','物理','化学','语文','英语']"></select>
+          </div>
+        </div>
+        <p class="alert-danger" ng-if="alert">{{alert}}</p>
+      </div>
+
+  </div>
+  <div class="modal-footer">
+    <div class="col-xs-6 text-center">
+      <span class="btn btn-link theme-color-1"  ng-click="ok()">确定</span>
+    </div>
+    <div class="col-xs-6 text-center">
+      <span class="btn btn-link theme-color-4"  ng-click="cancel()">取消</span>
+    </div>
+  </div>
+</script>

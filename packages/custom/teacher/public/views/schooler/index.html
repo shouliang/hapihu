@@ -1,0 +1,106 @@
+<div class="" data-ng-controller="SchoolerController as vm" ng-init="vm.init()">
+  <div class="banner-teacher-box">
+    <img class="img-responsive" src="theme/assets/img/banner-teacher.png">
+  </div>
+  <div class="row">
+    <div class="col-md-8  bg-white row-left">
+      <h3 class="sub-title row">
+        <span class="title-tag-1"></span>我的试卷
+        <div class="pull-right margin-right-1">
+          <span class="btn btn-border" ng-click="addPaper()">添加试卷</span>
+        </div>
+      </h3>
+      <div class="book-list row margin-top-neg-15">
+        <div class="col-xs-12 notask-teacher" ng-show="books.count===0">
+          <img class="img-responsive notask-teacher-img" src="theme/assets/img/noBooks-teacher.png">
+          <h4>还没有考试</h4>
+          <p>请点击右上角“添加试卷”，然后输入试卷id及密码</p>
+        </div>
+        <div class="col-sm-6 col-md-3 book-list-item" ng-repeat="book in books.list" ng-if="$index<4">
+          <div class="thumbnail">
+            <img class="img-responsive cursor-hand book-cover"  title="{{book.name}}" style="background-image: url({{book.cover}});" ng-src="{{book.cover}}" alt="" ui-sref="teacher paper({paperId:book._id})">
+            <div class="caption">
+              <h4><a href="" title="{{book.name}}"  ui-sref="teacher paper({paperId:book._id})">{{book.name}}</a> </h4>
+              <p class="text-muted">{{book.grade}}.{{book.subject}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row-seperate has-border-top"></div>
+      <h3 class="sub-title row"><span class="title-tag-1"></span>最近考试</h3>
+      <div class="task-list">
+        <div class="notask-teacher " ng-show="tasks.count===0">
+          <img class="img-responsive notask-teacher-img" src="theme/assets/img/noTask-teacher.png">
+          <h4>最近考试暂无内容</h4>
+          <p>布置几次考试，掌握学生学习状况～</p>
+        </div>
+        <div class="panel panel-default task-item" ng-repeat="task in tasks.list" ng-if="$index<3" ng-init="initTask(task)">
+          <div class="label-corner-right" ng-show="$index===0 && tasks.page===1">最新</div>
+          <div class="panel panel-heading">
+            <a href=""  ui-sref="teacher task({taskId:task._id})">{{task.title}}</a>
+            <span class="pull-right">
+                <span class="" ng-class="{'text-muted':task.status,'theme-color-1':!task.status}">{{task.status || '待批改'}}</span>
+              <!--<span ng-if="!task.status" class="btn btn-primary btn-border-round" ng-click="vm.markTask(task)" >待批改</span></span>-->
+            </span>
+          </div>
+          <div class="panel-body">
+            <div class="col-sm-10">
+              <div class="row">
+                <div class="col-xs-6">
+                  <p class=" ">已提交：<strong class="text-primary">{{task.executed.length}}</strong>人</p>
+                  <p class="">总人数：<strong>{{task.accepters.length}}</strong>人</p>
+                </div>
+                <div class="col-xs-6 text-right">
+                  <p class="text-muted ">发布日期：{{task.created | date:'MM-dd'}}</p>
+                  <p class="text-muted ">考试日期：{{task.endDate | date:'MM-dd'}}</p>
+                </div>
+              </div>
+
+              <div class="border-top-1">
+                <div class="pull-left t-klass-setting">
+                  <a href="" class="btn btn-black  btn-link padding-left-0" ng-repeat="klass in task.mySchoolClasses" ui-sref="task schooler statistic({taskId:task._id,classId:klass.classId})">{{klass.name}}</a>
+                </div>
+                <div class="pull-right">
+                  <a class="btn btn-primary-active btn-link" href="#" ui-sref="task schooler statistic({taskId:task._id})">考试统计</a>
+                  <a class="btn btn-black btn-link padding-right-0" href="#" ui-sref="paper setting({taskId:task._id})" ng-if="user._id===task.form.userId">考试设置</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2 hidden-xs book-thumb">
+              <img class="img-responsive" ng-show="task.content.book.cover" ng-src="{{task.content.book.cover}}">
+            </div>
+          </div>
+        </div>
+        <div class="more-box text-center margin-top-neg-15" ng-show="tasks.count>3">
+          <a href="#" class="btn btn-link theme-color-4" ui-sref="task schooler list">更多</a>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-4  row-right ">
+      <div class="bg-white row-right-body bottom-border-1">
+        <h3 class="sub-title row"><span class="title-tag-2"></span>学校管理</h3>
+        <div class="clearfix label-collection">
+          <span  class="btn btn-primary btn-border-round " ng-repeat="school in schools" ui-sref="manage school({id:school._id})">{{school.name}}</span>
+        </div>
+        <div class="notask-teacher" ng-if="user.profile && !user.profile.school">
+          <h4>你还没有与学校进行关联</h4>
+          <p>请尽快与网站管理员进行联系</p>
+        </div>
+        <h3 class="sub-title has-top-border row"><span class="title-tag-3"></span>最新消息<span class="">{{user.newNotifications.length?'（'+user.newNotifications.length+'）':''}}</span>
+          <span class="pull-right margin-right-1">
+            <span class=" btn theme-color-4 fa fa-refresh" ng-class="{'fa-spin':vm.notificationLoading}" ng-click="vm.checkNotification()"></span>
+          </span>
+        </h3>
+        <div class="list-group list-group-border-bottom">
+          <a href="#" ui-sref="my notification" class="list-group-item" ng-repeat="notification in user.newNotifications  | orderBy:'-'" title="{{notification.title}}"><span class="all-ellipsis">{{notification.title}}</span><span class="pull-right">{{notification.created | limitTo:10}}</span></a>
+          <div class="margin-top-20"><a ng-show="user.newNotifications.length > 0"  class="btn btn-border btn-lg" ng-click="vm.clearNew()" >我知道了</a></div>
+          <div class="text-muted" ng-show="!user.newNotifications || user.newNotifications.length===0">当前没有新通知</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+</div>

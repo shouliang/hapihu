@@ -1,0 +1,14 @@
+{
+  "name": "books",
+  "version": "0.0.1",
+  "description": "Some description of books",
+  "author": {
+    "name": "mean scaffold"
+  },
+  "mean": "0.5.5",
+  "dependencies": {},
+  "license": "MIT",
+  "scripts": {
+    "postinstall" : "bower install"
+  }
+}

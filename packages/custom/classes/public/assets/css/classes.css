@@ -1,0 +1,43 @@
+.class-confirm-code{
+  height: 35px;
+  overflow: hidden;
+  margin-top: -40px;
+}
+@media(max-width:768px){
+    .class-confirm-code{
+        height: 35px;
+        margin-top: 0;
+        overflow: visible;
+        border-bottom: 1px solid #e2e2e2;
+    }
+    .a-class-marginTop li{
+        margin-top:5px !important;
+    }
+    .a-table-padding td{
+        padding:5px !important;
+    }
+    .a-table-padding th{
+        padding:8px 2px;
+    }
+    .a-class-popover + div {
+        left:0 !important;
+    }
+    .a-class-out{
+        float:left;
+        margin:10px 10px 0 ;
+    }
+    .a-class-out .theme-color-1{
+        float: right;
+        margin-right: -50px;
+        margin-top: -40px;
+    }
+    .xs-joinClass-input{
+        width: 200px;
+    }
+
+}
+@media(min-width:768px){
+    .a-class-out{
+        float:right !important;
+    }
+}

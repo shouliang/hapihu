@@ -1,0 +1,99 @@
+<div class="" data-ng-controller="StudentBookController as vm" >
+  <div class="loading" ng-init="vm.init()" ng-hide="vm.book"></div>
+  <div class="row">
+    <div class="col-md-4 book-menu bg-white bottom-border-1" ng-if="vm.book">
+      <div class="book-selector " ng-if="vm.books.list && vm.books.list.length > 0">
+          <select class="form-control" ng-model="vm.selectedBook" ng-change="vm.changeBook();">
+            <option ng-repeat="book in vm.books.list"  value="{{book._id}}">{{book.name}}</option>
+          </select>
+      </div>
+      <div class="book-menu" >
+        <h1 class="page-title row">
+          <span class="title-tag-1"></span>
+          目录
+        </h1>
+        <div class="book-menu-btn">
+          <span ng-show="expandAll" class="btn btn-link theme-color-4"
+                ng-click="$broadcast('angular-ui-tree:collapse-all');expandAll=!expandAll;">
+            <span class="glyphicon glyphicon-resize-horizontal"></span>全部折叠
+          </span>
+          <span ng-show="!expandAll" class="btn btn-link theme-color-4"
+                ng-click="$broadcast('angular-ui-tree:expand-all');expandAll=!expandAll;">
+            <span class="glyphicon glyphicon-resize-vertical"></span>全部展开
+          </span>
+        </div>
+        <div class="book-about" >
+          <span class="cursor-hand"  ng-class="{'theme-color':!vm.selectedNode.node}" ng-click="vm.selectedNode.node=null">本书概述</span>
+        </div>
+        <div ui-tree id="tree-root" data-drag-enabled="false" >
+          <ol ui-tree-nodes ng-model="vm.book.nodes">
+            <li ng-repeat="node in vm.book.nodes" ui-tree-node data-collapsed="!node.expanded" ng-include="'books/views/vendor/book-menu.html'" ></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8 book-content">
+      <div class="row-right-body bg-white clearfix margin-bottom-1 bottom-border-1 min-height-100">
+        <div class="form-group" ng-if="hasNoBook">
+          <h3>请添加你所购买的图书，<a class="btn btn-info" ui-sref="teacher bookstore">添加图书</a></h3>
+        </div>
+        <div class=" " ng-show="!vm.selectedNode.node && vm.book">
+          <div class="bar-color row">
+            <span class="theme-bg-3"></span>
+            <span class="theme-bg-1"></span>
+            <span class="theme-bg-2"></span>
+          </div>
+          <ol class="breadcrumb book-summary-breadcrumb">
+            <img class="img-responsive icon-img" src="books/assets/img/icons/vendor-book.png">
+            <li class="latest-change">书籍简介</li>
+          </ol>
+          <div class="book-info">
+            <div class="col-sm-9">
+              <h1 class="book-name">{{vm.book.name}}</h1>
+              <div class="tags margin-bottom-1">
+                <span class="tag-grade">{{vm.book.grade}}</span>
+                <span class="tag-grade">{{vm.book.session}}</span>
+                <span class="tag-subject">{{vm.book.subject}}</span>
+              </div>
+              <div class="book-description"
+                   ng-if="vm.book.summary">{{vm.book.summary}}</div>
+            </div>
+            <div class="col-sm-3">
+              <img class="img-responsive" ng-src="{{vm.book.cover}}">
+            </div>
+          </div>
+        </div>
+        <div class="" ng-if="vm.selectedNode.node">
+          <div class="bar-color row">
+            <span class="theme-bg-3"></span>
+            <span class="theme-bg-1"></span>
+            <span class="theme-bg-2"></span>
+          </div>
+          <ol class="breadcrumb title-margin">
+            <li ng-repeat="inode in vm.selectedNode.parents">{{inode.title}}</li>
+            <li class="active">{{vm.selectedNode.node.title}}</li>
+          </ol>
+          <h3 class="sub-title row"><span class="title-tag-3"></span>学习目标</h3>
+          <div class="aim-details">
+            <pre>{{ vm.selectedNode.node.aim || '无目标' }}</pre>
+          </div>
+
+          <div class="row-seperate"></div>
+          <h3 class="sub-title  row"><span class="title-tag-1"></span>资源列表</h3>
+          <div class="resources-list">
+            <div class="col-md-1 col-xs-2" ng-repeat="resource in vm.selectedNode.resoucesObjects">{{resource.title}}</div>
+          </div>
+          <div class="row-seperate"></div>
+          <h3 class="sub-title  row"><span class="title-tag-2"></span>题目列表 （{{questions.count || "0"}}）
+            <span class="theme-color theme-font-16" ng-click="vm.selectAllQ()"></span>
+          </h3>
+          <div class="" ng-include="'books/views/student/questions-list.html'"></div>
+          <div class="alert alert-info" ng-if="questions.list.length===0">
+            此处内容可能正在审核中，稍后会正常展示
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

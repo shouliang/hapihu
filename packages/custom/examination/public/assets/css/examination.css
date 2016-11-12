@@ -1,0 +1,99 @@
+.e-task-list{
+    padding: 15px;
+}
+.e-task-list .theme-bg-gray{
+    border-radius: 10px;
+}
+.e-task-list a{
+    font-size: 12px;
+    color: #333;
+    text-decoration:none
+}
+.e-task-title{
+    font-size: 16px;
+    line-height: 3;
+    color: #333333;
+}
+.e-task-img img{
+    padding-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.e-task-img p{
+    font-size: 16px;
+    line-height: 3;
+    color: #666666;
+}
+.e-center{
+    margin-right: auto;
+    margin-left: auto ;
+    text-align: center;
+    padding-bottom: 20px;
+}
+.e-task-statistic{
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px 55px;
+    cursor: pointer;
+}
+.e-task-lookUp{
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px 55px;
+    background-color: #ffcb6d;
+    cursor: pointer;
+}
+.e-task-lookUp:hover{
+    background-color: #f6aa4f;
+    text-decoration:none
+}
+.e-task-check{
+    border: 1px solid #32c9ae;
+    border-radius: 5px;
+    padding: 8px 55px;
+    color: #32c9ae !important;
+    cursor: pointer;
+}
+
+.e-qst-check{
+    line-height: 80px;
+    vertical-align: middle;
+    margin: auto;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+.e-qst-check img{
+    margin-right: auto;
+    margin-left: auto ;
+    vertical-align: middle;
+}
+.e-check-check{
+    background-color: #ffcb6d;
+    border-radius: 5px;
+    padding: 10px 15px;
+    color: #333333;
+}
+.e-check-lookUp{
+    border-radius: 5px;
+    padding: 6px 15px;
+    color: #333333;
+    border: 1px solid #999;
+}
+.e-check-btn span{
+    padding: 8px;
+    border:1px solid #bcbcbc;
+    margin-right: 10px;
+    margin-top: 10px;
+    border-radius: 6px;
+    display: inline-block;
+}
+.check-select{
+    padding:8px 20px  ;
+}
+.give-checked{
+background-color: #ffcb6d;
+}
+.give-unchecked{
+    background-color: white;
+}

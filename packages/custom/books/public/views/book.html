@@ -1,0 +1,84 @@
+<div class="" data-ng-controller="BookController as vm">
+  <script type="text/ng-template" id="orderBookConfirm.html">
+    <div class="bar-color-top"></div>
+    <div class="modal-header">
+      <h3 class="modal-title">添加验证</h3>
+    </div>
+    <div class="modal-body">
+      <p class="text-muted">注意：此书验证码为此书的书号</p>
+      <div class="form-group">
+        <input class="form-control" type="text" ng-model="bookCode">
+        <div class="text-danger" ng-show="alert">
+          {{alert}}
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer clearfix">
+      <div class="col-xs-6 text-center">
+        <span class="btn btn-link theme-color-1"  ng-click="ok()">确定</span>
+      </div>
+      <div class="col-xs-6 text-center">
+        <span class="btn btn-link theme-color-4"  ng-click="cancel()">取消</span>
+      </div>
+    </div>
+  </script>
+  <div class="loading" ng-init="vm.init()" ng-hide="vm.book"></div>
+  <div class="row">
+    <div class="col-md-4 book-menu bg-white bottom-border-1">
+      <h1 class="page-title row">
+        <span class="title-tag-1"></span>
+        目录
+      </h1>
+      <div class="book-menu-btn">
+        <span ng-show="expandAll" class="btn btn-link theme-color-4"
+              ng-click="$broadcast('angular-ui-tree:collapse-all');expandAll=!expandAll;">
+          <span class="glyphicon glyphicon-resize-horizontal"></span>全部折叠
+        </span>
+        <span ng-show="!expandAll" class="btn btn-link theme-color-4"
+              ng-click="$broadcast('angular-ui-tree:expand-all');expandAll=!expandAll;">
+          <span class="glyphicon glyphicon-resize-vertical"></span>全部展开
+        </span>
+      </div>
+      <div class="book-about" >
+        <span class="cursor-hand"  ng-class="{'theme-color':!selectedNode.node}" ng-click="selectedNode.node=null">本书概述</span>
+      </div>
+      <div ui-tree id="tree-root" data-drag-enabled="false"
+           ng-init="selectedNode={}; " >
+        <ol ui-tree-nodes ng-model="vm.book.nodes" >
+          <li ng-repeat="node in vm.book.nodes"
+              ui-tree-node data-collapsed="!node.expanded"
+              ng-include="'books/views/vendor/book-menu.html'" ></li>
+        </ol>
+      </div>
+    </div>
+    <div class="col-md-8 book-content">
+      <div class=" row-right-body bg-white row clearfix bottom-border-1" ng-if="!vm.selectedNode.node">
+        <ol class="breadcrumb book-summary-breadcrumb">
+          <img class="img-responsive icon-img" src="books/assets/img/icons/vendor-book.png">
+          <li class="latest-change">书籍简介</li>
+          <li class="pull-right margin-top-10">
+            <a class="btn btn-lg btn-primary btn-padding btn-border-round" ng-show="!hasOrdered" ng-click="vm.orderBook()">添加此书</a>
+            <span class="btn theme-color-2 btn-border-round btn-lg disabled"  ng-show="hasOrdered">已经下载</span>
+          </li>
+        </ol>
+        <div class="book-info">
+          <div class="col-sm-9">
+            <h1 class="book-name">{{vm.book.name}}</h1>
+            <div class="tags margin-bottom-1">
+              <span class="tag-grade">{{vm.book.grade}}</span>
+              <span class="tag-grade">{{vm.book.session}}</span>
+              <span class="tag-subject">{{vm.book.subject}}</span>
+            </div>
+            <div class="book-description"
+                 ng-if="vm.book.summary">{{vm.book.summary}}</div>
+          </div>
+          <div class="col-sm-3">
+            <img class="img-responsive " ng-src="{{vm.book.cover}}">
+          </div>
+        </div>
+        <p></p>
+      </div>
+    </div>
+  </div>
+</div>
+

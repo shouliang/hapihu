@@ -1,0 +1,8 @@
+<ul class="list-group">
+    <li class="list-group-item"><span class="btn btn-block " ng-class="{'btn-link':subMenu!=='trainee','btn-primary':subMenu==='trainee'}" ui-sref="organization trainees({schoolId:school._id})">学员管理</span></li>
+    <li class="list-group-item"><span class="btn btn-block " ng-class="{'btn-link':subMenu!=='trainer','btn-primary':subMenu==='trainer'}" ui-sref="organization trainers({schoolId:school._id})">老师管理</span></li>
+    <li class="list-group-item"><span class="btn btn-block" ng-class="{'btn-link':subMenu!=='klass','btn-primary':subMenu==='klass'}" ui-sref="organization classes({schoolId:school._id})">班级管理</span></li>
+    <li class="list-group-item"><span class="btn btn-block" ng-class="{'btn-link':subMenu!=='product','btn-primary':subMenu==='product'}" ui-sref="organization products({schoolId:school._id})">业务管理</span></li>
+    <li class="list-group-item"><span class="btn btn-block" ng-class="{'btn-link':subMenu!=='paper','btn-primary':subMenu==='paper'}" ui-sref="organization papers({schoolId:school._id})">试卷管理</span></li>
+    <li class="list-group-item"><span class="btn btn-block" ng-class="{'btn-link':subMenu!=='setting','btn-primary':subMenu==='setting'}" ui-sref="organization setting({schoolId:school._id})">学校设置</span></li>
+</ul>

@@ -1,0 +1,179 @@
+<div id="helpDoc" class="row bg-white clearfix" data-ng-controller="HelpController">
+    <img class="img-responsive img-banner-feedback clearfix" src="system/assets/img/banner-feedback.png">
+    <div class=" clearfix bg-white col-md-12  help-form">
+        <div class="home-title-setting clearfix help-title">
+            <img class="img-responsive " src="articles/assets/img/help.png">
+        </div>
+        <div class="help-content clearfix">
+            <uib-tabset active="activeJustified" justified="true">
+                <uib-tab index="0" heading="我是学生">
+                    <div class="col-sm-5 margin-top-60 help-product-img">
+                        <img class="img-responsive" src="articles/assets/img/aboutus-product.png">
+                    </div>
+                    <div class="col-sm-7 a-detail margin-top-60 ">
+                        <h1 class="a-title">产品简介</h1>
+                        <p>
+                            哈皮虎自适应学习平台基于云计算，OCR图像识别，人工智能AI，大数据分析等信息技术
+                            引入了微课导学、诊断式教学、自适应学习、个性化教育等现代教育理念，整合了海量优
+                            质题库资源、微课资源，同时兼容PC、手机、pad等多种应用环境的自适应学习平台。
+                        </p>
+                        <p>
+                            平台集教学目标管理、学习流程管理、教学资源管理，数据统计与分析及个性诊断等功能
+                            于一体，利用该平台，将帮助老师更便捷地备课授课、组卷阅卷、布置个性化作业，降低
+                            教学流程的复杂度和不可控性，实现日常教学数据的精准统计与系统化管理，同时为学生
+                            提供线上线下作业与测验的自动测评与诊断错题收录、学情分析，真正做到把脉精准，有
+                            的放矢，高效学习，实现减负。
+                        </p>
+                    </div>
+                    <h1 class="help-subtitle">学生使用说明</h1>
+                    <div class="help-question">
+                        <h3>问题一：平台如何注册使用？</h3>
+                        <p class="help-bg">答：登陆learn.hapihu.com可以通过手机注册账户。友情提示：注意区分注册的身份，否则还要再次注册账户。</p>
+                        <h3>问题二：我该如何加入班级？</h3>
+                        <div class="help-bg">
+                            <p >填写个人信息之后，在导航栏上方有一个我的班级，通过班级ID或者条件搜索都可以加入班级，如果没有您的班级，可以创建学校、创建班级成为第一个体验我们平台的用户。下图是加入班级页面。</p>
+                            <img class="img-responsive  " pop-img pop-imgs="articles/assets/img/help-student-02.png" src="articles/assets/img/help-student-02.png">
+                        </div>
+                        <h3>问题三：我怎么收到老师布置的作业？</h3>
+                        <div class="help-bg">
+                            <p>如果您的老师也加入了班级，只要老师布置作业您就可以收到消息提醒，并且在首页显示出最新的作业。下图是首页显示最新作业页面。</p>
+                            <img class="img-responsive " pop-img pop-imgs="articles/assets/img/help-student-03.png" src="articles/assets/img/help-student-03.png">
+                        </div>
+                        <h3>问题四：我可以通过哪几种方式写作业？</h3>
+                        <div class="help-bg">
+                            <h4>1、上传作业</h4>
+                            <p>您可以在教辅上完成答题之后，按照要求拍下当前页码的照片，在每次作业的右下方，按照提示上传您拍摄作业的对应页码，系统会智能识别您的答题区域。友情提示：拍摄的照片一定要符合要求，否则还需要再次拍照，重新上传作业，给您带来不必要的麻烦。<sapn>下图是上传作业流程页面</sapn>。</p>
+                            <img class="img-responsive  col-sm-6" pop-img pop-imgs="articles/assets/img/help-student-0401.png" src="articles/assets/img/help-student-0401.png">
+                            <img class="img-responsive  col-sm-6" pop-img pop-imgs="articles/assets/img/help-student-0402.png" src="articles/assets/img/help-student-0402.png">
+                            <h4>2、在线做题</h4>
+                            <p>您可以在平台上在线回答老师布置的本次作业，系统智能识别选择题答案，不过非选择题就需要您亲自单题上传文件，并对照正确答案，自己对这次题目对错做出判断。</p>
+                            <img class="img-responsive " pop-img pop-imgs="articles/assets/img/help-student-0403.png" src="articles/assets/img/help-student-0403.png">
+                            <p>上面两种方式都能帮您完成本次作业，做错的题目系统会主动帮您加入错题本，以便再次复习。当然，还希望您实事求是判断回答题目的对错，因为您敬爱的老师也能看到您的答案。</p>
+                        </div>
+                        <h3>问题五：我按照页码上传作业，系统识别不成功或者识别区域有误怎么办？</h3>
+                        <div class="help-bg">
+                            这些问题可能和您上传的照片不符合要求有关，除了按照拍照要求拍摄当前页码作业照片以外，尽量在光线良好的环境下拍照，同时也要保证作业页面平整，拍摄字迹清晰，掌握了基本要领之后，多多使用就会熟能生巧，提升系统识别率。另外您也可以使用第二种提交作业方式：在线做题，非选择题则可以单题拍照上传，并自行判断对错。
+                        </div>
+                        <h3>问题六：我提交的作业为什么还有很多问题没有判断对错？</h3>
+                        <div class="help-bg">
+                            目前系统只能判定选择题和判断题的对错，非选择题还需要您亲自做出判断，判断的结果将会反馈给老师，老师会对您的答案进行再次批改。
+                        </div>
+                        <h3>问题七：为什么我写作业总是弹出“您还没有添加此内容对应的书”？</h3>
+                        <p class="help-bg">首先我们为这个问题对您造成的不便道歉，这个提醒是为了提示您添加与此次作业对应的书籍，否则将会影响您的后续使用和体验。</p>
+                        <h3>问题八：我要添加书籍，可为什么没有显示我需要的书籍？</h3>
+                        <div class="help-bg">
+                            <p>这个问题可能和您注册时填写的个人信息错误有关，可供选择的书只显示您的年级对应的书籍，如果没有搜索到需要的书籍，可以通过修改个人信息更改您的年级，再次搜索就能查到需要的书籍。下图是修改个人信息页面。</p>
+                            <img class="img-responsive " pop-img pop-imgs="articles/assets/img/help-student-06.png" src="articles/assets/img/help-student-06.png">
+                        </div>
+                        <h3>问题九：添加书籍的验证码是什么？</h3>
+                        <p class="help-bg">验证码是您添加这本实体书背面上的书号，输入书号即可将这本书加入您的书架。</p>
+                        <h3>问题十：我的作业为什么没有科目筛选？</h3>
+                        <div class="help-bg">
+                            <p>我的作业只显示已经加入书架的书籍的科目，所以您可以添加书籍之后，再尝试一下。下图为添加书籍科目之后的页面，用户添加了数学、生物和政治的相关书籍。</p>
+                            <img class="img-responsive " pop-img pop-imgs="articles/assets/img/help-student-08.png" src="articles/assets/img/help-student-08.png">
+                        </div>
+                        <h3>问题十一： 教辅书上的答案没有写在答题区域拍照上传可以吗？</h3>
+                        <p class="help-bg">不行，图片识别的区域为教辅书的答题区域，如果您把答案写在其他地方，将会无法显示您的答案，给您造成不必要的麻烦。</p>
+                        <h3>问题十二： 为什么我帐号密码正确，但是登录不进去？</h3>
+                        <p class="help-bg">如果是safari浏览器可能是因为设置了无痕浏览模式，建议关闭。</p>
+                    </div>
+                </uib-tab>
+                <uib-tab index="1" heading="我是老师">
+                    <div class="col-sm-5 margin-top-60 help-product-img">
+                        <img class="img-responsive" src="articles/assets/img/aboutus-product.png">
+                    </div>
+                    <div class="col-sm-7 a-detail margin-top-60 ">
+                        <h1 class="a-title">产品简介</h1>
+                        <p>
+                            哈皮虎自适应学习平台基于云计算，OCR图像识别，人工智能AI，大数据分析等信息技术
+                            引入了微课导学、诊断式教学、自适应学习、个性化教育等现代教育理念，整合了海量优
+                            质题库资源、微课资源，同时兼容PC、手机、pad等多种应用环境的自适应学习平台。
+                        </p>
+                        <p>
+                            平台集教学目标管理、学习流程管理、教学资源管理，数据统计与分析及个性诊断等功能
+                            于一体，利用该平台，将帮助老师更便捷地备课授课、组卷阅卷、布置个性化作业，降低
+                            教学流程的复杂度和不可控性，实现日常教学数据的精准统计与系统化管理，同时为学生
+                            提供线上线下作业与测验的自动测评与诊断错题收录、学情分析，真正做到把脉精准，有
+                            的放矢，高效学习，实现减负。
+                        </p>
+                    </div>
+                    <h1 class="help-subtitle">老师使用说明</h1>
+                    <div class="help-question">
+                        <h3>问题一：平台如何注册使用？</h3>
+                        <p class="help-bg">登陆learn.hapihu.com可以通过手机注册账户。友情提示：注意区分注册的身份，否则还要再次注册账户。</p>
+                        <h3>问题二：我该如何加入班级？</h3>
+                        <div class="help-bg">
+                            <p>填写个人信息之后，在导航栏上方有一个我的班级，通过班级ID或者条件搜索都可以加入班级，如果平台没有您的班级，可以创建学校、创建班级成为第一个体验我们平台的用户。</p>
+                            <img class="img-responsive " pop-img pop-imgs="articles/assets/img/help-teacher-02.png" src="articles/assets/img/help-teacher-02.png">
+                        </div>
+                        <h3>问题三：我该怎么布置作业？</h3>
+                        <div class="help-bg">
+                            <p>因为布置作业需要在具体的书籍上操作，所以您需要先添加相应的书籍。下图为添加新书页面。</p>
+                            <img class="img-responsive " pop-img pop-imgs="articles/assets/img/help-teacher-0301.png" src="articles/assets/img/help-teacher-0301.png">
+                            <p>在可供选择的图书中选择您需要的书籍，添加的验证为书籍背后的书号。下图为验证页面。</p>
+                            <img class="img-responsive " pop-img pop-imgs="articles/assets/img/help-teacher-0302.png"  src="articles/assets/img/help-teacher-0302.png">
+                            <p>添加完书籍之后，在首页点击布置作业按钮，就能进入布置作业页面了。也可以直接点击您添加的书籍布置作业。在这个页面您可以更改作业的标题、填写学习目标、发布的班级以及选择截止日期。</p>
+                            <img class="img-responsive " pop-img="" pop-imgs="articles/assets/img/help-teacher-0302.png" src="articles/assets/img/help-teacher-0302.png">
+                        </div>
+                        <h3>问题四：如何批改学生作业？</h3>
+                        <div class="help-bg">
+                            <p>每一个布置的作业右下角都有一个“批改作业”按钮。</p>
+                            <img class="img-responsive " pop-img pop-imgs="articles/assets/img/help-teacher-0401.png" src="articles/assets/img/help-teacher-0401.png">
+                            <p>进入之后，每一道题后面会有一个“批改”按钮，点击进入即可对这道题进行批改。</p>
+                            <img class="img-responsive " pop-img pop-imgs="articles/assets/img/help-teacher-0402.png" src="articles/assets/img/help-teacher-0402.png">
+                            <p>显示单题学生的回答和正确率。</p>
+                            <img class="img-responsive " pop-img pop-imgs="articles/assets/img/help-teacher-0403.png"  src="articles/assets/img/help-teacher-0403.png">
+                        </div>
+                        <h3>问题五：我该如何查看学生这次作业回答的情况统计？</h3>
+                        <div class="help-bg">
+                            <p>在布置的作业下方有一个作业统计，进入之后可以查看全部班级学生此次作业的统计。</p>
+                            <img class="img-responsive " pop-img pop-imgs="articles/assets/img/help-teacher-0501.png" src="articles/assets/img/help-teacher-0501.png">
+                            <p>在下图中，您可以选择不同班级查看信息，也可以直接查看该班级的班级报告。
+                            </p>
+                            <img class="img-responsive " pop-img pop-imgs="articles/assets/img/help-teacher-0502.png" src="articles/assets/img/help-teacher-0502.png">
+                            <p>班级报告目前有两个统计图，一个是班级每一道题的正确率，另一个是此次作业知识点的正确率。并且，您还可以在作答详情中查看每一道题的答错学生。</p>
+                            <img class="img-responsive " pop-img pop-imgs="articles/assets/img/help-teacher-0503.png" src="articles/assets/img/help-teacher-0503.png">
+                        </div>
+                        <h3>问题六：作业我已经批改完了，如何让每道题的待批改状态变成已批改？</h3>
+                        <div class="help-bg">
+                            <p>进入作业统计页面，在班级学生列表的下方，有一个“批改全部完成”按钮，点击之后，即可完成这次作业的批改。</p>
+                            <img class="img-responsive " pop-img pop-imgs="articles/assets/img/help-teacher-06.png" src="articles/assets/img/help-teacher-06.png">
+                        </div>
+                        <h3>问题七：学生作业拍照上传，有些题目的答案识别区域有误，无法显示正确答案怎么办？</h3>
+                        <div class="help-bg">
+                            这个问题是学生拍照上传的照片不符合要求导致的，您可以提醒他下次按照要求拍照，以及从他的纸质作业上判断此次作业各道题目的对错，所以为了您的方便，一定要让学生尽量按照要求拍摄，如果仍然难以识别，可以让学生线上做题，单题提交作业。
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab index="2" heading="学生获得价值">
+                    <h1 class="help-subtitle">学生获得价值</h1>
+                    <div class="help-question">
+                        <h3>1.平台全程跟踪学生学习过程，精准分析学习情况，并即时反馈，学生可以全面了解自己学习情况，避免重复学习和盲目学习。</h3>
+                        <img class="img-responsive " pop-img pop-imgs="articles/assets/img/help-student-value01.png" src="articles/assets/img/help-student-value01.png">
+                        <h3>2.学情统计分析将根据学生的薄弱知识点，推送优质拓展微课和练习进行巩固和加强。</h3>
+                        <img class="img-responsive max-width-100" pop-img pop-imgs="articles/assets/img/help-student-value02.png" src="articles/assets/img/help-student-value02.png">
+                        <h3>3.平台自动记录学习历史、收录错题、便于学生有针对性的高效复习。</h3>
+                        <img class="img-responsive " pop-img pop-imgs="articles/assets/img/help-student-value03.png" src="articles/assets/img/help-student-value03.png">
+                    </div>
+                </uib-tab>
+                <uib-tab index="3" heading="老师获得价值">
+                    <h1 class="help-subtitle">老师获得价值</h1>
+                    <div class="help-question">
+                        <h3>1.平台自动批改作业、试卷，节省老师批阅时间。</h3>
+                        <img class="img-responsive " pop-img pop-imgs="articles/assets/img/help-teacher-value01.png" src="articles/assets/img/help-teacher-value01.png">
+                        <h3>2.平台提供全方位教学数据统计：班级答题正确率、作业完成率、知识点掌握诊断、班级错题集、班级优解、典型提醒等，帮助老师调整教学课时和教学侧重点。</h3>
+                        <img class="img-responsive " pop-img pop-imgs="articles/assets/img/help-teacher-value02.png" src="articles/assets/img/help-teacher-value02.png">
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+        $(".help-bg").hide();
+        $("#helpDoc").on('click','h3',function(){
+            $(this).next(".help-bg").toggle(0);
+        });
+    });
+</script>

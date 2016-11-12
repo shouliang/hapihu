@@ -1,0 +1,20 @@
+<div class="upload-modal">
+  <div class="modal-header">
+    <h3 class="modal-title" >上传图片</h3>
+  </div>
+  <div class="modal-body upload-box">
+    <input class="form-control" name="upload" type="file" nv-file-select="" multiple="multiple" uploader="vm.uploader">
+    <div class="row">
+      <div ng-repeat="item in vm.uploader.queue">
+        <div class="col-md-5">{{item.file.name}}</div>
+        <div class="col-md-6 col-md-offset-1">
+          <div class="progress" >
+            <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span class="btn btn-default" ng-show="vm.uploader.queue.length>0" ng-click="vm.uploader.uploadAll()">上传</span>
+  </div>
+</div>
+

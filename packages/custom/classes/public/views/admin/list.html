@@ -1,0 +1,47 @@
+<div class="bg-white row" data-ng-controller="AdminAllClassesController as vm" ng-init="vm.init()">
+  <h1 class="page-title"><a class="btn fa fa-arrow-left btn-back" ng-click="goBack();"> | </a>班级列表</h1>
+  <div class="">
+    <div class="form-group clearfix">
+      <label class="control-label col-sm-1 text-center">状态</label>
+      <div class="col-sm-11">
+        <span class="search-condition"  ng-class="{'active':!query.status}" ng-click="query.status=null;loadData(1);">全部</span>
+        <span class="search-condition" ng-repeat="status in vm.statuses" ng-class="{'active':query.status==status}" ng-click="query.status=status;loadData(1);">{{status}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="row-seperate"></div>
+  <div class="clearfix">
+    <h4>当前共{{vm.klasses.count || 0}}个班级</h4>
+    <table class="table table-striped">
+      <tr class="info">
+        <td class="col col-md-2">名称</td>
+        <td class="col col-md-2">年级</td>
+        <td class="col col-md-3">学校</td>
+        <td class="col col-md-2">创建时间</td>
+        <td class="col col-md-3">管理</td>
+      </tr>
+      <tr class="" data-ng-repeat="klass in vm.klasses.list">
+        <td>{{klass.name}}</td>
+        <td>{{klass.grade}}</td>
+        <td><a class="btn btn-link" ui-sref="school({id:klass.school._id})">{{klass.school.name}}</a></td>
+        <td>{{klass.created | date:'MM-dd HH:mm'}}</td>
+        <td>
+          <span ng-if="klass.status!=='confirmed'" class="btn btn-link" ng-click="vm.confirmClass(klass)">审核确认</span>
+          <span ng-if="klass.status==='confirmed'" class="text-muted" >已审核</span>
+          <a class="btn btn-link" ui-sref="manage class({classId:klass._id})">管理</a>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="text-center ">
+    <uib-pagination ng-show="vm.klasses.count && vm.klasses.count>vm.klasses.pageItem" total-items="vm.klasses.count"
+                    ng-model="vm.klasses.page"
+                    max-size="5"
+                    items-per-page="vm.klasses.pageItem"
+                    class="pagination-sm" boundary-link-numbers="true"
+                    rotate="false" previous-text="上一页" next-text="下一页"
+                    ng-change="vm.selectPage()"></uib-pagination>
+
+  </div>
+</div>
+

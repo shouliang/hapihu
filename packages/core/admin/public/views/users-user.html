@@ -1,0 +1,110 @@
+<section>
+   <h1 class="page-title"><a class="btn fa fa-arrow-left btn-back" ng-click="goBack();"> | </a>{{vm.user._id?"修改用户信息":"增加用户"}}</h1>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-2 control-label"> 用户名</label>
+            <div class="col-sm-10">
+                <input class="form-control" ng-model="vm.user.username" ng-disabled="vm.action==='update'" placeholder="用户名">
+            </div>
+        </div>
+        <div class="form-group" ng-show="vm.action!='update'">
+            <label class="col-sm-2 control-label"> 密码</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" ng-model="vm.originalUser.password"  placeholder="密码">
+            </div>
+        </div>
+        <div class="form-group"  ng-show="vm.action!='update'">
+            <label class="col-sm-2 control-label"> 重复密码</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" ng-model="vm.originalUser.confirmPassword"  placeholder="重复密码">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="name" class="control-label col-sm-2">用户类型</label>
+            <div class="col-sm-10">
+                <select class="form-control"  ng-model="vm.user.userType" ng-options=" ut for ut in ROLES">
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="name" class="control-label col-sm-2">姓名</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="name" type="text" name="name" ng-model="vm.user.name" placeholder="真实姓名"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="name" class="control-label col-sm-2">性别</label>
+            <div class="col-sm-10">
+                <select class="form-control"  ng-model="vm.user.profile.gender" placeholder="真实姓名" ng-options="g for g in ['男','女']"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="name" class="control-label col-sm-2">手机</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" name="mobile" ng-model="vm.user.mobile" placeholder="手机号码"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="grade" class="control-label col-sm-2">年级</label>
+            <div class="col-sm-10">
+                <select  class="form-control" id="grade" type="text" name="grade" ng-model="vm.user.profile.grade" placeholder="选择年级" ng-options="grade.value as grade.label for grade in GRADES">
+                    <option value="" disabled>-- 选择年级 --</option>
+                    <!--<option ng-repeat="grade in profile.GRADES" value="{{grade.value}}">{{grade.label}}</option>-->
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="grade" class="control-label col-sm-2">地址</label>
+            <div class="col-sm-10">
+                <div id="cityselector" select-result='vm.user.profile.address' select-class='city-selector' city-select set-sel-city="setSelCity(obj)" init-city="vm.initAddress"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-if="vm.user.userType!='vendor'">
+            <label for="grade" class="control-label col-sm-2">学校</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" ng-model="vm.user.profile.school" on-select="selectSchool" szn-autocomplete highlight-first="false" search-method="getSchoolResults">
+            </div>
+        </div>
+        <div class="form-group" ng-if="vm.user.userType=='teacher'">
+            <label for="grade" class="control-label col-sm-2">资格验证</label>
+            <div class="col-sm-10">
+                <img class="img-responsive" ng-if="vm.user.profile.certification" ng-src="{{vm.user.profile.certification}}">
+            </div>
+        </div>
+        <div class="form-group" ng-if="vm.user.userType=='teacher'">
+            <label for="grade" class="control-label col-sm-2">资格审核</label>
+            <div class="col-sm-10">
+                <select class="form-control"  ng-model="vm.user.profile.certificationStatus"  >
+                    <option value="等待审核">等待审核</option>
+                    <option value="审核失败">审核失败</option>
+                    <option value="审核成功">审核成功</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group" ng-if="vm.user.userType=='vendor'">
+            <label for="grade" class="control-label col-sm-2">公司</label>
+            <div class="col-sm-10">
+                <select class="form-control"  ng-model="vm.user.profile.company"  ng-options="company.name as company.name for company in vm.companies"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="name" class="control-label col-sm-2">权限</label>
+            <div class="col-sm-10">
+                <select multiple="" class="form-control"  ng-model="vm.user.roles" ng-options=" circle for circle in allCircles">
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input ng-show="vm.action==='update'" class=" btn btn-primary" type="button" value="保存修改" ng-click="vm.update()">
+                <input ng-show="vm.action!='update'" class=" btn btn-primary" type="button" value="添加用户" ng-click="vm.add()">
+            </div>
+        </div>
+        <div class="form-group" ng-show="vm.error && vm.error.length>0">
+            <div class="col-sm-offset-2 col-sm-10">
+                <h4 class="alert alert-warning" ng-repeat="err in vm.error">{{err.msg}}</h4>
+            </div>
+        </div>
+    </div>
+
+</section>

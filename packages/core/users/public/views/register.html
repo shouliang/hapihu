@@ -1,0 +1,125 @@
+<div data-ng-controller="RegisterCtrl as reg" ng-init="reg.user.userType='student'">
+    <form name="register_form" id="register_form"
+          class="form-bottom"
+          ng-submit="reg.register()">
+        <div class="sign-nav sign-nav-reg"></div>
+        <ul class="login-nav">
+            <li ng-class="{'active': stateName=='auth.login'}"><a ui-sref="auth.register">注册</a></li>
+            <li ng-class="{'active': stateName=='auth.register'}"><a  ui-sref="auth.login">登陆</a></li>
+        </ul>
+
+        <div class="form-group row user-roles">
+            <div class=" col-xs-4 col-md-4 "
+                 ng-class="{active:reg.user.userType==='student'}"
+                 ng-click="reg.user.userType='student'">
+                <img
+                     ng-src="{{reg.user.userType==='student'?'/theme/assets/img/student_active.png':'/theme/assets/img/student_nomal.png'}}">
+                学生
+            </div>
+            <div class=" col-xs-4 col-md-4 " ng-class="{active:reg.user.userType==='teacher'}"
+                 ng-click="reg.user.userType='teacher'">
+                <img
+                      ng-src="{{reg.user.userType==='teacher'?'/theme/assets/img/teacher_active.png':'/theme/assets/img/teacher_nomal.png'}}">
+                老师
+            </div>
+            <div class=" col-xs-4 col-md-4 " ng-class="{active:reg.user.userType==='parent'}"
+                 ng-click="reg.user.userType='parent'">
+                <img
+                     ng-src="{{reg.user.userType==='parent'?'/theme/assets/img/parent_active.png':'/theme/assets/img/parent_nomal.png'}}">
+                家长
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-wrap"
+                     ng-class="{'input-mine-normal':register_form.username.$invalid,
+                     'input-mine-active':register_form.username.$valid}" >
+                    <input class="form-control" required id="username"
+                           type="text" name="username" placeholder="用户名"
+                           ng-model="reg.user.username" ng-blur="reg.checkName()" >
+                </div>
+                <div  ng-if="isCheckName" class="text-danger error_message">{{checkName}}</div>
+            </div>
+        </div>
+        <!--<div class="form-group">-->
+            <!--<div class="input-group">-->
+                <!--<div class="input-wrap"-->
+                     <!--ng-class="{'input-email-normal':register_form.email.$invalid,-->
+                     <!--'input-email-active':register_form.email.$valid}">-->
+                    <!--<input class="form-control" required id="email_block"-->
+                           <!--type="email" name="email" placeholder="邮箱地址"-->
+                           <!--ng-model="reg.user.email">-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="error_message">Please enter a correct info #</div>-->
+            <!--<span class="pic email"></span>-->
+        <!--</div>-->
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-wrap"
+                     ng-class="{'input-mobile-normal':register_form.mobile.$invalid,
+                     'input-mobile-active':register_form.mobile.$valid}">
+                    <input class="form-control" required id="mobile_block"
+                           type="number" name="mobile" placeholder="手机号码"
+                           ng-model="reg.user.mobile" >
+                </div>
+            </div>
+            <div class="error_message" ng-show="mobileConfirm.mobileError">{{mobileConfirm.mobileMsg}}</div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-wrap"
+                     ng-class="{'input-confirm-normal':register_form.mobile_code.$invalid,
+                     'input-confirm-active':register_form.mobile_code.$valid}">
+                    <input class="form-control no-border-radius" required id="mobile_code_block"
+                           type="number" name="mobile_code" placeholder="手机验证码"
+                           ng-model="reg.user.mobile_code" ng-blur="reg.check_mobileCode()">
+                    <input type="button" class="form-control confirm-btn" ng-value="mobileConfirm.sendCode" ng-disabled="mobileConfirm.sendCode!=='发送验证码'" ng-click="reg.send_sms()">
+                </div>
+            </div>
+            <div class="error_message" ng-show="mobileConfirm.codeError">{{mobileConfirm.codeMsg}}</div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-wrap"
+                     ng-class="{'input-pass-normal':register_form.password.$invalid,
+                     'input-pass-active':register_form.password.$valid}">
+                    <input  class="form-control"
+                            required id="password_block"
+                            name="password" type="{{reg.input.type}}"
+                            placeholder="{{reg.input.placeholder}}"
+                            ng-model="reg.user.password"/>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-wrap"
+                     ng-class="{'input-pass-normal':register_form.confirm_password.$invalid,
+                     'input-pass-active':register_form.confirm_password.$valid}">
+                    <input class="form-control" required id="confirm_password"
+                           name="confirm_password" type="{{reg.input.type}}"
+                           placeholder="{{reg.input.placeholderConfirmPass}}"
+                           ng-model="reg.user.confirmPassword"/>
+                </div>
+            </div>
+            <div class="error_message" ng-show="reg.user.confirmPassword && register_form.confirm_password.$invalid">密码不一致</div>
+        </div>
+        <div class="button_register" style="margin: 20px">
+            <button type="submit"
+                    class="btn btn-primary btn-block btn-lg submit_button btn-submit"
+                    ng-disabled="register_form.$invalid">立刻注册</button>
+            <div class="btn-addtion">已经有帐号? <a ui-sref='auth.login'>登录</a></div>
+        </div>
+        <span class="col-xs-2 col-md-offset-4 icon-tiger">
+            <img class="img-responsive"
+                 src="/users/assets/img/tiger.png"></span>
+        <div ng-repeat="error in reg.registerError">
+            <div class="alert alert-danger animated fadeIn">{{error.msg}}</div>
+        </div>
+        <div class="alert alert-danger animated fadeIn"
+             ng-show="reg.usernameError">{{reg.usernameError}}</div>
+        <!--<div class="alert alert-danger animated fadeIn"-->
+             <!--ng-show="reg.emailError">{{reg.emailError}}</div>-->
+    </form>
+</div>

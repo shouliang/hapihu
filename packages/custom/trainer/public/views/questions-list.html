@@ -1,0 +1,56 @@
+<div class="questions-list" id="questions-list">
+    <div class=" questions-item" ng-repeat="question in questions.list" id="q_{{question._id}}">
+        <div class="questions-item-body">
+            <div class="panel panel-gray">
+                <div class="panel-heading">
+                    <span class="indexNum">{{$index+1}}</span>
+                    <span class="questionType">{{question.type}}</span>
+                </div>
+                <div class="panel-body" ng-class="{'border-danger':(!question.done && question.unAnswer)}">
+                    <div class="" ng-if="question.image.stem">
+                        <img class="img-responsive" ng-repeat="image in question.image.stem" ng-src="{{image.dataUrl}}">
+                    </div>
+                    <div ng-if="question.stem" class="question-stem-box" ng-bind-html="question.stem"></div>
+                </div>
+                <div class="panel-footer" ng-if="!question.done">
+                    <div class="text-danger">尚未回答</div>
+                </div>
+                <div class="panel-footer " ng-if="question.done">
+                    <div class="row equal">
+                        <div class="col-xs-6 question-footer-block" ng-class="{'theme-bg-0':question.myAnswer.status!=='已批改'}">
+                            <h4>学生回答</h4>
+                            <p ng-if="question.myAnswer.myAnswer">{{question.myAnswer.myAnswer}}</p>
+                            <p ng-if="question.myAnswer.myAnswerImg && question.myAnswer.myAnswerImg.length>0">
+                                <img class="img-responsive" ng-repeat="img in question.myAnswer.myAnswerImg" pop-img pop-imgs="{{img}}" ng-src="{{img}}">
+                            </p>
+                            <div class="" >
+                                <div class="btn-group mark-box" ng-class="{'mark-right-box':(question.myAnswer.status==='已批改' && question.myAnswer.mark==='对'),'mark-wrong-box':(question.myAnswer.status==='已批改'  && question.myAnswer.mark==='错')}">
+                                    <span class="btn btn-mark-right" ng-class="{'btn-success':(question.myAnswer.status==='已批改' && question.myAnswer.mark==='对')}" ng-click="markQuestion(question,'对')">对</span>
+                                    <span class="btn btn-mark-wrong" ng-class="{'btn-danger':(question.myAnswer.status==='已批改'  && question.myAnswer.mark==='错')}" ng-click="markQuestion(question,'错')">错</span>
+                                </div>
+                                <input type="text" class="form-control input-score" placeholder="请输入分数" ng-model="score" ng-blur="markQuestion(null,null,score)">
+
+                                <div>
+                                    <span class="" ng-show="question.myAnswer.status!=='已批改'">请参考标准答案判断对错</span>
+                                    <span class="" ng-show="question.myAnswer.mark==='对'">首次回答正确</span>
+                                    <span class="" ng-show="question.myAnswer.mark==='错'">首次回答错误</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 theme-bg-2 question-footer-block">
+                            <h4>标准答案
+                                <span ng-if="question.analysis" class="pull-right cursor-hand theme-font-14 btn-link theme-color-2" ng-click="question.showDetail=!question.showDetail" ng-init="question.showDetail=false">详解答案</span>
+                            </h4>
+                            <p><div ng-if="question.answer" class="question-answer-box" ng-bind-html="question.answer" pop-img pop-content="{{question.answer}}"></div></p>
+                            <div class="" ng-if="question.showDetail">
+                                <h4>详解答案</h4>
+                                <div ng-bind-html="question.analysis" pop-img pop-content="{{question.analysis}}"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

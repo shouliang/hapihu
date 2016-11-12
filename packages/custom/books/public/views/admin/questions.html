@@ -1,0 +1,107 @@
+<div class="" data-ng-controller="AdminQuestionsController as vm">
+  <div class="loading" ng-init="vm.init()" ng-hide="vm.books"></div>
+  <div class="row theme-equal" >
+    <div class="col-md-3 book-menu bg-white bottom-border-1">
+      <h1 class="page-title row"><span class="title-tag-1 "></span>题库</h1>
+      <div class="form-inline margin-bottom-1">
+        <div class="form-group">
+          <select class="form-control" ng-model="query.stage" ng-change="vm.loadSubject()">
+            <option value="1">小学</option>
+            <option value="2">初中</option>
+            <option value="3">高中</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <select class="form-control" ng-model="query.subject" ng-options="subject.subjectName for subject in subjects" ng-change="vm.loadKnowledge()"></select>
+        </div>
+      </div>
+      <div class="book-about" >
+        <div class="form-group">
+          <select class="form-control input-lg theme-bg-1" ng-model="query.system">
+            <option value="知识点">知识点</option>
+            <option value="同步">同步</option>
+          </select>
+        </div>
+      </div>
+      <div ui-tree id="tree-root" data-drag-enabled="false"
+           ng-init="selectedNode={}; " >
+        <ol ui-tree-nodes ng-model="knowledgeSystem.children" >
+          <li ng-repeat="node in knowledgeSystem.children"
+              ui-tree-node data-collapsed="!node.expanded"
+              ng-include="'books/views/admin/node-list.html'" ng-init="node.expanded=false"></li>
+        </ol>
+      </div>
+    </div>
+    <div class="col-md-9 book-content  ">
+      <div class="row-right-body bg-white">
+        <div class="form-horizontal margin-top-20">
+          <div class="form-group clearfix" ng-if="query.subject.questionTypes.length>0">
+            <label class="col-sm-1 text-right">题型</label>
+            <div class="col-sm-11">
+              <span class="search-condition"  ng-class="{'active':!query.questionType}" ng-click="query.questionType=null;loadData();">全部</span>
+              <span class="search-condition" ng-repeat="questionType in query.subject.questionTypes " ng-class="{'active':query.questionType===questionType}" ng-click="query.questionType=questionType;vm.loadData();">{{questionType.questionTypeName}}</span>
+            </div>
+          </div>
+          <div class="form-group clearfix">
+            <label class="col-sm-1 text-right">难度</label>
+            <div class="col-sm-11">
+              <!--<span class="search-condition"  ng-class="{'active':!query.difficult}" ng-click="query.difficult=null;loadData();">全部</span>-->
+              <span class="search-condition" ng-repeat="(key,difficult) in difficults" ng-class="{'active':query.difficult==key}" ng-click="query.difficult=key;vm.loadData();">{{difficult}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="row-seperate"></div>
+        <h3>题目列表 </h3>
+        <p>共计<span class="strong">{{questions.count || 0}}</span>道题</p>
+        <div class="theme-loadding" ng-if="!questions">
+          加载中..
+        </div>
+        <div class="" ng-include="'books/views/admin/questions-list.html'"></div>
+        <div paging
+             class="small"
+             page="vm.questions.page"
+             page-size="vm.questions.pageItem"
+             total="vm.questions.count"
+             pg-href="#"
+             adjacent="3"
+             text-first="首页"
+             text-last="末页"
+             text-next="下一页"
+             text-prev="上一页"
+             text-title-first="首页"
+             text-title-last="末页"
+             text-title-next="下一页"
+             text-title-prev="上一页"
+             text-title-page="{page}"
+             hide-if-empty="false"
+             show-prev-next="true"
+             show-first-last="true"
+             ul-class="pagination"
+             active-class="active"
+             disabled-class="disabled"
+             paging-action="vm.changePage('Paging Clicked', page, pageSize, total)">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="paper-selector">
+    <div class="paper-selector-title">
+      组卷选题
+      <a class="pull-right btn btn-primary" ui-sref="paper preview">预览</a>
+    </div>
+    <div class="paper-selector-body">
+      <p class="padding-left-5">已选题目：{{paper.topicIds.length || 0}}</p>
+      <table class="table table-striped">
+        <tbody>
+          <tr ng-repeat="qtype in query.subject.questionTypes">
+            <td>{{qtype.questionTypeName}}</td>
+            <td>{{paper.topics[qtype.questionTypeName].length || 0}}</td>
+            <td><span class="btn btn-link" ng-click="clearTopics(qtype.questionTypeName);">清除</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+

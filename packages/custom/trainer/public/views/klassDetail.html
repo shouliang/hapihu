@@ -1,0 +1,38 @@
+<div class="row bg-white" data-ng-controller="TrainerKlassDetailController as vm">
+    <div class="loading" ng-init="vm.init()" ng-hide="books"></div>
+    <h1 class="page-title"><span class="title-tag-1 fa fa-chevron-left" ng-click="goBack();"></span>
+        班级<span class="theme-font-16">({{trainees.name}})</span></h1>
+    <div class="book-list  margin-top-neg-15">
+        <div class="col-xs-12 notask-teacher" ng-if="members.length===0">
+            <img class="img-responsive notask-teacher-img" src="theme/assets/img/noBooks-teacher.png">
+            <h4>暂时没有班级</h4>
+            <p>赶紧去加入辅导机构领取班级吧～</p>
+        </div>
+        <table class="table theme-table-1 ">
+            <thead>
+                <th>姓名 </th>
+                <th>测试 </th>
+                <th>报告</th>
+                <th>历史试卷</th>
+                <th>错题本</th>
+                <th><a class="btn btn-sm btn-border" ui-sref="trainer student examinations({klassId:trainees._id})">发布整体测试</a></th>
+            </thead>
+                <tr ng-repeat="member in trainees.members">
+                    <td>{{member.name||'姓名'}}</td>
+                    <td>
+                        <a ui-sref="trainer student examinations({userId:member.userId})">布置测试</a>
+                    </td>
+                    <td>
+                        <a ui-sref="trainer student statistic({userId:member.userId})">查看报告</a>
+                    </td>
+                    <td><a ui-sref="trainer student list({userId:member.userId})">历史试卷</a></td>
+                    <td>
+                        <a href="#"   ui-sref="trainer student collectionNoteBook({userId:member.userId})">错题本</a>
+                    </td>
+                </tr>
+        </table>
+    </div>
+
+
+</div>
+

@@ -1,0 +1,105 @@
+<div class="bg-white row" data-ng-controller="KnowledgeSystemController as vm">
+    <div class="loading" ng-init="vm.init()" ng-hide="knowledgeSystems"></div>
+    <h1 class="page-title"><span class="title-tag-1 fa fa-chevron-left" ui-sref="admin knowledgeSystem list"></span>知识体系
+        <div class="pull-right margin-right-1">
+            <span class="btn btn-primary" ng-click="vm.loadOrderKnowledge()">排序知识点</span>
+            <span class="btn btn-success" ng-click="vm.loadUnOrderKnowledge()">未排序知识点</span>
+        </div>
+
+    </h1>
+    <div class="padding-10">
+        <form class="form-inline" editable-form name="editableForm" onbeforesave="saveKnowledgeSystem()">
+            <div class="form-group margin-right-1">
+                <span class="theme-color-4">名称: </span>
+                <span editable-text="knowledgeSystem.name" e-name="name"  e-required>{{ knowledgeSystem.name || 'empty' }}</span>
+            </div>
+            <div class="form-group margin-right-1">
+                <span class="theme-color-4">科目: </span>
+                  <span editable-select="knowledgeSystem.subject" e-name="" e-ng-options="subject as subject for subject in vm.subjects">{{knowledgeSystem.subject || '--'}}</span>
+            </div>
+            <div class="form-group margin-right-1">
+                <span class="theme-color-4">年级: </span>
+                <span editable-text="knowledgeSystem.grade" e-name="name"  e-required>{{ knowledgeSystem.grade}}</span>
+            </div>
+            <div class="form-group margin-right-1">
+                <span class="theme-color-4">版本: </span>
+                <span editable-text="knowledgeSystem.edition" e-name="name"  e-required>{{ knowledgeSystem.edition }}</span>
+            </div>
+            <div class="form-group margin-right-1">
+                <span class="theme-color-4">版本: </span>
+                <span editable-text="knowledgeSystem.mapId" e-name="mapId"  e-required>{{ knowledgeSystem.mapId }}</span>
+            </div>
+            <div class="form-group">
+                <!-- button to show form -->
+                <button type="button" class="btn btn-link" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">
+                    修改
+                </button>
+                <!-- buttons to submit / cancel form -->
+              <span ng-show="editableForm.$visible">
+                <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">保存</button>
+                <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">取消</button>
+              </span>
+            </div>
+            <div class="tip" ng-if="tip">{{tip}}</div>
+        </form>
+    </div>
+    <div class="row-seperate"></div>
+    <div class="loading text-center" ng-show="isLoading">
+        <span class="fa fa-spinner fa-pulse fa-3x fa-fw theme-color"></span>
+    </div>
+    <div class="padding-10">
+        <div ui-tree id="tree-root" class="menu-edit-modal">
+            <ol ui-tree-nodes ng-model="knowledgeSystem.children">
+                <li ng-repeat="node in knowledgeSystem.children" ui-tree-node
+                    ng-include="'knowledge-children.html'"></li>
+            </ol>
+        </div>
+        <div class="margin-top-20" id="inputCatalogue" >
+            <textarea class="form-control border-primary" rows="5"
+                      placeholder="添加新目录" data-ng-model="newKnowledge">
+            </textarea>
+            <br/>
+            <span class="btn btn-primary btn-border-round" ng-click="vm.addNewKnowledge();">一级目录</span>
+            <span class="tip-information text-muted">注意：不支持层级</span>
+        </div>
+        <div class="margin-top-20">
+            <span class="btn btn-primary" ng-click="vm.saveKnowledgeSystem()">保存</span>
+        </div>
+    </div>
+    <script type="text/ng-template" id="knowledge-children.html">
+        <div class="tree-node vendor-menu-ellipsis" ng-click="toggle(this)">
+            <div class="pull-left" ui-tree-handle title="移动">
+                <span class="fa fa-circle-thin"></span>
+            </div>
+            <sapn  class="tree-node-content" >
+                <a class="cursor-hand " editable-text="node.title" onbeforesave="saveItem(this)">
+                    {{ node.title || 'empty' }}
+                </a>
+            </sapn>
+            <a class="fa expand-nodes"
+               ng-if="node.children && node.children.length > 0"
+               data-nodrag ng-click="toggle(this)">
+              <span class=""
+                    ng-class="{ 'fa fa-caret-down': collapsed,
+                   'fa fa-caret-up': !collapsed }">
+              </span>
+            </a>
+            <span class="pull-right cata-btn "
+                  data-nodrag ng-click="removeItem(this);$event.stopPropagation();">
+                <span class="fa fa-times-circle fa-2x theme-color-3 cata-btn-remove"></span>
+            </span>
+            <span class="pull-right cata-btn "
+                  data-nodrag ng-click="newSubItem(this);$event.stopPropagation();">
+                <span class="fa fa-plus-circle fa-2x theme-color-2 cata-btn-add"></span>
+            </span>
+        </div>
+        <ol ui-tree-nodes="" ng-model="node.children"
+            ng-class="{hidden: collapsed}" >
+            <li ng-repeat="node in node.children"
+                ui-tree-node data-collapsed="!node.expanded"
+                ng-include="'knowledge-children.html'" >
+            </li>
+        </ol>
+    </script>
+</div>
+

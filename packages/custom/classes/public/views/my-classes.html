@@ -1,0 +1,66 @@
+<div class="bg-white row clearfix" data-ng-controller="MyClassesController as vm" >
+  <h1 class="page-title"><span class="title-tag-1"></span>我的班级
+    <span class="pull-right margin-right-1">
+      <a href="" class="btn btn-primary btn-padding btn-border-round " ui-sref="join class">加入/退出班级</a>
+    </span>
+  </h1>
+  <div class="no-result notask-teacher" ng-if="!user.profile.classes || user.profile.classes.length===0">
+      <h4>您还没有加入班级</h4>
+      <p>赶快新建班级或者添加验证码加入班级吧～</p>
+      <a class="btn btn-border" ui-sref="join class">加入班级</a>
+  </div>
+  <uib-tabset type="pills" class="theme-pills a-class-marginTop" active="active"  ng-if="user.profile.classes && user.profile.classes.length>0" ng-init="vm.init()">
+    <uib-tab classes="theme-pill"  index="$index" ng-repeat="klass in myClasses" heading="{{klass.name}}({{klass.members.length || '-'}})" select="vm.loadClass(klass)">
+      <div class=" min-height-5" ng-if="klass.status.indexOf('成功')===-1">
+        <div class="col-md-5 col-sm-7 margin-top-10 margin-bottom-1">
+          <div class="list-group no-border">
+            <li class="list-group-item"><h4  class="">等待审核通过中</h4></li>
+            <li class="list-group-item">
+              方法一：等待此班内的1位老师或者3位同学的审核通过
+            </li>
+            <li class="list-group-item">
+              方法二：输入此班级的验证码，自动验证
+            </li>
+            <li class="list-group-item">
+              <div class="form-inline ">
+                <div class="form-group ">
+                  <div class="input-group-round border-primary">
+                    <input class="form-control " type="input" ng-model="confirmCode" placeholder="班级验证码">
+                    <input type="button"  class="form-control btn btn-primary"  ng-click="vm.joinClass(confirmCode,klass)" value="&nbsp;&nbsp;&nbsp;验证&nbsp;&nbsp;&nbsp; ">
+                  </div>
+                </div>
+              </div>
+            </li>
+          </div>
+        </div>
+
+      </div>
+      <div class="min-height-5" ng-if="klass.status.indexOf('成功')> -1">
+        <div class="text-right margin-right-1 class-confirm-code">
+          <span class="btn btn-link theme-color-1 padding-right-0 " uib-popover="验证码：{{klass.ccode || '无'}}" popover-animation="true" popover-title="班级ID：{{klass.cid || '无'}}" popover-placement="bottom">点我查看“班级加入验证码”</span>
+          <span class="btn btn-link theme-color-1 fa fa-question-circle-o padding-left-0" uib-popover="使用“验证码”可直接完成验证" popover-trigger="mouseenter" popover-title="使用“班级ID”可直接加入班级" ></span>
+        </div>
+        <table class="table theme-table-1 a-table-padding">
+          <thead>
+          <th width="20%" class="text-center">身份</th>
+          <th width="20%"  class="text-center">姓名</th>
+          <th width="20%" class="text-center">用户名</th>
+          <th width="20%" class="text-center">状态</th>
+          <th width="20%" class="text-center">班级管理<span uib-popover="{{user.userType==='teacher'?'老师可以加入或踢出班级成员':'3人或者全部人同意可加入新成员；5人或全部人踢出可删除非班级的人'}}" popover-trigger="mouseenter" popover-placement="bottom"  class="glyphicon glyphicon-question-sign theme-color-1"></span></th>
+          </thead>
+          <tbody>
+          <tr ng-repeat="item in klass.members | orderBy:'-userType'" class="" ng-class="{'theme-color-1':item.userId===user._id,'text-danger':item.status==='等待审核','theme-bg-0':item.userType==='teacher'}">
+            <td>{{item.userType==='teacher'?'老师':'学生'}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.username[0]}}***</td>
+            <td ng-class="{'text-danger':item.status.indexOf('成功')===-1}">{{item.status}}<span class="badge" ng-if="item.status.indexOf('成功')===-1">{{item.checked.length || 0}}</span></td>
+            <td><span class="btn btn-link theme-color-1 btn-sm" ng-click="vm.manageClass(item,'check_member',klass)" ng-if="item.status.indexOf('成功')===-1">审核通过</span>&nbsp;&nbsp; <span class="btn btn-link theme-color-4 btn-sm" ng-if="item.userId!==user._id && !(user.userType==='student' && item.userType==='teacher') " ng-click="vm.manageClass(item,'remove_member',klass)">踢出班级</span></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </uib-tab>
+  </uib-tabset>
+
+</div>
+

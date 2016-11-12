@@ -1,0 +1,84 @@
+
+<div data-ng-controller="SystemSchoolsController as sub"     id="admin-sysInfo-page">
+
+    <h3 class="">系统学校管理 <a class="btn btn-default pull-right" ng-click="">导入默认学校</a><a class="btn btn-default pull-right" ng-click="addSchoolShow=!addSchoolShow">添加学校</a></h3>
+    <hr>
+    <form class="form-horizontal bg-1 margin-bottom-2" ng-show="addSchoolShow">
+        <h4>添加学校</h4>
+        <div class="form-group">
+            <div id="cityselector2" select-result='sub.newSchool.address' select-class='city-selector' city-select></div>
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" rows="10" type="text" ng-model="sub.newSchool.name" placeholder="输入学校全称"></textarea>
+            <div class="tip tip-information">每行一个学校</div>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" ng-click="sub.addSchool();">添加学校</button>
+        </div>
+        <div class="alert alert-danger animated fadeIn" ng-show="sub.newSchool.error">{{sub.newSchool.error}}</div>
+        <div class="alert alert-success animated fadeIn" ng-show="sub.tip">{{sub.tip}}</div>
+    </form>
+    <div class="clearfix"></div>
+    <div class="form-inline">
+        <div class="form-group">
+            <select class="form-control" ng-model="sub.search.status" ng-options="status for status in ['all','confirmed','unconfirmed']"></select>
+        </div>
+        <div class="form-group">
+            <div id="cityselector" select-result='sub.search.address' select-class='city-selector' city-select></div>
+        </div>
+        <div class="form-group">
+            <span school-auto-input="" school-location="sub.search.address" ng-model="sub.search.keyword" ng-object="selectedSchool"></span>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-default" ng-click="sub.searchSchools();">搜索</button>
+        </div>
+    </div>
+
+    <div class="schools table-responsive">
+        <h4>当前总共{{sub.schools.count}}所学校</h4>
+        <table class="table table-striped">
+            <tr class="info">
+                <td class="col col-md-4">名称</td>
+                <td class="col col-md-3">地址</td>
+                <td class="col col-md-2">添加时间</td>
+                <td class="col col-md-1">状态</td>
+                <td class="col col-md-2">管理</td>
+            </tr>
+            <tr class="" data-ng-repeat="school in sub.schools.list">
+                <td>{{school.name}}</td>
+                <td>{{school.location}}</td>
+                <td>{{school.created | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td ng-class="{'text-danger':school.status!='confirmed'}">{{school.status}}</td>
+                <td>
+                    <a class="btn btn-link" ng-click="sub.deleteSchool(school)">删除</a> |
+                    <a class="btn btn-link" ui-sref="school({id:school._id})">管理</a>
+                </td>
+            </tr>
+        </table>
+        <div paging
+                class="small"
+                page="sub.schools.page"
+                page-size="sub.schools.pageItem"
+                total="sub.schools.count"
+                pg-href="#"
+                adjacent="3"
+                text-first="首页"
+                text-last="末页"
+                text-next="下一页"
+                text-prev="上一页"
+                text-title-first="首页"
+                text-title-last="末页"
+                text-title-next="下一页"
+                text-title-prev="上一页"
+                text-title-page="{page}"
+                hide-if-empty="false"
+                show-prev-next="true"
+                show-first-last="true"
+                ul-class="pagination"
+                active-class="active"
+                disabled-class="disabled"
+                paging-action="sub.changePage('Paging Clicked', page, pageSize, total)">
+        </div>
+    </div>
+
+</div>

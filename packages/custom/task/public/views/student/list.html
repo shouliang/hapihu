@@ -1,0 +1,105 @@
+<div class="bg-white row" data-ng-controller="StudentTasksController as vm" ng-init="vm.init();">
+  <h1 class="page-title"><span class="title-tag-1"></span>我的作业
+    <span class="pull-right note-about">
+            <span class="page-note-about">关于我的作业</span>
+            <span  uib-popover="{{'历史作业只显示加入书架图书的科目，为了您的方便，请前往添加相关书籍'}}"
+                   popover-trigger="mouseenter" popover-placement="bottom"
+                   class="glyphicon glyphicon-question-sign theme-color-1"></span>
+      </span>
+  </h1>
+
+  <div class="condition-list">
+    <div class="form-group clearfix" ng-if="group.grades">
+      <label class="control-label col-sm-1 text-center">年级</label>
+      <div class="col-sm-11">
+        <span class="search-condition"  ng-class="{'active':!query.grade}" ng-click="query.grade=null;vm.queryFetch();">全部</span>
+        <span class="search-condition" ng-repeat="grade in group.grades" ng-class="{'active':query.grade===grade}" ng-click="query.grade=grade;vm.queryFetch();">{{grade}}</span>
+      </div>
+    </div>
+    <div class="form-group clearfix" ng-if="group.subjects">
+      <label class="control-label col-sm-1 text-center">科目</label>
+      <div class="col-sm-11">
+        <span class="search-condition"  ng-class="{'active':!query.subject}" ng-click="query.subject=null;vm.queryFetch();">全部</span>
+        <span class="search-condition" ng-repeat="subject in group.subjects" ng-class="{'active':query.subject===subject}" ng-click="query.subject=subject;vm.queryFetch();">{{subject}}</span>
+      </div>
+    </div>
+    <!--<div class="form-group clearfix" ng-if="group">-->
+      <!--<label class="control-label col-sm-1 text-center">筛选</label>-->
+      <!--<div class="col-sm-11">-->
+        <!--<span class="search-condition"  ng-class="{'active':!query.status}" ng-click="query.status=null;vm.queryFetch();">全部</span>-->
+        <!--<span class="search-condition"  ng-class="{'active':query.status==='待批改'}" ng-click="query.status='待批改';vm.queryFetch();">没有批改</span>-->
+        <!--<span class="search-condition"  ng-class="{'active':query.status==='已批改'}" ng-click="query.status='已批改';vm.queryFetch();">已经批改</span>-->
+      <!--</div>-->
+    <!--</div>-->
+  </div>
+  <div ng-show="tasks.count===0" class="row-seperate"></div>
+  <div class="notask-teacher" ng-show="tasks.count===0">
+    <img class="img-responsive notask-teacher-img" src="theme/assets/img/noTask-teacher.png">
+    <h4>最近作业暂无内容</h4>
+    <p>恭喜您，最近没有作业哦～赶快加入班级领取您的作业吧～</p>
+    <a class="btn btn-border" ui-sref="join class">体验一下</a>
+  </div>
+  <div ng-show="tasks.count!==0" class="row-seperate"></div>
+  <div class="task-list clearfix">
+    <!--<div class="no-result" ng-if="tasks.count===0">没有符合条件的结果</div>-->
+    <div class="col-md-6 " ng-repeat="task in tasks.list" ng-class="{'md-padding-right-5':$index%2===0,'md-padding-left-5':$index%2===1}">
+      <div class="panel panel-default task-item margin-bottom-none" >
+        <div class="label-corner-right" ng-show="$index===0 && tasks.page===1">最新</div>
+        <div class="panel panel-heading">
+            <a class="all-ellipsis" ng-if="task.done" ui-sref="student taskExe({taskExeId:task.taskExe._id})">{{task.title}}</a>
+            <a class="all-ellipsis " ng-if="!task.done" ui-sref="student task({taskId:task._id})">{{task.title}}</a>
+            <span class="pull-right" ng-show="task.done">
+              <span class="text-muted" >已完成</span>
+              <!--<span class="task-delete" >删除</span>-->
+            </span>
+        </div>
+        <div class="panel-body">
+          <div class="col-sm-10">
+            <div class="row">
+              <div class="col-sm-6 col-xs-6">
+                <div ng-if="!task.done">
+                  <p  ><span class="btn btn-danger">未完成</span></p>
+                  <p class="text-muted">截至时间：{{task.endDate | date:'MM-dd'}}</p>
+                </div>
+                <div ng-if="task.done">
+                  <p >正确率：<span class="btn btn-success">{{task.taskExe.statistics.rightRate||0}}%</span> </p>
+                  <p class="">总体评价：{{task.advice.mark||"暂无评价"}}</p>
+                </div>
+              </div>
+              <div class="col-sm-6 col-xs-6 text-right padding-top-10">
+                <p>共{{task.content.topics.length}}题</p>
+                <p ng-if="task.done">{{task.taskExe.created | date:'MM-dd'}}日完成</p>
+              </div>
+            </div>
+            <div class="border-top-1">
+              <a href="" class="btn btn-border btn-question-border task-subject" ui-sref="student tasks({subject:task.content.subject})">{{task.content.subject}}</a>
+              <div class="pull-right">
+                <a ng-if="!task.done" class="btn btn-primary-active btn-link" href="#" ui-sref="upload task({taskId:task._id})">上传作业</a>
+                <a  ng-if="!task.done" class="btn btn-black btn-link padding-right-0" href="#" ui-sref="student task({taskId:task._id})">在线做题</a>
+                <a ng-if="task.done" class="btn btn-primary-active btn-link padding-right-0" href="#" ui-sref="student taskExe({taskExeId:task.taskExe._id})">查看统计</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-2 hidden-xs book-thumb">
+            <img class="img-responsive" ng-show="task.content.book.cover" ng-src="{{task.content.book.cover}}">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center margin-top-10">
+    <uib-pagination ng-if="tasks && tasks.count>tasks.pageItem"
+        total-items="tasks.count"
+        ng-model="tasks.page"
+        max-size="maxSize"
+        items-per-page="tasks.pageItem"
+        class="pagination-sm"
+        boundary-link-numbers="true"
+        rotate="false" previous-text="上一页"
+        next-text="下一页"
+        ng-change="vm.selectPage()">
+    </uib-pagination>
+  </div>
+</div>
+

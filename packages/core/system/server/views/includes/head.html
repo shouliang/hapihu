@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<head>
+  <base href="/">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="fragment" content="!">
+
+  <title>{{appName}} - {{title}}</title>
+  <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+  <meta name="keywords" content="哈皮虎 自适应学习">
+  <meta name="description" content="哈皮虎自适应学习平台 目标导向，系统管理，提高效率，降低老师与学生负担，学学习更有效">
+
+  <link rel="manifest" href="/system/assets/static/manifest.json">
+  
+  <!-- {{locals.config.cssFramework}} -->
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+
+  {% for file in aggregatedassets.header.css %}
+    <link rel="stylesheet" href="{{file}}">
+  {% endfor %}
+
+  {% for file in aggregatedassets.footer.css %}
+    <link rel="stylesheet" href="{{file}}">
+  {% endfor %}
+
+  {% for file in aggregatedassets.header.js %}
+    <script type="text/javascript" src="{{file}}"></script>
+  {% endfor %}
+  <script type="text/javascript">
+    function BrowserType()
+    {
+      var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+      var isOpera = userAgent.indexOf("Opera") > -1; //判断是否Opera浏览器
+      var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera; //判断是否IE浏览器
+      var isEdge = userAgent.indexOf("Windows NT 6.1; Trident/7.0;") > -1 && !isIE; //判断是否IE的Edge浏览器
+      var isFF = userAgent.indexOf("Firefox") > -1; //判断是否Firefox浏览器
+      var isSafari = userAgent.indexOf("Safari") > -1 && userAgent.indexOf("Chrome") == -1; //判断是否Safari浏览器
+      var isChrome = userAgent.indexOf("Chrome") > -1 && userAgent.indexOf("Safari") > -1; //判断Chrome浏览器
+
+      if (isIE)
+      {
+        var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+        reIE.test(userAgent);
+        var fIEVersion = parseFloat(RegExp["$1"]);
+        if(fIEVersion == 7)
+        { return "IE7";}
+        else if(fIEVersion == 8)
+        { return "IE8";}
+        else if(fIEVersion == 9)
+        { return "IE9";}
+        else if(fIEVersion == 10)
+        { return "IE10";}
+        else if(fIEVersion == 11)
+        { return "IE11";}
+        else
+        { return "0"}//IE版本过低
+      }//isIE end
+
+      if (isFF) {  return "FF";}
+      if (isOpera) {  return "Opera";}
+      if (isSafari) {  return "Safari";}
+      if (isChrome) { return "Chrome";}
+      if (isEdge) { return "Edge";}
+    }
+    var bv=BrowserType();
+    if(bv==='IE7' || bv==='IE8' || bv==='IE9' || bv==='0'){
+      window.location.href='/notsupport.html';
+    }
+
+    //baidu tongji
+    var _hmt = _hmt || [];
+  </script>
+</head>

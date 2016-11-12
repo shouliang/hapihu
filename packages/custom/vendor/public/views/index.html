@@ -1,0 +1,62 @@
+<div class="" data-ng-controller="VendorController as vm" ng-init="vm.init()">
+  <div class="banner-teacher-box">
+    <img class="img-responsive" src="vendor/assets/img/banner-vendor.png">
+  </div>
+  <div class="row-seperate"></div>
+  <div class="row">
+    <div class="col-md-8  bg-white">
+      <h3 class="sub-title row"><span class="title-tag-1"></span>最近修改的书</h3>
+      <div class="col-xs-12 notask-teacher" ng-show="vm.hasNoBooks">
+        <img class="img-responsive notask-teacher-img" src="theme/assets/img/noBooks-teacher.png">
+        <h4>荒废无物的书架</h4>
+        <p>赶紧去给您的书架添加新书吧～</p>
+        <a class="btn btn-border" ui-sref="create book">添加图书</a>
+      </div>
+      <!--<div class="" ng-show="vm.hasNoBooks">-->
+        <!--<h4>哈皮虎自适应平台 + 教辅书 </h4>-->
+        <!--<p><a class="btn btn-primary btn-border-round" ui-sref="create book">添加图书</a> </p>-->
+        <!--<img class="img-responsive" src="common/assets/img/flow.jpg">-->
+      <!--</div>-->
+      <div class="book-list row margin-top-neg-15">
+        <div class="col-sm-6 col-md-3 book-list-item" ng-repeat="book in vm.books.list">
+          <div class="thumbnail">
+            <img class="img-responsive cursor-hand book-cover" style="background-image: url({{book.cover}});" title="{{book.name}}"
+                 ng-src="{{book.cover}}" alt="" ui-sref="vendor book({bookId:book._id})">
+            <div class="caption">
+              <h4><a href="" title="{{book.name}}" ui-sref="vendor book({bookId:book._id})">{{book.name}}</a> </h4>
+              <p class="text-muted">{{book.grade}}.{{book.subject}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4  row-right ">
+      <div class="bg-white row-right-body bottom-border-1">
+        <div class="media padding-10">
+          <div class="media-left">
+            <img class=" user-head-lg"  ng-src="{{user.head?user.head:'/users/assets/img/user-default.png'}}">
+          </div>
+          <div class="media-body">
+            <h4 class="v-photo-margin">{{user.name}}</h4>
+            <span class="theme-color-4">{{user.profile.company}}</span>
+          </div>
+        </div>
+        <h3 class="sub-title has-top-border row vendor-home-news">
+          <span class="title-tag-3"></span>最新消息
+          <span class="">{{user.newNotifications.length?'（'+user.newNotifications.length+'）':''}}
+          </span>
+          <span class="pull-right margin-right-1">
+            <span class=" btn theme-color-4 fa fa-refresh"
+                  ng-class="{'fa-spin':vm.notificationLoading}" ng-click="vm.checkNotification()">
+            </span>
+          </span>
+        </h3>
+        <div class="list-group list-group-border-bottom">
+          <a href="#" ui-sref="my notification" class="list-group-item" ng-repeat="notification in user.newNotifications  | orderBy:'-'"><span class="all-ellipsis">{{notification.title}}</span><span class="pull-right">{{notification.created | limitTo:10}}</span></a>
+          <div class="margin-top-20"><a ng-show="user.newNotifications.length > 0"  class="btn btn-default" ng-click="vm.clearNew()" >我知道了</a></div>
+          <div class="text-muted" ng-show="!user.newNotifications || user.newNotifications.length===0">当前没有新通知</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

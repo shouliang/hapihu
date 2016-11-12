@@ -1,0 +1,27 @@
+<div class="bar-color-top"></div>
+<div class="modal-header">
+  <h3 class="modal-title" >选择资源</h3>
+</div>
+<div class="modal-body">
+  <div class="">
+    <div class="form-group">
+        <input class="form-control" ng-model="newAttach.title" placeholder="标题">
+    </div>
+      <div class="form-group">
+          <input class="form-control" ng-model="newAttach.url" placeholder="地址">
+      </div>
+      <div class="form-group">
+          <input class="form-control" type="file" nv-file-select="" uploader="uploader">
+      </div>
+    <div class="theme-color-1 margin-top-10 animated fadeIn" ng-show="tip">{{tip}}</div>
+  </div>
+</div>
+<div class="modal-footer">
+    <div class="col-xs-6 text-center">
+        <span class="btn btn-link theme-color-1"  ng-click="ok()">添加</span>
+    </div>
+    <div class="col-xs-6 text-center">
+        <span class="btn btn-link theme-color-4"  ng-click="cancel()">取消</span>
+    </div>
+</div>
+

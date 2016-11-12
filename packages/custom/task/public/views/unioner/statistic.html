@@ -1,0 +1,75 @@
+<div class="bg-white row" data-ng-controller="TaskExamStatisticController as vm" ng-init="vm.init()">
+  <h1 class="page-title a-page-title"><span class="title-tag-1 fa fa-chevron-left" ng-click="goBack();"></span>{{task.title}}
+    <span class="theme-font-16 a-submit-num">已有<span class="theme-color-1">{{task.executed.length}}</span>人提交作业</span>
+  </h1>
+  <div class="padding-bottom-15 clearfix padding-left-right-15">
+    <div class="btn-group " uib-dropdown>
+      <span  class="btn btn-link theme-color-1" uib-dropdown-toggle>
+        <span>{{selectedSchool.schoolName}}</span>
+        <span class="glyphicon glyphicon-triangle-bottom"></span>
+      </span>
+      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-single-button">
+        <li><a href="#" ui-sref="task union statistic({taskId:task._id,classIds:'',schoolId:''})" >全部</a></li>
+        <ul class="list-style-none " ng-repeat="school in schools" >
+          <li href="#" >
+            <a href="#"  ui-sref="task union statistic({taskId:task._id,classIds:school.classIds,schoolId:school.schoolId})" >{{school.schoolName}}</a>
+          </li>
+        </ul>
+      </ul>
+    </div>
+    <span class="colum-seperate margin-right-1"></span>
+    <span class="btn btn-primary btn-border-round btn-padding margin-right-1">个人报告</span>
+    <span class="btn btn-border margin-right-1" ui-sref="task union statistic_class({taskId:task._id,classId:selectedClass.classId})">班级报告</span>
+  </div>
+  <table class="table theme-table-1 ">
+    <thead>
+    <th>姓名 <span class="text-muted fa" ng-class="{'fa-sort':sortCondition.sort!=='name','fa-sort-asc':sortCondition.sort==='name'&&!sortCondition.reverse,'fa-sort-down':sortCondition.sort==='name'&&sortCondition.reverse}" ng-click="vm.sortBy('name')"></span></th>
+    <th>用户名</th>
+    <th>总分 <span class="text-muted fa" ng-class="{'fa-sort':sortCondition.sort!=='taskExe.statistics.rightRate','fa-sort-asc':sortCondition.sort==='taskExe.statistics.rightRate'&&!sortCondition.reverse,'fa-sort-down':sortCondition.sort==='taskExe.statistics.rightRate'&&sortCondition.reverse}" ng-click="vm.sortBy('taskExe.statistics.totalSorce')"></span></th>
+    <th>考试原件</th>
+    <th>提交时间 <span class="text-muted fa" ng-class="{'fa-sort':sortCondition.sort!=='taskExe.created','fa-sort-asc':sortCondition.sort==='taskExe.created'&&!sortCondition.reverse,'fa-sort-down':sortCondition.sort==='taskExe.created'&&sortCondition.reverse}" ng-click="vm.sortBy('taskExe.created')"></span></th>
+    <th>老师批改</th>
+    <th >批改状态
+      <span class="theme-color fa theme-font-16 margin-left-1" ng-class="{'fa-circle-thin':!task.allSelected,'fa-check-circle':task.allSelected}"  ng-click="vm.changeAllSelected()"></span>
+    </th>
+    </thead>
+    <tr ng-if="task.executors !==0" ng-repeat="member in taskExecutors | orderBy:sortGetter:sortCondition.reverse">
+      <td>{{member.name}}</td>
+      <td class="text-muted">{{member.username[0]}}***</td>
+      <td>{{member.taskExe.statistics.totalScore?member.taskExe.statistics.totalScore:'0'}}</td>
+      <td>
+        <span ng-if="!member.taskExe||member.taskExe.exeImg.length===0">无原件</span>
+        <span ng-if="exeImg.length!==0" class="btn btn-default "  ng-repeat="exeImg in  member.taskExe.exeImg"  pop-img pop-imgs="{{exeImg.exeImg}}">{{$index+1}}</span></td>
+      <td>{{member.taskExe?(member.taskExe.created | date: 'MM-dd HH:mm'):'未提交'}}</td>
+      <td>
+        <a href="#" class="btn btn-link theme-color-1" ng-if="member.taskExe" ui-sref="taskExe({taskExeId:member.taskExe._id})">批改及查看</a>
+      </td>
+      <td>
+        <div class="" ng-if="member.taskExe">
+          <span class="margin-right-1" ng-if="member.taskExe.status==='已批改'">已批改</span>
+          <span class="theme-color-1 margin-right-1" ng-if="member.taskExe.status!=='已批改'">待批改</span>
+          <span class="theme-color fa theme-font-16" ng-class="{'fa-circle-thin':!member.selected,'fa-check-circle':member.selected}" ng-init="member.selected=false;" ng-click="member.selected=!member.selected"></span>
+        </div>
+      </td>
+    </tr>
+  </table>
+  <div class="col-xs-12 notask-teacher bg-white " ng-show="taskExecutors ==0">
+  <img class="img-responsive notask-teacher-img" src="notification/assets/img/notification.png">
+  <h4>还没有人提交考试哦～</h4>
+  </div>
+  <div class="text-center margin-top-10">
+    <uib-pagination ng-if="task.executors && task.executors.length>20"
+                    total-items="task.executors.length" ng-model="page"
+                    max-size="10" items-per-page="20"
+                    class="pagination-sm" boundary-link-numbers="true"
+                    rotate="false" previous-text="上一页" next-text="下一页"
+                    ng-change="vm.selectPage(page)">
+    </uib-pagination>
+  </div>
+  <div class="text-right  padding-bottom-15 margin-right-30" ng-if="task.status==='已批改'">
+    <span  class="theme-font-16">已完成批改</span>
+  </div>
+  <div class="bottom-border-1"></div>
+  <div class="row-seperate"></div>
+</div>
+

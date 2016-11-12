@@ -1,0 +1,171 @@
+<section data-ng-controller="VendorBookEditController as vm" ng-init="vm.init()">
+    <form name="bookForm" role="form">
+    <div class="col-sm-12 col-md-4 bg-white padding-none margin-bottom-1">
+        <h1 class="page-title">
+            <span class="title-tag-1 fa fa-chevron-left" ng-click="goBack()"></span>
+            {{book._id?"修改书籍":"添加新书"}}
+            <span class="btn btn-primary btn-border-round pull-right" ng-if="action!=='edit'"
+              ng-click="vm.create(bookForm.$valid)">添加</span>
+            <span class="btn btn-primary btn-border-round pull-right"
+                  ng-if="action==='edit'" ng-click="vm.edit(bookForm.$valid)">保存</span>
+        </h1>
+        <div class="form-horizontal col-md-12 " >
+            <div class="form-group"
+                 ng-class="{ 'has-error' : submitted && bookForm.title.$invalid }">
+                <label mean-token="'create-title'"
+                       class="col-md-2 control-label">书名
+                </label>
+                <div class="col-md-10 v-input">
+                    <input name="title" type="text" class="form-control"
+                           data-ng-model="book.name" id="title"
+                           placeholder="Title" required>
+                    <div ng-show="submitted && bookForm.title.$invalid"
+                         class="help-block">
+                        <p ng-show="bookForm.title.$error.required">必须填写书名</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group"
+                 ng-class="{ 'has-error' : submitted && bookForm.grade.$invalid }">
+                <label for="grade" class="control-label col-md-2">年级</label>
+                <div class="col-md-10 v-input">
+                    <select required  class="form-control" id="grade"  name="grade"
+                            ng-model="book.grade" placeholder="选择年级"
+                            ng-options="grade.value as grade.label for grade in GRADES">
+                    </select>
+                    <div ng-show="submitted && bookForm.grade.$invalid" class="help-block">
+                        <p ng-show="bookForm.grade.$error.required">必须选择年级</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group"
+                 ng-class="{ 'has-error' : submitted && bookForm.session.$invalid }">
+                <label for="session" class="control-label col-md-2">学期</label>
+                <div class="col-md-10 v-input">
+                    <select required  class="form-control" id="session"
+                            name="session" ng-model="book.session" placeholder="选择学期"
+                            ng-options="session for session in vm.sessions">
+                    </select>
+                    <div ng-show="submitted && bookForm.session.$invalid" class="help-block">
+                        <p ng-show="bookForm.session.$error.required">必须选择适合阶段</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" >
+                <label for="subject" class="control-label col-md-2">科目</label>
+                <div class="col-md-10 v-input">
+                    <select  class="form-control" id="subject"  name="subject"
+                             ng-model="book.subject" placeholder="选择科目"
+                             ng-options="subject for subject in vm.subjects">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="edition" class="control-label col-md-2">版本</label>
+                <div class="col-md-10 v-input">
+                    <select  class="form-control" id="edition"  name="edition"
+                             ng-model="book.edition" placeholder="选择版本"
+                             ng-options="edition.title as edition.title for edition in vm.editions">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group" >
+                <label  class="col-md-2 control-label">书号</label>
+                <div class="col-md-10 v-input">
+                    <input name="isbn" type="text" class="form-control"
+                           data-ng-model="book.isbn" id="isbn" placeholder="书号" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="label" mean-token="'create-title'"
+                       class="col-md-2 control-label">标签</label>
+                <div class="col-md-10 v-input">
+                    <input name="label" type="text" class="form-control"
+                           data-ng-model="book.tags" id="label" placeholder="标签">
+                    <div class="help-block">
+                        <p >多个标签之间用空格区分</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" >
+                <label  class="col-md-2 control-label padding-left-0">出版社</label>
+                <div class="col-md-10 v-input">
+                    <input name="publisher" type="text" class="form-control"
+                           data-ng-model="book.publisher"
+                           id="publisher" placeholder="出版社" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label  class="col-md-2 control-label">状态</label>
+                <div class="col-md-10 glyphicon" >
+                    <label class="radio-inline">未上线
+                        <span ng-class="{'glyphicon-record theme-color':book.online ==='unOnline',
+                        'glyphicon-record font-color-999':book.online ==='online'}"
+                        ng-click="book.online ='unOnline'" ng-model="book.online" >
+                        </span>
+                    </label>
+                    <label class="radio-inline">已上线
+                        <span ng-class="{'glyphicon-record theme-color':book.online ==='online',
+                        'glyphicon-record font-color-999':book.online ==='unOnline'}"
+                              ng-click="book.online ='online'" ng-model="book.online" >
+                        </span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8 col-sm-12">
+        <div class="row-right-body bg-white">
+            <div class="bar-color row">
+                <span class="theme-bg-3"></span>
+                <span class="theme-bg-1"></span>
+                <span class="theme-bg-2"></span>
+            </div>
+            <div class="clearfix">
+                <div class="form-group col-md-6 book-summary-block "
+                     ng-class="{ 'has-error' : submitted && bookForm.summary.$invalid }">
+                    <label mean-token="'create-content'" for="summary"
+                           class="theme-color">简介</label>
+                    <span class="pull-right v-note-about">
+                        <span class="page-note-about">编辑简介</span>
+                        <span  uib-popover="{{'如要需要换行请在换行的末尾加&lt;br&#47&gt;'}}"
+                            popover-trigger="mouseenter" popover-placement="bottom"
+                            class="glyphicon glyphicon-question-sign theme-color-1">
+                        </span>
+                    </span>
+                    <div class="">
+                       <textarea name="summary" data-ng-model="book.summary"
+                         id="summary" cols="30" rows="10" placeholder="请填写书的简介"
+                                 class="form-control" required ></textarea>
+                       <div ng-show="submitted && bookForm.summary.$invalid" class="help-block">
+                            <p ng-show="bookForm.summary.$error.required">请填写书籍简介</p>
+                       </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6 book-cover-block">
+                    <label mean-token="'create-title'" class="theme-color-2">封面</label>
+                    <div class="">
+                        <input class="form-control" name="upload" type="file"
+                               nv-file-select="" uploader="vm.uploader">
+                        <div class="text-center">
+                            <span class="btn btn-primary btn-border-round" ng-show="vm.uploader.queue.length>0"
+                                  ng-click="vm.uploader.uploadAll()">上传</span>
+                        </div>
+                        <div class="bookcover" ng-show="book.cover" class="margin-top-10">
+                            <img class="img-responsive" ng-src="{{book.cover}}">
+                        </div>
+                        <div class="progress" ng-show="vm.uploader.isUploading ">
+                            <div class="progress-bar" role="progressbar"
+                                 ng-style="{ 'width': vm.uploader.queue[0].progress + '%' }">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class=""> </p>
+    </div>
+    </form>
+</section>

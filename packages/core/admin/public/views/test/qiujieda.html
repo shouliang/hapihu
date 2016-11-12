@@ -1,0 +1,137 @@
+<div ng-controller="QiujiedaController" class="bg-white row padding-left-right-15" ng-init="activeTest='exercises'">
+    <h1 class="page-title">求解答接口测试</h1>
+    <div class="">
+        <span class="btn btn-default" ng-class="{'btn-primary':activeTest==='exercises'}" ng-click="activeTest='exercises';">题目列表</span>
+        <span class="btn btn-default" ng-class="{'btn-primary':activeTest==='papers'}" ng-click="activeTest='papers';">试卷列表</span>
+    </div>
+    <div ng-if="activeTest==='exercises'" class="list-group">
+        <h1>测试：题目列表</h1>
+        <div class="form-inline border-bottom-1">
+            <div class="form-group">
+                科目：
+                <select class="form-control" ng-model="query.subjectId" ng-options="key as item for (key,item) in subjects">
+                </select>
+            </div>
+            <div class="form-group">
+                年级：
+                <select class="form-control" ng-model="query.gradeId" ng-options="key as item for (key,item) in grades">
+                </select>
+            </div>
+            <div class="form-group">
+                题目类型：
+                <select class="form-control" ng-model="query.typeId" ng-options="key as item for (key,item) in types">
+                </select>
+            </div>
+            <div class="form-group">
+                难度：
+                <select class="form-control" ng-model="query.hard" ng-options="key as item for (key,item) in hards">
+                </select>
+            </div>
+            <div class="form-group">
+                排序：
+                <select class="form-control" ng-model="query.sortBy" >
+                    <option class="" value="visit">按总访问量</option>
+                    <option class="" value="createTime">按录入时间</option>
+                </select>
+            </div>
+            <div class="form-group">
+                每页数据：
+                <select class="form-control" ng-model="query.pageSize" ng-options="item as item for item in [10,20]" ng-init="query.pageSize=10">
+                </select>
+            </div>
+            <div class="form-group">
+                页码：
+                <input type="text" class="form-control" ng-model="query.pageNum" ng-init="query.pageNum=1">
+            </div>
+            <div class="form-group">
+                知识点ID：
+                <input type="text" class="form-control" ng-model="query.kpId" >
+            </div>
+            <div class="form-group">
+                <input type="button" class="btn btn-primary" value="获取数据" ng-click="loadData('exercises')"/>
+            </div>
+        </div>
+        <h3 class="" ng-if="exercises.payload">总共{{exercises.payload.totalCount}}项，共{{exercises.payload.pageTotal}}页,当前第{{exercises.payload.pageNum}}页</h3>
+        <div ng-repeat="item in exercises.payload.items" class="list-group-item qiujieda">
+            <p style="line-height: 2em;" class="" ng-bind-html="$sce.trustAsHtml(item.stmt)"></p>
+            <p class="theme-bg-0">
+                知识点：<span class="btn btn-default" ng-repeat="kp in item.kplist" ng-click="query.kpId=kp.id;loadData('exercises');">{{kp.title}}</span>
+            </p>
+            <div class="theme-bg-2">
+                <span class="btn btn-danger" ng-click="item.solutionShow=!item.solutionShow;loadAnswer(item);">答案及解析</span>
+                <div class="margin-top-10" ng-if="item.solution && item.solutionShow">
+                    <span class="btn btn-success">简化答案</span>
+                    <p ng-bind-html="$sce.trustAsHtml(item.solution.quickAnswer)"></p>
+                    <span class="btn btn-success">详解答案</span>
+                    <div class="" ng-repeat="slt in item.solution.solutions">
+                        <span class="btn btn-default">解题分析</span>
+                        <p  ng-bind-html="$sce.trustAsHtml(slt.analysis)"></p>
+                        <span class="btn btn-default">详细答案</span>
+                        <p  ng-bind-html="$sce.trustAsHtml(slt.answer)"></p>
+                        <span class="btn btn-default">备注</span>
+                        <p  ng-bind-html="$sce.trustAsHtml(slt.comment)"></p>
+                    </div>
+                    <div>
+                        关联试卷:<span class="btn btn-info" ng-repeat="paper in item.solution.simpapers">{{paper.displayName}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="activeTest==='papers'" class="list-group">
+        <h3>测试：试卷列表</h3>
+        <div class="form-inline border-bottom-1">
+            <div class="form-group">
+                科目：
+                <select class="form-control" ng-model="query2.subjectId" ng-options="key as item for (key,item) in subjects">
+                </select>
+            </div>
+            <div class="form-group">
+                年级：
+                <select class="form-control" ng-model="query2.gradeId" ng-options="key as item for (key,item) in grades">
+                </select>
+            </div>
+            <div class="form-group">
+                试卷类型：
+                <select class="form-control" ng-model="query2.typeId" >
+                    <option value="4">测验/竞赛训练</option>
+                    <option value="6">月考</option>
+                    <option value="8">期中/期末</option>
+                    <option value="10">模考/会考/统考/联考</option>
+                    <option value="12">真题/竞赛初试、复试、决赛真题</option>
+                </select>
+            </div>
+            <div class="form-group">
+                排序：
+                <select class="form-control" ng-model="query2.sortBy" >
+                    <option class="" value="visit">按总访问量</option>
+                    <option class="" value="year">按年份</option>
+                    <option class="" value="createTime">按录入时间</option>
+                </select>
+            </div>
+            <div class="form-group">
+                每页数据：
+                <select class="form-control" ng-model="query2.pageSize" ng-options="item as item for item in [10,20]" ng-init="query.pageSize=10">
+                </select>
+            </div>
+            <div class="form-group">
+                页码：
+                <input type="text" class="form-control" ng-model="query2.pageNum" ng-init="query.pageNum=1">
+            </div>
+            <div class="form-group">
+                年份：
+                <input type="text" class="form-control" ng-model="query2.year" placeholder="年份，例如：2014">
+            </div>
+            <div class="form-group">
+                <input type="button" class="btn btn-primary" value="获取数据" ng-click="loadData('papers')"/>
+            </div>
+        </div>
+        <h3 class="" ng-if="papers.payload">总共{{papers.payload.totalCount}}项，共{{papers.payload.pageTotal}}页,当前第{{papers.payload.pageNum}}页</h3>
+        <div ng-repeat="item in papers.payload.items" class="list-group-item ">
+            <h2 class="" >{{item.name}}</h2>
+            <p>
+                年份：<strong>{{item.year}}</strong> 科目：<strong>{{subjects[item.subjectId]}}</strong> 年级：<strong>{{grades[item.gradeId]}}</strong>
+            </p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,783 @@
+.editable-table .editable-textarea{
+    width:100%;
+}
+.book-menu-border{
+    border: 1px solid #c0c0c0;
+}
+.book-content{
+}
+.angular-ui-tree-handle {
+    color: #666;
+    padding: 0 10px;
+}
+
+/*.angular-ui-tree-handle:hover {*/
+    /*color: #438eb9;*/
+    /*background: #f4f6f7;*/
+    /*border-color: #dce2e8;*/
+/*}*/
+
+.angular-ui-tree-placeholder {
+    background: #f0f9ff;
+    border: 2px dashed #bed2db;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+tr.angular-ui-tree-empty {
+    height:100px
+}
+ol + .angular-ui-tree-empty {
+    min-height: 0;
+    border:none;
+}
+.group-title {
+    background-color: #687074 !important;
+    color: #FFF !important;
+}
+
+
+
+
+.notice{
+
+}
+.notice-border-right{
+    padding-left: 15px;
+}
+
+.book-menu h3{
+    margin-top: 0;
+}
+.questions-list{
+    max-width: 100%;
+}
+.questions-item{
+    margin-bottom: 15px;
+}
+.questions-item .questions-item-addon{
+    -webkit-flex: 0 0 30px;
+    flex:0 0 30px;
+}
+.questions-list .panel-heading{
+    position: relative;
+}
+.check-question{
+    font-size: 22px;
+}
+.questions-list .panel-heading .check-question{
+    position: absolute;
+    top:-11px;
+    left:-10px;
+}
+.indexNum{
+    font-weight: bold;
+    padding: 5px 10px;
+    border: 1px solid #98E8CD;
+    border-radius:20px;
+}
+.questions-item .questions-item-body{
+    -webkit-flex: 1 1 auto;
+    flex:1 1 auto;
+}
+.questions-item .panel-body{
+    background-color: inherit;
+    border-left: 1px solid #f0f0f0;
+    border-right: 1px solid #f0f0f0;
+}
+.questions-item img{
+    max-width: 100%;
+}
+.question-stem-box{
+    max-width:100% ;
+}
+.question-stem-box img{
+    max-width:100% ;
+}
+.book-item-vendor .thumbnail img{
+    height: 200px;
+    max-width: 100%;
+    padding: 10px;
+}
+.book-item-vendor .caption{
+    background-color: #fff;
+    margin: -5px;
+}
+.row .book-item-vendor{
+    border-bottom: 1px solid #e2e2e2;
+    border-right: 1px solid #e2e2e2;
+}
+
+@media (min-width: 985px) {
+    .row .book-item-vendor:nth-of-type(4n){
+        border-right: 0;
+    }
+}
+@media (max-width: 985px) {
+    .row .book-item-vendor:nth-of-type(2n){
+        border-right: 0;
+    }
+}
+@media (max-width: 760px) {
+    .row .book-item-vendor:nth-of-type(n){
+        border-right: 0;
+    }
+    .thumbnail{
+        border: 0 !important;
+    }
+}
+
+.learn-aim .editable-textarea,.learn-aim .editable-textarea .editable-controls.form-group,.learn-aim .editable-textarea .form-control{
+    width:100%;
+}
+
+
+.btn-class-selector{
+    margin-right: 10px;
+}
+
+.query-condition-box > .btn{
+    margin-bottom: 5px;
+}
+.search-condition{
+    margin-right: 15px;
+    line-height: 1.5em;
+    background-color: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.search-condition.active{
+    color: #f48024;
+}
+
+/*vendor books style start*/
+.book-name-left{
+    margin: 0 0 10px 0;
+    padding: 10px;
+    line-height: 1.5em;
+    background-color: #f7f7f7;
+    font-size: 36px;
+    font-family: "Microsoft YaHei";
+    cursor: pointer;
+}
+
+.vendor-books-goal{
+    color: #fe6d67;
+    width: 2px;
+    height: 5px;
+}
+.book-manege{
+    float: right;
+    margin-top: -30px;
+    cursor: pointer;
+    font-weight: bolder;
+    font-size: 16px;
+    color: #f48024;
+}
+/*vendor book title */
+.vendor-block{
+    border-left: 10px solid #f48024;
+    padding-left: 15px;
+    font-size: 36px;
+}
+.books-border{
+    border-left: 1px solid #f0f0f0;
+    line-height: 1.3;
+    margin: 10px 15px 10px 10px;
+    padding: 10px 10px 10px 20px;
+
+}
+
+
+/*grade add major list style*/
+.list-item{
+    margin: 0 -15px 0 -15px;
+    border-bottom: 10px solid #F0F0F0;
+    padding: 25px;
+}
+.vendor-book-num{
+    margin-right: 2px;
+}
+/*vendor books style end*/
+
+/*vendor book style start*/
+
+@media (max-width:990px) {
+    .book-menu{
+        /*margin-right: 15px;*/
+        /*margin-left: 10px;*/
+        /*border-bottom: 10px solid #f0f0f0;*/
+    }
+}
+.book-menu-btn{
+    margin: -10px 0 5px -10px;
+}
+.book-about{
+    margin: 0 -10px;
+    padding: 10px;
+    border-top: 1px solid #f0f0f0;
+}
+.book-menu .book-selector{
+    margin: 10px 0;
+}
+.book-menu .book-selector .form-control{
+    border-color: #f0f0f0;
+    border-radius: 0;
+}
+/* --- Tree --- */
+.tree-node {
+    border-bottom:1px solid #f0f0f0;
+    color: #666;
+    margin-left: -10px;
+    margin-right: -10px;
+    padding: 10px;
+    margin-top: -1px;
+}
+.tree-node:first-child{
+    border-top:1px solid #f0f0f0;
+ }
+
+.nodrop {
+    background-color: #f2dede;
+}
+
+.tree-node-content {
+    /*margin: 10px;*/
+}
+.tree-handle {
+    padding: 10px;
+    background: #428bca;
+    color: #FFF;
+    margin-right: 10px;
+}
+.tree-node.active{
+    color: #f48024;
+}
+.tree-node.border-primary{
+    border:1px solid #FFCB6B;
+    margin: 10px auto;
+}
+.angular-ui-tree-handle:hover {
+}
+
+.angular-ui-tree-placeholder {
+    background: #f0f9ff;
+    border: 2px dashed #bed2db;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.angular-ui-tree-nodes .angular-ui-tree-nodes{
+    padding-left: 30px !important;
+}
+.angular-ui-tree-nodes .angular-ui-tree-nodes a{
+    color:#666;
+    font-weight:400;
+    font-size: 14px;
+}
+.tree-node .btn-collapse{
+    background-color: #f1f1f1;
+}
+.tree-node:active{
+    color: #f48024;
+}
+.tree-node .tree-node-icon-space{
+    color: #aaaaaa;
+    padding: 1px 5px;
+}
+.tree-node a{
+    border: 0;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: 500;
+    color: #2a2a2a;
+}
+.tree-node a:active,.tree-node.active a{
+    color: #f48024;
+}
+.expand-nodes{
+    float: right;
+}
+.book-content .breadcrumb{
+    background-color: white;
+    border-radius: 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+.book-content .book-summary-breadcrumb > li + li:before{
+    content: none;
+}
+/*书籍简介style*/
+.book-description{
+    padding: 10px 0;
+    line-height: 1.8em;
+    letter-spacing: 1.3px;
+}
+.book-name{
+    margin: 0;
+    line-height: 2;
+    padding-bottom: 10px;
+    font-size: 2em;
+    font-family: "Microsoft YaHei";
+}
+.tag-subject{
+    padding: 6px 23px;
+    margin-right: 10px;
+    color: #ffffff;
+    background-color: #f48024;
+    border-radius: 15px;
+    font-size: 16px;
+    font-weight: 400;
+}
+.tag-grade{
+    font-family: Source Han Sans CN;
+    font-weight: 400;
+    padding: 5px 15px;
+    margin-right: 10px;
+    color: #f48024;
+    font-size: 16px;
+    border-radius: 15px;
+    border:1px solid #f48024;
+}
+.tags span{
+    margin-right: 15px;
+}
+.fa-caret-down.active{
+    color: #f48024;
+}
+/*最近修改*/
+.time-list{
+    border-top: 8px solid #f0f0f0;
+    padding: 10px 45px;
+    font-weight: 400;
+}
+.latest-change{
+    font-size: 22px;
+    color: #333;
+    font-weight: 700;
+    font-family: Source Han Sans CN;
+    line-height: 2.18;
+    letter-spacing: 1.6px;
+}
+.latest-line{
+    border-bottom: 1px solid #f0f0f0;
+    margin: 0 -45px !important;
+    padding: 10px 30px !important;
+}
+.change-time{
+    line-height: 1.5;
+    padding-left: 0;
+}
+.time-padding{
+    padding-top: 10px;
+}
+.icon-img{
+    display: inline-block;
+    margin-bottom: 10px;
+}
+.padding-bottom-2{
+    padding-bottom: 20px;
+}
+/*cate details*/
+.title-margin{
+    margin:0 -15px;
+    border-bottom: 1px solid #e2e2e2;
+    line-height: 2em;
+}
+.title-margin >li + li:before{
+    color: #666;
+}
+.aim-details{
+    margin-bottom: 15px;
+    color:#666;
+}
+.aim-details pre{
+    background-color: inherit;
+    border: 0;
+    font-size: 16px;
+    line-height: 1.6em;
+    padding: 0;
+    white-space:pre-wrap;
+}
+.aim-details form.form-inline,.aim-details form .form-group{
+    display: block !important;
+}
+.aim-details .editable-input.editable-has-buttons{
+    width:100%;
+}
+.resource-list{
+
+}
+.vendor-resource-title h4{
+    display: block !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+.resource-list-item{
+    line-height: 3em;
+    border-bottom: 1px solid #f0f0f0;
+}
+.resource-thumbmail{
+    max-width:80px;
+}
+.question-list{
+
+}
+.question-img{
+    margin: 13px 10px 0 auto;
+}
+.img-font{
+    margin: 15px 20px;
+}
+.question-block{
+    border-left: 5px solid #98e8cd;
+    margin-left: -15px;
+    padding-left: 15px;
+}
+.question-title{
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 2;
+    color: #666;
+    display: inline-block;
+}
+.arrow-box{
+    position: relative;
+    margin-top: 42px;
+    line-height: 2em;
+    padding: 10px;
+    clear: both;
+}
+.question-setting-margin{
+    margin-top: -20px;
+    padding: 1px 0 0px !important;
+    margin-right: -15px;
+}
+.v-question-online{
+    color: #FFA98B;
+}
+.change-style-block{
+    color: #f48024;
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.change-style-block:hover{
+    color: #f48024;
+}
+.delete-style-block:hover{
+    color: #999;
+}
+.fa-question-setting{
+    color: #999999;
+    margin-top: -2px;
+}
+.v-move-right{
+    padding-left: 5px;
+}
+.v-move-left{
+    padding-right: 2px;
+}
+.edit-margin-15{
+    margin-right: 20px;
+}
+.panel-footer-border{
+    border: 1px solid #f0f0f0;
+    padding-bottom: 0px;
+    border-bottom: 0 !important;
+}
+.delete-style-block{
+    color: #999;
+    display: inline-block;
+    margin-right: 15px;
+}
+.question-add-footer{
+    border-bottom: 1px solid #f0f0f0;
+    padding: 0px 15px 15px 15px;
+    color: #666;
+}
+.v-style-block{
+    border: 1px solid #f48024;
+    padding: 4px 10px;
+    color: #f48024;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-right: 5px;
+    margin-top: 5px;
+    display: inline-block;
+}
+.v-style-block:hover{
+    color: #f48024;
+}
+.v-style-level{
+    margin-top: 5px;
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-right: 5px;
+    border:1px solid #f2f2f2;
+}
+.v-style-block:hover{
+    color: #f48024;
+}
+.v-right-answer{
+    padding: 12px 15px 0 15px;
+}
+.v-question-analysis{
+    margin-top: 6px;
+}
+.vendor-question-level{
+    display: block;
+}
+.arrow-box > .arrow {
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    top: -9px;
+    right: 20px;
+    margin-left: -11px;
+    border-width: 11px;
+    border-top-width: 0;
+}
+.arrow-box > .arrow:after{
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 8px;
+    top: 1px;
+    margin-left: -10px;
+    content: " ";
+    border-top-width: 0;
+    border-bottom-color: #98e8cd;
+}
+.book-page-title{
+    font-size: 36px;
+    line-height: 2;
+    border-bottom: 1px solid #e2e2e2;
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+    font-weight: 700;
+}
+.border-none{
+    border: none;
+}
+.padding-none{
+    padding: 0;
+}
+.padding-left-20{
+    padding-left: 20px;
+}
+.label-border{
+    border-color: #f48024;
+    border-radius: 5px;
+}
+.margin-bottom-none{
+    margin-bottom: 0;
+}
+.icon-photo{
+    height: 36px;
+    width: 34px;
+    display: inline-block;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+}
+.icon-catalogue-add{
+    background-image: url("/books/assets/img/icons/vendor-catalogue-add.png");
+}
+.icon-catalogue-delete{
+    background-image: url("/books/assets/img/icons/vendor-catalogue-delete.png");
+}
+.icon-catalogue-move{
+    background-image: url("/books/assets/img/icons/vendor-catalogue-move.png");
+}
+.menu-edit-modal .node-title{
+    border-bottom: 1px dotted #4eb592;
+}
+.cata-btn{
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.cata-btn-add:hover{
+    color:#6AE8BE;
+}
+.cata-btn-remove:hover{
+    color:#FF916A;
+}
+.margin-20{
+    margin: 20px;
+}
+.font-333{
+    color: #333;
+}
+.node-title{
+    font-size: 16px;
+    color: #333;
+    padding: 0 !important;
+}
+.form-bottom{
+    padding-bottom: 10px;
+}
+ .fa-caret-up{
+     color: #f48024;
+     font-size: 18px;
+ }
+ .fa-caret-down{
+     font-size: 18px;
+ }
+.book-summary-block{
+    margin-top: 15px;
+    height: 500px;
+    background-color: #FFEFD2;
+}
+.book-cover-block{
+    margin-top: 15px;
+    min-height: 500px;
+    background-color: #E0F8F0;
+}
+.book-summary-block label ,.book-cover-block label{
+    line-height: 2em;
+    font-size: 30px;
+}
+.book-summary-block textarea,.book-cover-block .form-control{
+    padding: 10px 2px;
+    border: 0;
+    background-color: inherit;
+}
+.book-summary-block textarea{
+    min-height: 400px;
+}
+.book-cover-block .bookcover{
+    margin-top: 20px;
+    max-width: 66%;
+    margin-left:auto ;
+    margin-right: auto;
+}
+.image-crop-box{
+    width: 100%;
+}
+.cropped-box{
+    margin: 10px 0;
+    padding: 5px;
+    background-color: #ffffff;
+}
+.upload-images-box .popover{
+    max-width: 600px;
+}
+.image-mark-box .popover{
+    width: 200px;
+}
+.my-drop-zone { border: dotted 3px lightgray; }
+.nv-file-over { border: dotted 3px red; }
+.image-mark-thumbmail{
+    width:30px;
+    height: 30px;
+}
+.line-height-30{
+    line-height: 30px;
+}
+ .teacher-notask h4{
+    margin-top: 25px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #666666;
+     text-align: center;
+}
+.teacher-notask p{
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    color: #999999;
+    text-align: center;
+}
+.node-title-setting{
+    max-width: 82%;
+    display: inline-block;
+}
+.vendor-resource-title h4:hover{
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow: visible;
+    white-space:normal;
+}
+.t-resource-name, .t-resource-list h4{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 80%;
+}
+
+.t-resource-name:hover, .t-resource-list h4:hover{
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow: visible;
+    white-space:normal;
+}
+
+.theme-font-14{
+    font-size: 14px;
+}
+@media(max-width:768px){
+    .a-panel-footer .a-answer{
+        width:60%
+    }
+    .a-panel-footer .a-submit{
+        width:30%;
+    }
+    .t-resource-name{
+        display:block;
+    }
+    .a-label-title label{
+        padding:5px 2px 2px 10px;
+        text-align:center !important;
+    }
+    .a-knowledge{
+        margin-left:-3px;
+        padding-left:0
+    }
+    .a-resource .margin-bottom-1, .a-resource .form-group:last-child{
+        margin-bottom:0 !important;
+        padding:5px;
+    }
+    .a-resource-content{
+        width:100%
+    }
+    .a-t-status{
+        text-align:left !important;
+    }
+    .xs-form-input{
+        min-width: 200px;
+        margin-bottom: 12px;
+    }
+}
+/*组卷*/
+.paper-selector{
+    position: fixed;
+    top:90px;
+    right: 30px;
+    width:200px;
+    border:1px solid #00b3ee;
+    background-color: #dff0d8;
+    opacity: 0.7;
+}
+.paper-selector-title{
+    background-color: #00b3ee;
+    font-size: 16px;
+    font-family: "Microsoft YaHei";
+    text-align: center;
+    line-height: 3em;
+    color:#ffffff;
+}
+.paper-selector-body{
+    padding: 10px 0;
+}

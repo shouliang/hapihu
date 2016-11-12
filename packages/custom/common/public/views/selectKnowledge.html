@@ -1,0 +1,27 @@
+<div class="knowledge-selector">
+    <!--<div class="query-condition-box">-->
+        <!--<span class="btn btn-default search-condition" ng-class="{'active':selected.knowledgeSystem===knowledgeSystem}" ng-repeat="knowledgeSystem in knowledgeSystems" ng-click="selectSystem(knowledgeSystem)">{{knowledgeSystem.name}}</span>-->
+    <!--</div>-->
+
+    <div ng-show="knowledgeSystems" class="form-inline">
+        <div class="related-selector">
+            <select class="form-control" ng-model="selected.knowledgeSystem" ng-options="knowledgeSystem as knowledgeSystem.name for  knowledgeSystem in knowledgeSystems">
+                <option value="">--知识体系--</option>
+            </select>
+            <div class="loading form-control" ng-show="isLoading">
+                <span class="fa fa-spinner fa-pulse fa-fw theme-color"></span>
+            </div>
+            <select ng-if="selected.knowledgeSystem" class="form-control" ng-model="selected.knowledgePoints[0]" ng-options="node as node.title for node in selected.knowledgeSystem.children" ng-change="changeSelect()">
+                <option value="">--一级知识点--</option>
+            </select>
+            <select ng-if="selected.knowledgePoints[0].children" class="form-control" ng-model="selected.knowledgePoints[1]" ng-options="node as node.title for node in selected.knowledgePoints[0].children" ng-change="changeSelect()">
+                <option value="">--二级知识点--</option>
+            </select>
+            <select ng-if="selected.knowledgePoints[1].children" class="form-control" ng-model="selected.knowledgePoints[2]" ng-options="node as node.title for node in selected.knowledgePoints[1].children" ng-change="changeSelect()">
+                <option value="">--三级知识点--</option>
+            </select>
+        </div>
+    </div>
+    <div class="theme-color-1 margin-top-10 animated fadeIn" ng-show="tip">{{tip}}</div>
+</div>
+

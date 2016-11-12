@@ -1,0 +1,58 @@
+<nav class="navbar navbar-static-top header header-border" data-role="navigation"
+     ng-controller="HeaderController as hdrctr">
+    <div class="header-body container">
+        <div class="navbar-header">
+            <div class="logo u-logo" >
+                <img class="img-logo cursor-hand"  ui-sref="home"  ng-src="{{sysVersion.logo || '/theme/assets/img/logo-hapihu.png'}}">
+                <span class="logo-title " ui-sref="home">
+                    {{sysVersion.name || '哈皮虎自适应学习平台'}}
+                    <div class="theme-font-12">{{sysVersion.subName || 'ADAPTIVE LEARNING PLATFORM'}}</div>
+                </span>
+            </div>
+            <button type="button" class="navbar-toggle" ng-click="hdrctr.isCollapsed = !hdrctr.isCollapsed" ng-init="hdrctr.isCollapsed=true">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse"  id="main-menu" ng-class="!hdrctr.isCollapsed && 'in'">
+            <div class="navbar-right">
+                <ul class="navbar-nav nav">
+                    <li ui-sref='{{item.link}}' class=""
+                        ng-class="{'active': stateName==item.name}"
+                        ng-repeat="item in hdrctr.menus.main | orderBy:'-weight'" ng-click="hdrctr.isCollapsed=true">
+                        <a href=""  ui-sref='{{item.link}}' >{{item.title}}</a>
+                    </li>
+                </ul>
+            <!--</div>-->
+            <!--<div class="navbar-right">-->
+                <!--<div class="text-edit" ng-show="hdrctr.hdrvars.authenticated">-->
+                    <!--<div class="pull-right" mean-token-editable></div>-->
+                    <!--<div class="pull-right" mean-translate></div>-->
+                <!--</div>-->
+                <ul class="navbar-nav nav auth-link" ng-show="!hdrctr.hdrvars.authenticated" ng-if="!sysVersion.forbidRegist">
+                    <li ng-class="{'active': stateName=='auth.register'}"><a href="" ui-sref='auth.register' ng-click="hdrctr.isCollapsed = !hdrctr.isCollapsed">注册</a></li>
+                    <li class="divider-vertical"></li>
+                    <li ng-class="{'active': stateName=='auth.login'}"><a href="" ui-sref='auth.login' ng-click="hdrctr.isCollapsed = !hdrctr.isCollapsed">登录</a></li>
+                </ul>
+                <ul class="navbar-nav nav" ng-show="hdrctr.hdrvars.authenticated">
+                    <li class="dropdown" uib-dropdown on-toggle="toggled(open)">
+                        <a href="#" class="dropdown-toggle" >
+                            <span ui-sref="user profile" ng-click="hdrctr.isCollapsed = !hdrctr.isCollapsed">{{hdrctr.hdrvars.user.username}}</span> <b class="fa fa-caret-down " uib-dropdown-toggle>&nbsp;&nbsp;</b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" ui-sref="user profile" ng-click="hdrctr.isCollapsed = !hdrctr.isCollapsed">个人信息</a></li>
+                            <!--<li ng-if="['teacher','student'].indexOf(hdrctr.hdrvars.user.userType) > -1"><a href="" ui-sref="join class">修改班级</a></li>-->
+                            <!--<li ng-if="['vendor'].indexOf(hdrctr.hdrvars.user.userType) > -1"><a ui-sref="my notification" >我的消息</a></li>-->
+                            <!--<li><a ui-sref="user change password">修改密码</a></li>-->
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#" ng-click="hdrctr.logout()" ng-click="hdrctr.isCollapsed = !hdrctr.isCollapsed">退出</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>

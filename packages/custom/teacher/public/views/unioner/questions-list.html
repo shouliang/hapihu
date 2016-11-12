@@ -1,0 +1,37 @@
+<div class="questions-list">
+    <div class=" questions-item" ng-repeat="question in questions.list" id="q_{{question._id}}">
+        <div class="questions-item-body">
+            <div class="panel panel-gray">
+                <div class="panel-heading">
+                    <span class="theme-color fa check-question" ng-class="{'fa-circle-thin':!question.selected,'fa-check-circle':question.selected}" ng-init="question.selected=true;" ng-click="question.selected=!question.selected"></span>
+                    <span class="indexNum">{{$index+1}}</span>
+                    <span class="questionTitle" ng-if="question.title">{{question.title}}</span>
+                    <span class="questionType">{{question.type}}</span>
+                    <span class="pull-right text-danger" ng-show="question.online!='online'">尚未上线</span>
+                </div>
+                <div class="panel-body" >
+                    <div class="" ng-if="question.image.stem">
+                        <img class="img-responsive" ng-repeat="image in question.image.stem" ng-src="{{image.dataUrl}}">
+                    </div>
+                    <div ng-if="question.stem" class="question-stem-box" ng-bind-html="question.stem"></div>
+                </div>
+                <!--<div class="panel-footer ">-->
+                    <!--<div class="row equal">-->
+                        <!--<div class="col-md-5"><label>正确答案：</label><div ng-if="question.answer" class="question-answer-box" ng-bind-html="question.answer" pop-img pop-content="{{question.answer}}"></div></div>-->
+                        <!--<div class="col-md-7" >-->
+                            <!--<div class="text-right">-->
+                                <!--<span class="pull-right btn btn-link theme-color-2 row" ng-if="question.analysis" ng-click="question.showAnalysis=!question.showAnalysis">详细解析</span>-->
+                            <!--</div>-->
+                            <!--<div class="arrow-box theme-bg-2" ng-show="question.showAnalysis">-->
+                                <!--<div class="arrow"></div>-->
+                                <!--<div class="description-details"-->
+                                     <!--ng-bind-html="question.analysis"  pop-img pop-content="{{question.analysis}}">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+</div>

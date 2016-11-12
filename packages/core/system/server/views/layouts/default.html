@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="zh" xmlns="http://www.w3.org/1999/xhtml"  itemscope="itemscope" itemtype="http://schema.org/Product">
+{% include '../includes/head.html' %}
+<body data-ng-controller="ThemeController" ng-cloak class="ng-cloak" ng-class="bodyClass">
+    <div id="main-body" class="main main-footer">
+        <div data-ng-include="'/system/views/header.html'" data-role="navigation"></div>
+        <div class="container" data-ng-include="'/admin/views/dashboard.html'"></div>
+        <section id="content-body" class="container content" ng-class="{'fullScreen':fullScreen}">
+            <!--<section class="container">-->
+                {% block content %}{% endblock %}
+            <!--</section>-->
+        </section>
+    </div>
+    <toasty></toasty>
+    <div class="top" data-ng-include="'/system/views/scrollTop.html'"></div>
+    <div class="footer footer-setting" data-ng-include="'/system/views/footer.html'" ></div>
+    {% include '../includes/foot.html' %}
+</body>
+</html>

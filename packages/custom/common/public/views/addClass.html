@@ -1,0 +1,33 @@
+<div class="bar-color-top"></div>
+<div class="modal-header">
+  <h3 class="modal-title" >新建班级</h3>
+</div>
+<div class="modal-body">
+  <div class="">
+    <div class="form-group">
+        学校：<strong class="">{{school.name}}</strong>
+    </div>
+    <div class="form-group">
+        <select  class="form-control" ng-model="newClass.grade" ng-options="grade.value as grade.label for grade in GRADES">
+          <option value="" disabled="true">---选择年级---</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <input class="form-control" ng-model="newClass.name" placeholder="班级名称">
+    </div>
+    <!--<div class="form-group">-->
+        <!--<button class="btn btn-primary" ng-click="addClass();">添加班级</button>-->
+    <!--</div>-->
+    <div class="text-danger margin-top-10 animated fadeIn" ng-show="newClass.error">{{newClass.error}}</div>
+    <div class="theme-color-1 margin-top-10 animated fadeIn" ng-show="tip">{{tip}}</div>
+  </div>
+</div>
+<div class="modal-footer">
+    <div class="col-xs-6 text-center">
+        <span class="btn btn-link theme-color-1"  ng-click="ok()">新建</span>
+    </div>
+    <div class="col-xs-6 text-center">
+        <span class="btn btn-link theme-color-4"  ng-click="cancel()">取消</span>
+    </div>
+</div>
+

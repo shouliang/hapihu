@@ -1,0 +1,157 @@
+<section class="clearfix home-page"   data-ng-controller="IndexController as vm" >
+    <div ng-if="sysVersion.name!=='辅导易'">
+        <div class="banner" >
+            <img class="img-responsive img-resp-banner  hidden-xs"  ng-src="{{ sysVersion.banner || 'users/assets/img/banner.png'}}">
+            <img class="img-responsive visible-xs" ng-src="users/assets/img/home/xs-banner.png">
+            <div class="banner-btn hidden-xs">
+                <a class="btn btn-primary btn-border-round btn-lg btn-padding " ui-sref="auth.register">立即注册</a>
+                <a class="btn btn-default btn-border-round btn-lg btn-padding banner-btn-video" ng-click="showVideo=!showVideo;">观看视频</a>
+            </div>
+            <div class="xs-banner-btn visible-xs">
+                <a class="btn btn-primary btn-border-round btn-lg btn-padding " ui-sref="auth.register">立即注册</a>
+                <a class="btn btn-default btn-border-round btn-lg btn-padding banner-btn-video" ng-click="showVideo=!showVideo;">观看视频</a>
+            </div>
+        </div>
+        <div class="text-center clearfix video-box" ng-show="showVideo">
+            <div class="video-modal">
+                <div class="video-content">
+                    <div class="video-header">
+                        <img class="bg-btn-video" src="users/assets/img/home/video-close.png" ng-click="showVideo=!showVideo">
+                    </div>
+                    <vjs-video-container vjs-ratio="16:9">
+                        <video  id="video-show" class="video-js vjs-default-skin video-show"
+                               controls preload="auto" width="500" >
+                            <source src="system/assets/video/hapihu-show.mp4" type="video/mp4">
+                        </video>
+                    </vjs-video-container>
+                </div>
+            </div>
+
+        </div>
+        <div class="home-function clearfix">
+            <div class="home-title-setting ">
+               <img class="img-responsive" src="users/assets/img/home/title-01.png">
+            </div>
+            <div class="bg-white clearfix func-item hidden-xs">
+                <div class="col-md-6 text-center">
+                    <img class="margin-right-30" src="users/assets/img/home/mark-01.png">
+                </div>
+                <div class="col-md-6 ">
+                    <img class="hidden-xs hidden-xs mark-wave" src="users/assets/img/home/wave.png">
+                    <img class="" src="users/assets/img/home/mark-02.png">
+                </div>
+            </div>
+            <div class="bg-white clearfix func-item visible-xs">
+                <h1 class="home-xs-title">智能批改作业</h1>
+                <img src="users/assets/img/home/xs-intelligence-mark.png">
+                <p class="p-margin">系统自动批改</p>
+                <p>老师集中、高效批改</p>
+                <p>学生即时了解对错</p>
+                <img class="pull-right" src="users/assets/img/home/xs-number-01.png">
+            </div>
+            <div class="bg-gray-1 clearfix func-item">
+                <div class="col-md-6 hidden-xs">
+                    <img class="" src="users/assets/img/home/class-statistic-02.png">
+                </div>
+                <div class="col-md-6 text-center hidden-xs">
+                    <img class="margin-top-20" src="users/assets/img/home/class-statistic-01.png">
+                    <img class="hidden-xs hidden-sm class-wave" src="users/assets/img/home/wave.png">
+                </div>
+                <div class="visible-xs">
+                    <h1 class="home-xs-title">班级作业统计</h1>
+                    <img src="users/assets/img/home/xs-class-statistic.png">
+                    <p class="p-margin">系统自动统计分析各班级作业情况</p>
+                    <p>老师集中、老师统一查阅班级当前及历史作业情况</p>
+                    <p>统计比较各个班级之间学习情况</p>
+                    <img class="pull-right" src="users/assets/img/home/xs-number-02.png">
+                </div>
+
+            </div>
+            <div class="bg-white clearfix func-item">
+                <div class="col-md-6 text-center hidden-xs">
+                    <img class="hidden-xs hidden-sm person-wave" src="users/assets/img/home/wave.png">
+                    <img class="margin-top-20" src="users/assets/img/home/person-statistic-01.png">
+                </div>
+                <div class="col-md-6 hidden-xs">
+                    <img class="" src="users/assets/img/home/person-statistic-02.png">
+                </div>
+                <div class="visible-xs">
+                    <h1 class="home-xs-title">个人作业统计</h1>
+                    <img src="users/assets/img/home/xs-person-statistic.png">
+                    <p class="p-margin">系统完整统计分析学生所有作业数据</p>
+                    <p>老师方便了解每个学生的学习水平</p>
+                    <p>学生、家长详细了解每个知识点的掌握情况</p>
+                    <img class="pull-right" src="users/assets/img/home/xs-number-03.png">
+                </div>
+            </div>
+        </div>
+        <div class="function-introduce clearfix bg-function hidden-xs">
+            <div class="home-title-setting">
+                <img class="img-responsive" src="users/assets/img/home/title-02.png">
+            </div>
+            <div class="feature-center ">
+                <img class="img-responsive" src="users/assets/img/home/bg-snow.png">
+            </div>
+            <div class="function-slick " ng-init="vm.slick_step=1">
+                <div class="slick-step">
+                    <span class="slick-step-item slick-step-unactive" ng-class="{'slick-step-active':vm.slick_step===1}" ng-click="vm.slick_step=1"><span class="step-title">1</span></span>
+                    <span class="slick-step-line"> </span>
+                    <span class="slick-step-item slick-step-unactive" ng-class="{'slick-step-active':vm.slick_step===2}" ng-click="vm.slick_step=2"><span class="step-title">2</span></span>
+                    <span class="slick-step-line"> </span>
+                    <span class="slick-step-item slick-step-unactive" ng-class="{'slick-step-active':vm.slick_step===3}" ng-click="vm.slick_step=3"><span class="step-title">3</span></span>
+                </div>
+                <div class="text-center theme-color-1 theme-font-16 ">
+                    {{['设定学习目标','老师布置作业','智能批改，数据自动统计'][vm.slick_step-1]}}
+                </div>
+                <div class="slick-box">
+                    <img class=" step-arrow" src="/theme/assets/img/step-arrow-left.png" ng-click="vm.slick_step=(vm.slick_step===1?1:vm.slick_step-1)">
+                    <div class="step-pc">
+                        <img class="img-responsive" ng-show="vm.slick_step===1" src="/theme/assets/img/step-snap-1.png">
+                        <img class="img-responsive" ng-show="vm.slick_step===2" src="/theme/assets/img/step-snap-2.png">
+                        <img class="img-responsive" ng-show="vm.slick_step===3" src="/theme/assets/img/step-snap-3.png">
+                    </div>
+                    <img class=" step-arrow " src="/theme/assets/img/step-arrow-right.png" ng-click="vm.slick_step=(vm.slick_step===3?3:vm.slick_step+1)">
+                </div>
+            </div>
+        </div>
+        <div class="xs-function-introduce clearfix bg-function visible-xs">
+            <div class="home-title-setting">
+                <img class="img-responsive" src="users/assets/img/home/title-02.png">
+            </div>
+            <div class="xs-function-slick " ng-init="vm.slick_step=1">
+                <div class="slick-step">
+                    <div class="slick-step-item slick-step-unactive" ng-class="{'slick-step-active':vm.slick_step===1}" ng-click="vm.slick_step=1"><span class="step-title">1</span><p ng-class="{'slick-step-detail':vm.slick_step===1}" ng-click="vm.slick_step=1">设定学习目标</p></div>
+                    <div class="slick-step-perpendicular"></div>
+                    <div class="slick-step-item slick-step-unactive" ng-class="{'slick-step-active':vm.slick_step===2}" ng-click="vm.slick_step=2"><span class="step-title">2</span><p ng-class="{'slick-step-detail':vm.slick_step===2}" ng-click="vm.slick_step=2">老师布置作业</p></div>
+                    <div class="slick-step-perpendicular"> </div>
+                    <div class="slick-step-item slick-step-unactive" ng-class="{'slick-step-active':vm.slick_step===3}" ng-click="vm.slick_step=3"><span class="step-title">3</span><p ng-class="{'slick-step-detail':vm.slick_step===3}" ng-click="vm.slick_step=3">智能批改，数据自动统计</p></div>
+                </div>
+                <div class="slick-box">
+                    <div class="step-pc">
+                        <img class="img-responsive" ng-show="vm.slick_step===1" src="/theme/assets/img/step-snap-1.png">
+                        <img class="img-responsive" ng-show="vm.slick_step===2" src="/theme/assets/img/step-snap-2.png">
+                        <img class="img-responsive" ng-show="vm.slick_step===3" src="/theme/assets/img/step-snap-3.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class=" platform-process clearfix bg-gray-1 visible-lg-block ">
+            <img class="img-responsive row hidden-xs" src="users/assets/img/home/bg-adapt.jpg">
+        </div>
+        <div class="bg-gray-1 visible-xs clearfix multiple-item">
+            <img class="img-responsive" src="users/assets/img/home/xs-title-03.png">
+            <img class="img-responsive" src="users/assets/img/home/xs-computers.png">
+        </div>
+    </div>
+    <div ng-if="sysVersion.name==='辅导易'">
+        <div ng-include="'system/views/fudaoyi.html'"></div>
+    </div>
+</section>
+<!--<script>-->
+    <!--$('document').ready(function () {-->
+        <!--videojs("video-show", {}, function(){-->
+            <!--// Player (this) is initialized and ready.-->
+        <!--});-->
+    <!--});-->
+<!--</script>-->
+

@@ -1,0 +1,28 @@
+<div class="" ng-controller="OrganizationPapersController as vm" ng-init="vm.init()">
+  <div class="banner-teacher-box">
+    <img class="img-responsive" src="organization/assets/img/banner.png">
+  </div>
+  <div class="row theme-equal bg-gray-1 padding-top-15">
+    <div class="col-md-2 menu-right " data-spy="affix" data-offset-top="60" data-offset-bottom="200">
+      <div ng-include="'organization/views/right-menu.html'"></div>
+    </div>
+    <div class="col-md-10 bg-white">
+      <h1 class="page-title">试卷管理</h1>
+      <p>当前共有{{school.profile.trainers.length || 0}}份试卷</p>
+      <table class="table theme-table-1">
+        <thead>
+          <tr>
+            <th class="col-md-2">试卷名</th>
+            <th class="col-md-2">科目</th>
+            <th class="col-md-2">年级</th>
+            <th class="col-md-2">录入时间</th>
+            <th class="col-md-2">管理</th>
+          </tr>
+        </thead>
+      </table>
+      <p>
+        <span class="btn btn-info" >添加试卷</span>
+      </p>
+    </div>
+  </div>
+</div>

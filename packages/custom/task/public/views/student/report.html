@@ -1,0 +1,65 @@
+<div class="bg-white row" data-ng-controller="StudentReport as vm" ng-init="vm.init()">
+    <div class="bg-white">
+        <h1 class="page-title">
+            <span class="title-tag-1 fa fa-chevron-left" ng-click="goBack()"></span>推介学习
+            <span class="s-task-title text-muted">{{recommendations.task.content.title||"未掌握知识点"}}</span>
+        </h1>
+        <div class="aim-details padding-left-right-15" >
+            <p>本次作业你的综合得分为<span class="theme-color">{{recommendations.statistics.rightRate || 0}}</span>  分</p>
+            <p>请在系统引导下有针对性的继续学习</p>
+        </div>
+    </div>
+    <div class="row-seperate "></div>
+    <div class="notask-teacher" ng-show="recommendations.resources.length===0">
+        <img class="img-responsive notask-teacher-img" src="theme/assets/img/noTask-teacher.png">
+        <h4>暂无推介内容</h4>
+        <p>赶快领取您的作业吧～</p>
+        <a class="btn btn-border" ui-sref="student tasks">去做作业</a>
+    </div>
+    <div class="col-xs-12 bg-white bottom-border-1 r-recommend" ng-show="recommendations.resources&&recommendations.resources.length!==0">
+        <div class="r-title">
+            <p class="r-subtitle">哈皮虎向您推荐以下课程</p>
+            <div class="style-block"></div>
+        </div>
+        <div class="clearfix media-list">
+            <!--<div ng-repeat="resource in recommendations.resources" ng-init="resource.isVideo=(resource.type && resource.type==='video/mp4') || (resource.url.toLowerCase().lastIndexOf('.mp4')!==-1)">-->
+                <!--<div class="col-xs-4">-->
+                    <!--<div class="bg-gray r-border-radius">-->
+                        <!--<div ng-if="resource.isVideo">-->
+                            <!--<img class="r-btn-video" src="theme/assets/img/btn-play.png" ng-if="!isPlaying" ng-click="vm.playVideo=!vm.playVideo">-->
+                            <!--<video id="video-show" class="r-video-show" width="100%"  height="100%"  ng-click="vm.playVideo=!vm.playVideo">-->
+                                <!--<source ng-src="{{resource.url | trusted}}">-->
+                            <!--</video>-->
+                            <!--<p class="r-question-title">{{resource.title}}题目</p>-->
+                        <!--</div>-->
+                        <!--<div ng-if="!resource.isVideo" class="r-resource-detail">-->
+                            <!--<img media-img="" class="media-object resource-thumbmail" ng-url="resource.url">-->
+                            <!--<p class="r-question-title">{{resource.title}}题目</p>-->
+                            <!--<a target="_self" href="{{resource.url}}" class="btn btn-link margin-right-1 r-download" >下载</a>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="media col-md-6 " ng-class="{'clear-left':$index%2===0}" ng-repeat="resource in recommendations.resources ">
+                <div class="media-left">
+                    <img media-img="" ng-url="resource.url" class="media-object resource-thumbmail"  ng-src="">
+                </div>
+                <div class="media-body t-resource-list">
+                    <h4>{{resource.title}}</h4>
+                    <p class="text-muted">
+                        <span class=" theme-label" ng-show="resource.grade">{{resource.grade}}</span>
+                        <span class=" theme-label" ng-show="resource.subject">{{resource.subject}}</span>
+                        <span class="theme-label" ng-repeat="point in resource.knowledge">{{point.title}}</span>
+                    </p>
+                    <p class="">
+                        <a target="_blank" href="{{resource.url}}" class="btn btn-border margin-right-1" ng-if="['.txt','.pdf','.mp4','.jpg','.png','jpeg','.gif','.flv'].indexOf(resource.url.toLowerCase()).substr(-4)!==-1">学习</a>
+                        <a target="_self" href="{{resource.url}}" download="{{resource.title}}" class="btn btn-border margin-right-1" >下载</a>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row-seperate "></div>
+</div>
+

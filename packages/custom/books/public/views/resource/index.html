@@ -1,0 +1,89 @@
+<div class="bg-white row" data-ng-controller="ResourcesController as vm">
+    <div class="loading" ng-init="vm.init()" ng-hide="vm.resources"></div>
+    <h1 class="page-title"><span class="title-tag-1"></span>课件资源
+        <div class="pull-right">
+            <a class="btn btn-primary btn-lg btn-border-round btn-padding margin-right-1" ui-sref="save resource">添加资源</a>
+        </div>
+    </h1>
+    <div class="">
+        <!--<div class="form-group clearfix" ng-if="vm.grades">-->
+            <!--<label class="control-label col-sm-1 text-center">年级</label>-->
+            <!--<div class="col-sm-11">-->
+                <!--<span class="search-condition"  ng-class="{'active':!search.grade}" ng-click="search.grade=null;loadData();">全部</span>-->
+                <!--<span class="search-condition" ng-repeat="grade in vm.grades | gradeOrder" ng-class="{'active':search.grade===grade}" ng-click="search.grade=grade;loadData();">{{grade}}</span>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="form-group clearfix" ng-if="vm.subjects">
+            <label class="control-label col-sm-1 text-center">科目</label>
+            <div class="col-sm-11">
+                <span class="search-condition"  ng-class="{'active':!search.subject}" ng-click="search.subject=null;changeSubject();">全部</span>
+                <span class="search-condition" ng-repeat="subject in vm.subjects" ng-class="{'active':search.subject==subject}" ng-click="search.subject=subject;changeSubject();">{{subject}}</span>
+            </div>
+        </div>
+        <div class="form-group clearfix" >
+            <label class="control-label col-sm-1 text-center">知识点</label>
+            <div class="col-sm-11">
+                <div select-knowledge=""  knowledge-subject="search.subject" knowledge-selected="knowledgeSelected" on-select="onSelectKnowledge(knowledge)"></div>
+                <!--<span class="search-condition"  ng-class="{'active':!search.knowledge}" ng-click="search.knowledge=null;loadData();">全部</span>-->
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="control-label col-sm-1 text-center">标题</label>
+            <div class="col-sm-11 form-inline">
+                <div class="form-group">
+                    <input class="form-control" type="text" ng-model="search.title" placeholder="资源标题">
+                </div>
+                <div class="form-group">
+                    <span class="form-control btn btn-primary" ng-click="loadData();">搜索</span>
+                </div>
+            </div>
+        </div>
+        <!--<div class="form-group clearfix" ng-if="vm.isAdmin">-->
+            <!--<label class="control-label col-sm-1 text-center">状态</label>-->
+            <!--<div class="col-sm-11 form-inline">-->
+                <!--<div class="form-group">-->
+                    <!--<select class="form-control" ng-model="search.status" ng-options="status for status in ['发布','草稿','删除']" ng-change="loadData();">-->
+                        <!--<option class="disabled" value="">全部</option>-->
+                    <!--</select>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
+    <div class="row-seperate"></div>
+    <h3 class="sub-title"><span class="title-tag-2"></span>资源列表（{{ vm.resources.count}}）</h3>
+    <div class="no-result" ng-if="vm.resources.count===0">
+        没有匹配的内容
+    </div>
+    <div class="media-list padding-10">
+        <div class="media" ng-repeat="resource in vm.resources.list ">
+            <div class="media-left">
+                <img media-img="" ng-url="resource.url" class="media-object resource-thumbmail"  ng-src="">
+            </div>
+            <div class="media-body t-resource-list">
+                <h4>{{resource.title}}</h4>
+                <p>
+                    <span class="theme-label " ng-show="resource.grade">{{resource.grade}}</span>
+                    <span class="theme-label " ng-show="resource.subject">{{resource.subject}}</span>
+                    <span class="text-muted">{{resource.name}}</span>
+                    <br><br>
+                    <span class="theme-label " ng-repeat="point in resource.knowledge">{{point.title}}</span>
+                    <span class="pull-right">
+                        <a target="_blank" href="{{resource.url}}" class="btn btn-default margin-right-1" ng-if="['.txt','.pdf','.mp4','.jpg','.png','jpeg','.gif','.flv'].indexOf(resource.url.toLowerCase()).substr(-4)!==-1">预览</a>
+                        <a target="_self" href="{{resource.url}}" download="{{resource.title}}" class="btn btn-default margin-right-1" >下载</a>
+                    </span>
+                </p>
+            </div>
+
+        </div>
+    </div>
+    <div class="text-center">
+        <uib-pagination ng-show="vm.resources.count && vm.resources.count>vm.resources.pageItem" total-items="vm.resources.count"
+                        ng-model="vm.resources.page"
+                        max-size="5"
+                        items-per-page="vm.resources.pageItem"
+                        class="pagination-sm" boundary-link-numbers="true"
+                        rotate="false" previous-text="上一页" next-text="下一页"
+                        ng-change="vm.selectPage()"></uib-pagination>
+
+    </div>
+</div>

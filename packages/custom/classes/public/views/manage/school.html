@@ -1,0 +1,68 @@
+<section class="bg-white row" data-ng-controller="SchoolController as vm" id="school">
+   <h1 class="page-title"><span class="title-tag-1 fa fa-chevron-left" ng-click="goBack();"></span>{{vm.school.name}}</h1>
+   <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="cursor-hand" ng-class="{active:!selectedTab || selectedTab=='baseInfo'}" ng-click="selectedTab='baseInfo'"><a  role="tab" >基本信息</a></li>
+      <li role="presentation" class="cursor-hand"  ng-class="{active:selectedTab=='grade'}" ng-click="selectedTab='grade'"><a  role="tab" >班级管理</a></li>
+   </ul>
+   <div class="tab-content">
+      <div role="tabpanel" class="tab-pane " ng-class="{active:!selectedTab || selectedTab=='baseInfo'}">
+         <div class="form-horizontal margin-top-10 padding-10">
+            <div class="form-group">
+               <label class="col-sm-1 control-label">学校名称</label>
+               <div class="col-sm-10">
+                  <input class="form-control" ng-model="vm.school.name" placeholder="请填写学校完整名称" readonly>
+               </div>
+            </div>
+            <div class="form-group">
+               <label class="col-sm-1 control-label">学校位置</label>
+               <div class="col-sm-10">
+                  <div select-result='vm.school.address' select-class='city-selector' city-select  init-city="vm.initAddress"></div>
+               </div>
+            </div>
+            <div class="form-group">
+               <label class="col-sm-1 control-label">学校介绍</label>
+               <div class="col-sm-10">
+                  <textarea class="form-control" placeholder="学校介绍信息" rows="10" data-ng-model="vm.school.profile.summary"></textarea>
+               </div>
+            </div>
+            <div class="form-group">
+               <div class="col-sm-offset-1 col-sm-10">
+                  <input class=" btn btn-primary" type="button" value="保存修改" ng-click="vm.editSchool()">
+               </div>
+            </div>
+         </div>
+      </div>
+      <div role="tabpanel" class="tab-pane padding-10"  ng-class="{active:selectedTab=='grade'}">
+         <h2 class=""><span>{{vm.localGrade.length===0?"还没有添加年级":"校内年级"}}</span> <span class="btn btn-default pull-right" ng-click="showAddGrade=!showAddGrade"><span class="glyphicon glyphicon-plus"></span>添加年级</span> </h2>
+         <div class="bg-1" ng-class="{hidden:!showAddGrade}">
+            <div class="form-horizontal ">
+               <div class="form-group">
+                     <select  class="form-control" type="text" name="grade" ng-model="vm.newGrade" placeholder="选择年级" ng-options="grade.value as grade.label for grade in GRADES">
+                        <option value="" disabled>-- 选择年级 --</option>
+                     </select>
+               </div>
+               <div class="form-group">
+                     <input class="btn btn-primary " type="button" ng-click="vm.addGrade();" value="添加新年级"> <input class="btn btn-default " type="button" ng-click="showAddGrade=null;" value="关闭">
+               </div>
+            </div>
+         </div>
+         <div class="panel panel-default" ng-repeat="grade in vm.localGrade">
+            <div class="panel-heading">
+               <h3 class="panel-title">{{grade.name}}
+                  <span class="pull-right cursor-hand" ng-click="vm.removeGrade(grade);"><span class="glyphicon glyphicon-remove-sign"></span>删除</span>
+               </h3>
+            </div>
+            <div class="panel-body">
+               <span class="" ng-repeat="class in grade.classes">{{class.name}} <span class="cursor-hand glyphicon glyphicon-remove-sign" ng-click="vm.removeClass(class,grade);"></span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+               <span class="btn btn-default" ng-click="vm.addClass(grade);"><span class="glyphicon glyphicon-plus"></span>添加班级</span>
+            </div>
+         </div>
+         <hr>
+         <div class="">
+            <button class="btn btn-primary" ng-click="vm.editGrade();">保存</button>
+         </div>
+      </div>
+   </div>
+
+
+</section>

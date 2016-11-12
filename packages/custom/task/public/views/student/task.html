@@ -1,0 +1,45 @@
+<div class="" data-ng-controller="StudentTaskController as vm" ng-init="vm.init()">
+  <div class="row  bg-white ">
+    <h1 class="page-title">
+      <span class="title-tag-1 fa fa-chevron-left" ng-click="goBack()"></span>在线做作业
+      <span class="s-task-title text-muted">{{task.title}}</span>
+      <span class="pull-right margin-right-1">
+        <!--<a ng-if="noteToBook===0" ng-click="vm.alert()">书中位置88</a>-->
+        <a ng-if="noteToBook" class="btn btn-link theme-color-1 "
+           ui-sref="student book({bookId:task.content.bookId,bookType:'teacherBook',
+           path:task.content.path.join(',')})"><span class="fa fa-location-arrow"></span> 书中位置</a>
+        <!--<span  uib-popover="{{'您只可以选择自己所在年级的图书，请在个人信息中设置您的年级'}}"-->
+               <!--popover-trigger="mouseenter" popover-placement="bottom"-->
+               <!--class="glyphicon glyphicon-question-sign theme-color-1 note-about-task"></span>-->
+      </span>
+    </h1>
+    <h4 class="padding-left-right-15">学习目标</h4>
+    <div class="aim-details padding-left-right-15" >
+      <pre>{{task.aim||'暂无目标'}}</pre>
+    </div>
+    <div class="s-task-line text-muted">请完成以下针对性的作业题。</div>
+  </div>
+  <div class="row-seperate "></div>
+  <div class="row bg-white border-top">
+    <h3 class="sub-title "><span class="title-tag-2"></span>题目列表
+      <span class="">（{{questions.count || "0"}}）</span></h3>
+    <div class="" ng-include="'books/views/student/questions-list.html'"></div>
+  </div>
+  <div class="row-seperate"></div>
+  <div class="row bg-white border-top">
+    <h3 class="sub-title"><span class="title-tag-3"></span>个人总结</h3>
+    <div class="s-question-padding">
+      <textarea data-ng-model="taskExe.remark"  class="form-control border-primary" rows="5"
+                placeholder="个人总结"></textarea>
+    </div>
+  </div>
+  <div class="row bg-white s-question-submit ">
+    <span class="btn btn-primary btn-padding btn-border-round "
+          ng-class="{'disabled':task.myAnswer}"
+          ng-click="vm.submitTask()">提交作业</span>
+    <span class="btn btn-border s-question-upload" ui-sref="upload task({taskId:task._id})">上传作业</span>
+    <span class="help-block" ng-show="task.myAnswer">
+        已经提交，提交时间：{{task.myAnswer.created | date:'MM-dd'}}</span>
+  </div>
+</div>
+

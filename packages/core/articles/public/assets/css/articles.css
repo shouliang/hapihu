@@ -1,0 +1,321 @@
+.introduce-title{
+    font-size: 30px;
+    line-height: 2.5em;
+    font-family: "Microsoft YaHei";
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.img-banner-introduce{
+    z-index: 1;
+    top: 60px;
+    position: absolute;
+    margin-top: -20px;
+    left: 50%;
+    margin-left: -50%;
+}
+.introduce-box{
+    margin-top: 20vw;
+    position: relative;
+    z-index: 100;
+}
+.img-company{
+    margin-top: -75px;
+}
+.introduce-detail{
+    margin-top: 25px;
+    font-size: 14px;
+    line-height: 1.8;
+    font-weight: 400;
+    letter-spacing: 1.4px;
+}
+.introduce-company{
+    padding: 10px 50px;
+    color: #666666;
+}
+.company-block{
+    background-color: #ffcb6d;
+    width: 40px;
+    height: 4px;
+}
+.receive-honor{
+    font-family: Arial;
+    font-size: 16px;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 3;
+    letter-spacing: 2px;
+    color: #666666;
+}
+.text-marginLeft{
+    text-indent: 20px;
+}
+.project-margin{
+    margin-top: 80px;
+}
+.sub-introduce-title{
+    margin-top: -15px;
+    font-family: Arial;
+    font-size: 16px;
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: 1.6px;
+    color: #999;
+}
+.honor-border{
+    /*border-top: 1px solid #e2e2e2;*/
+    /*border-bottom: 1px solid #e2e2e2 ;*/
+    min-height: 350px;
+    margin-right: 15px;
+    margin-left: 15px;
+}
+.honor-border:last-child{
+    border-right: 0 !important;
+    /*margin-right: 15px;*/
+}
+.honor-border:first-child{
+    margin-left: 15px;
+}
+.honor-title{
+    padding: 40px 10px;
+    /*text-align: center;*/
+    color: #666666;
+}
+.honor-title-1{
+   padding:40px 10px 20px !important;
+}
+.honor-border .col-md-3{
+    border-right: 1px solid #e2e2e2;
+    border-bottom: 1px solid #e2e2e2;
+    border-top: 1px solid #e2e2e2;
+    min-height: 400px;
+}
+.honor-bottom{
+    padding: 70px 10px 10px 10px ;
+}
+.honor-year{
+    font-family: Source Han Sans CN;
+    font-size: 30px;
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: 3px;
+    color: #999999;
+}
+.honor-block{
+    background-color: #999;
+    height: 2px;
+    width: 30px;
+    margin: 0 10px;
+}
+.sub-honor-block{
+    margin-bottom: -2px;
+    z-index: 1;
+    position: relative;
+}
+@media(max-width: 990px)  {
+    .honor-border{
+        border-right: 0 !important;
+    }
+    .honor-border .col-md-3{
+        border-bottom: 1px solid #e2e2e2;
+        border-right: 0 !important;
+        margin-left: 15px ;
+        margin-right: 15px;
+    }
+}
+.honor-detail{
+    text-align: center;
+    font-weight: 400;
+    color: #333333;
+    font-size: 14px;
+    line-height: 2em;
+}
+.honor-img .col-md-3{
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+.honor-img img{
+    margin-left: auto;
+    margin-right: auto;
+}
+.honor-img h4{
+    padding: 10px 20px 0;
+}
+.bg-honor{
+    background-color: #fafafa;
+}
+.fa-size{
+    font-size: 45px;
+    color: #F0F0F0;
+    padding: 20px;
+}
+.honor-border *:hover{
+    /*color: white !important;*/
+
+}
+.honor-border .col-md-3:hover {
+    background-color: #ffcb6d;
+    background-image: url('/circles/assets/img/honor_bg.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size:70% 70%;
+
+}
+.honor-border .col-md-3:hover .honor-title ,.honor-border  .col-md-3:hover .honor-detail,
+.honor-border .col-md-3:hover .fa-angle-right ,.honor-border  .col-md-3:hover .year-details,
+.honor-border .col-md-3:hover .honor-block{
+    color: white;
+}
+.honor-border .col-md-3:hover .honor-block{
+    background-color: white;
+}
+.year-details{
+    padding: 20px;
+}
+.contact-border{
+    border-bottom: 1px solid #e2e2e2;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+.contact-block{
+    width: 40px;
+    height: 4px;
+    background-color: #ffcb6d;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: -2px;
+}
+.subTitle{
+    padding-left: 50px;
+}
+.introduce-adress{
+    margin-left: 30px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #666666;
+    margin-top: 15px;
+}
+.introduce-img{
+    margin-left: 10px;
+}
+.honor-block-adress{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 30px;
+    background-color: #999999;
+}
+.introduce-feedback{
+    font-weight: 400;
+    letter-spacing: 1.2px;
+    color: #999999;
+    line-height: 2;
+}
+.introduce-feedback textarea{
+    resize: none;
+}
+.company-name{
+    font-weight: 400;
+    color: #999;
+    margin-left: 30px;
+    font-size: 18px;
+    margin-top: 25px;
+}
+.address-img{
+    margin: 30px;
+}
+.introduce-send{
+    padding:6px 40px ;
+}
+.block-display{
+    margin-top: 10px;
+    visibility: hidden;
+}
+.img-contactUs{
+    display: inline-block;
+    margin-right: 10px;
+}
+.feedbackForm input,.feedbackForm textarea{
+    background-color: #fafafa;
+    border:1px solid #e2e2e2;
+}
+.c-telephone{
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    margin-top: -18px;
+    margin-right: 15px;
+}
+.c-telephone-detail{
+    font-size: 36px;
+    line-height: 1.33;
+    text-align: left;
+    color: #333333;
+    margin-left: 15px;
+}
+.c-detail{
+    padding: 55px;
+}
+@media (max-width: 768px) {
+    .c-detail{
+        padding: 0;
+    }
+    .c-telephone-detail{
+        font-size: 22px;
+    }
+}
+.c-content{
+    padding-top: 55px;
+    color: #666666;
+}
+@media (max-width: 768px) {
+    .c-content p{
+        font-size: 16px;
+    }
+    .a-detail p{
+        font-size: 16px !important;
+    }
+}
+.c-email{
+    color: #62a2e4;;
+}
+.a-detail p{
+    font-size: 14px;
+    line-height: 1.71;
+    letter-spacing: 1.4px;
+    text-align: left;
+    color: #666666;
+    text-indent: 2em;
+}
+.home-title-setting .a-detail{
+    margin-top: 20px;
+}
+.a-title{
+    text-align: center;
+    font-size: 22px;
+    color: #666666;
+    font-weight: 600;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 15px;
+}
+.a-title-margin{
+    margin-top: -50px;
+}
+.margin-top-60{
+    margin-top: 60px;
+}
+.a-title-margin-neg-80{
+    margin-top: -80px;
+    padding-bottom: 0;
+}
+.a-margin{
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+.xs-aboutUs{
+    z-index: 1;
+    top: 100px;
+    position: absolute;
+    margin-top: 0px;
+    left: 50%;
+    margin-left: -50%;
+}

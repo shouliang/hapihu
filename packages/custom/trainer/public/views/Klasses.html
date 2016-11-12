@@ -1,0 +1,63 @@
+<div class="bg-white row" data-ng-controller="TrainerKlassController as vm" ng-init="vm.init();">
+    <h1 class="page-title"><span class="title-tag-1"></span>我的班级</h1>
+    <div class="condition-list">
+        <div class="form-group clearfix" >
+            <label class="control-label col-sm-1 text-center">年级</label>
+            <div class="col-sm-11">
+                <span class="search-condition"  ng-class="{'active':!query.grade}" ng-click="query.grade=null;loadData();">全部</span>
+                <span class="search-condition"  ng-repeat="grade in grades" ng-class="{'active':query.grade===grade}" ng-click="query.grade=grade;loadData(grade);">{{grade}}</span>
+            </div>
+        </div>
+        <div class="form-group clearfix" >
+            <label class="control-label col-sm-1 text-center">状态</label>
+            <div class="col-sm-11">
+                <span class="search-condition"  ng-class="{'active':!query.station}" ng-click="query.station=null;loadData();">全部</span>
+                <span class="search-condition"  ng-repeat="station in stationes" ng-class="{'active':query.station===station}" ng-click="query.station=station;loadData(null,station);">{{station}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="row-seperate"></div>
+    <div class="task-list clearfix">
+        <div class="notask-teacher" ng-show="Klasses.count===0">
+            <img class="img-responsive notask-teacher-img" src="theme/assets/img/noTask-teacher.png">
+            <h4>最近作业暂无内容</h4>
+            <p>没有作业哦～赶快去布置作业吧～</p>
+            <a class="btn btn-border" ui-sref="teacher book">布置作业</a>
+        </div>
+        <div class="col-md-6 " ng-repeat="Klass in Klasses.list " ng-class="{'padding-right-5':$index%2===0,'padding-left-5':$index%2===1}">
+            <div class="panel panel-default task-item margin-bottom-none" >
+                <div class="label-corner-right" ng-show="$index===0 && tasks.page===1">最新</div>
+                <div class="panel panel-heading">
+                    <a href=""  ui-sref="trainer klass detail({KlassId:Klass._id})">{{Klass.name}}</a>
+                </div>
+                <div class="panel-body">
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <p class="text-muted ">状态：{{Klass.station }}</p>
+                                <p class="text-muted ">
+                                    <span class="margin-right-1">人数：{{Klass.members.length||'0' }}人</span>
+                                    <span>年级：{{Klass.grade}}</span>
+                                </p>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <p class="text-muted ">开始日期：{{Klass.created | date:'MM-dd'}}</p>
+                                <p class="text-muted ">截止日期：{{task.endDate | date:'MM-dd'}}</p>
+                            </div>
+                        </div>
+                        <div class="border-top-1">
+                            <div class="pull-left ">
+                                <a class="btn btn-primary-active btn-link neg-margin-left-1" href="#" ui-sref="trainer klass detail({klassId:Klass._id})">进入</a>
+                                <a class="btn btn-black btn-link padding-right-0" href="#" ui-sref="trainer student examinations({klassId:Klass._id})">布置测试</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center margin-top-10">
+        <uib-pagination ng-if="students && students.count>students.pageItem" total-items="students.count" ng-model="students.page" max-size="10" items-per-page="students.pageItem" class="pagination-sm" boundary-link-numbers="true" rotate="false" previous-text="上一页" next-text="下一页" ng-change="vm.selectPage()"></uib-pagination>
+    </div>
+</div>
+

@@ -1,0 +1,81 @@
+<section data-ng-controller="UsersController as vm" class="users">
+    <div class="loader" data-ng-init="vm.init()" data-ng-hide="vm.users.count"></div>
+
+    <div class="actions-bar">
+        <button class="btn btn-default pull-right" ui-sref="users-addUser"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add user</button>
+    </div>
+    <div class="form-inline">
+        <div class="form-group">
+            <select class="form-control"  ng-model="vm.query.userType" ng-options=" ut for ut in ROLES">
+                <option class="" value="">--用户类型---</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <div id="cityselector" select-result='vm.query.address' select-class='city-selector' city-select></div>
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" ng-model="vm.query.username" placeholder="用户名">
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" ng-model="vm.query.name" placeholder="用户姓名">
+        </div>
+        <div class="form-group">
+            <button class="btn btn-default" ng-click="vm.searchUsers();">搜索</button>
+        </div>
+    </div>
+    <hr/>
+    <h2 class="block-title">共有用户{{vm.users.count}}位</h2>
+    <table class="table table-striped table-bordered table-hover editable-table" data-ng-show="vm.users.count">
+        <tr>
+            <th >用户类型</th>
+            <th >用户名</th>
+            <th >姓名</th>
+            <th >年级</th>
+            <th >地址</th>
+            <th>其他</th>
+            <th> 操作 </th>
+        </tr>
+        <tr data-ng-repeat="user in vm.users.list">
+            <td class="table-editable-cell" >{{user.userType}}</td>
+            <td class="table-editable-cell" >{{user.username}}</td>
+            <td class="table-editable-cell" >{{user.name}}</td>
+            <td class="table-editable-cell" >{{user.profile.grade}}</td>
+            <td class="table-editable-cell" >{{user.profile.location}}</td>
+            <td class="table-editable-cell" >
+                <span class="" ng-class="{'text-danger':user.profile.certificationStatus&&user.profile.certificationStatus.indexOf('等待')>-1}" ng-if="user.userType=='teacher'">
+                    {{user.profile.certificationStatus}}
+                </span>
+            </td>
+            <td>
+                <a class="btn btn-default" ui-sref="users-user({userId:user._id})"><i class="glyphicon glyphicon-edit"></i></a>
+                <button class="btn btn-danger glyphicon glyphicon-trash" data-ng-click="remove(user)" value="del">
+                    <i class="icon-trash icon-white"></i>
+                </button>
+            </td>
+        </tr>
+    </table>
+    <div paging
+         class="small"
+         page="vm.users.page"
+         page-size="vm.users.pageItem"
+         total="vm.users.count"
+         pg-href="#"
+         adjacent="3"
+         text-first="首页"
+         text-last="末页"
+         text-next="下一页"
+         text-prev="上一页"
+         text-title-first="首页"
+         text-title-last="末页"
+         text-title-next="下一页"
+         text-title-prev="上一页"
+         text-title-page="{page}"
+         hide-if-empty="false"
+         show-prev-next="true"
+         show-first-last="true"
+         ul-class="pagination"
+         active-class="active"
+         disabled-class="disabled"
+         paging-action="vm.changePage('Paging Clicked', page, pageSize, total)">
+    </div>
+</section>

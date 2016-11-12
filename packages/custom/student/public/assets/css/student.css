@@ -1,0 +1,240 @@
+.student-example h1 {
+  background-color: purple
+}
+.s-aim{
+  margin-left: 15px;
+}
+.s-task-title{
+  font-size: 16px;
+}
+.s-task-aim{
+  font-size: 16px ;
+  font-weight: 400;
+}
+.s-aim-font{
+  font-size: 14px;
+}
+.s-task-line{
+  border-top: 1px solid #e2e2e2;
+  font-size: 12px;
+  padding: 15px;;
+}
+.s-answer .confirm-btn{
+  background-color: #FFCB6B;
+  color:#ffffff;
+  width: 100px !important;
+  border: 1px solid #e2e2e2;
+}
+.s-upload{
+  border-left: 1px solid #e2e2e2 !important;
+  color: #666;
+  width: 100px !important;
+}
+.s-submit{
+  border-radius: 16px;
+  background-color: #ffcb6d;
+  color: white;
+  border:none !important;
+}
+.s-answer .input-wrap{
+  padding-left: 0 !important;
+}
+.s-answer .input-wrap::after{
+  width: 0 !important;
+  height: 0 !important;
+}
+.s-answer-radius{
+  border-radius: 15px !important;
+}
+.s-answer .input-wrap .s-answer-radius{
+  border-radius: 16px 0 0 16px !important;
+}
+.s-answer-list{
+  min-height: 40px;
+  padding: 15px;
+}
+.s-answer-arrow{
+  margin-top: 10px !important;
+}
+.s-btn-answer-right{
+  padding: 6px 12px ;
+  color:#ffffff;
+  background-color: #ffcb6d;
+  border-radius: 20px 0 0 20px !important;
+}
+.s-btn-right{
+  border:1px solid #ffcb6d !important;
+  padding: 6px 12px ;
+  color: #ffcb6d;
+  border-radius:20px 0 0 20px !important; ;
+}
+.s-btn-answer-wrong{
+  padding: 6px 12px ;
+  color:#ffffff;
+  background-color: #ffcb6d !important;
+  border-radius: 0 20px 20px 0 !important;
+}
+.s-btn-wrong{
+  padding: 6px 12px ;
+  border: 1px solid #ffcb6d !important;
+  color: #ffcb6d !important;
+  border-radius:0 20px 20px 0 !important;
+}
+.s-answer-body{
+  padding: 0 10px;
+}
+.s-question-padding{
+  padding: 10px;
+}
+.s-question-upload{
+  color: #ffcb6d;
+}
+.s-question-submit{
+  border-top: 1px solid #e2e2e2;
+  padding: 10px 15px;
+  border-bottom: 10px solid #e2e2e2;
+}
+.s-evaluate-time{
+  float: right;
+  margin-top: -60px;
+  font-size: 12px ;
+  font-weight: 400;
+  color: #999;
+}
+.s-teacher-name{
+  color: #333333;
+}
+.s-teacher-evaluate{
+  color: #666;
+}
+.notask-teacher-img{
+  margin-right: auto;
+  margin-left: auto;
+}
+.notask-teacher{
+  text-align: center;
+  padding: 35px;
+}
+.notask-teacher h4{
+  margin-top: 25px;
+  font-family: Source Han Sans CN;
+  font-size: 16px;
+  font-weight: 400;
+  color: #666666;
+}
+.notask-teacher p{
+  font-family: Source Han Sans CN;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: #999999;
+}
+.notask-teacher a{
+  margin-top: 20px;
+}
+.s-note-border{
+    border-bottom: none !important;
+    border-right:1px solid #e2e2e2;
+    border-left:1px solid #e2e2e2;
+    border-top:1px solid #e2e2e2;
+    border-radius:10px 10px 0 0;
+}
+.border-none{
+    border: none !important;
+    padding: 0 15px 0px 0 !important;
+}
+.p-border-none{
+    border:none !important;
+}
+.n-panel-margin{
+    margin:auto 15px;
+}
+.n-question-title{
+   margin-left:15px;
+}
+.n-panel-footer{
+    border: 1px solid #f0f0f0;
+    /*border-bottom: 0 !important;*/
+    padding:15px 15px  0 15px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.n-panel-footer .col-sm-4{
+    padding-top:10px;
+}
+.n-panel-footer-border:last-child{
+    border-right: 0;
+    border-bottom-right-radius: 10px;
+}
+.n-panel-footer-border:first-child{
+    border-bottom-left-radius: 10px;
+}
+.n-panel-footer-border{
+    flex-direction: initial !important;
+    border-right: 1px solid #e2e2e2;
+    border-left: 1px solid #e2e2e2;
+}
+.n-extentInfo{
+    padding:0 15px 10px;
+    color:#666;
+}
+
+.n-extend-border{
+    border-top: 1px solid #e2e2e2;
+}
+@media (min-width:768px) {
+    .n-panel-footer-border{
+        border-right: 1px solid #e2e2e2;
+        border-left: 1px solid #e2e2e2;
+    }
+}
+@media (max-width:768px) {
+    .n-panel-footer-border{
+        border-top: 1px solid #e2e2e2;
+        border-bottom: 1px solid #e2e2e2;
+        padding: 10px 0;
+    }
+
+}
+.xs-margin-neg-top-60{
+    margin-top: -60px;
+}
+.note-margin-top-50{
+    margin-top: 50px !important;
+}
+.page-note{
+    padding:0px 15px 15px;
+    font-size:16px;
+}
+.page-note-version{
+    color: #ffa000;
+    border-right:1px solid #e2e2e2;
+    padding-right:15px;
+}
+.page-note-more{
+    color:#999;
+    padding-left:15px;
+    font-weight:700;
+}
+.page-note-detail{
+    font-weight:400;
+    font-size:14px;
+}
+.page-note-about{
+    color: #49a7d2;
+    font-size:14px;
+}
+.n-panel{
+    border: none;
+    border-radius: 4px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.upload-page-box{
+
+}
+.img-border-right{
+    border-right: 1px solid #e2e2e2;
+}
+
+

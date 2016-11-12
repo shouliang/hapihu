@@ -1,0 +1,17 @@
+<div class="" data-ng-controller="KnowledgeSystemListController as vm">
+    <div class="loading" ng-init="vm.init()" ng-hide="knowledgeSystems"></div>
+    <h1 class="">知识体系<span class="btn btn-primary pull-right" ui-sref="create knowledgeSystem"><span class="glyphicon glyphicon-plus"></span>添加知识点</span></h1>
+    <hr>
+    <div>当前总共有{{vm.knowledgeSystems.count?vm.knowledgeSystems.count:0}}知识体系</div>
+    <br>
+    <div class="row">
+        <div class="col-sm-4 col-md-3" ng-repeat="knowledgeSystem in knowledgeSystems.list">
+            <div class="thumbnail">
+                <div class="caption">
+                    <h3  ><a class="theme-color-1" href="" ui-sref="admin knowledgeSystem({knowledgeSystemId:knowledgeSystem._id})">{{knowledgeSystem.name}}</a> </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

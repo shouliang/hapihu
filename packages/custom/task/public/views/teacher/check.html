@@ -1,0 +1,53 @@
+<div class="bg-white row" data-ng-controller="TaskCheckController as vm" ng-init="vm.init()">
+  <h1 class="page-title"><span class="title-tag-1 fa fa-chevron-left" ng-click="goBack();"></span>智能批改
+    <span class="theme-font-16">{{task.title}}</span>
+    <div class="pull-right margin-right-1">
+      <div class="btn-group " uib-dropdown>
+        <span  class="btn btn-primary btn-padding" uib-dropdown-toggle>
+          {{selectedClass.name}}
+          <span class="glyphicon glyphicon-triangle-bottom"></span>
+        </span>
+        <ul class="dropdown-menu" uib-dropdown-menu role="menu"
+            aria-labelledby="btn-append-to-single-button">
+          <li ng-repeat="klass in task.to">
+            <a href="#" ui-sref="task check({taskId:task._id,classId:klass.classId})">{{klass.name}}</a></li>
+        </ul>
+      </div>
+    </div>
+  </h1>
+  <h4 class="padding-left-right-15">批改状况</h4>
+  <div class="padding-left-right-15" >
+    <p>共 {{statistics.total}} 题</p>
+    <p ng-if="statistics.total!==statistics.completed">还有 <span class="theme-strong">{{statistics.total-statistics.completed}}</span> 题未批改完</p>
+    <p class="theme-color-1" ng-if="statistics.total===statistics.completed">所有题目已经批改完</p>
+  </div>
+  <div class="row-seperate"></div>
+  <h3 class="sub-title"><span class="title-tag-2"></span>题目列表（{{questions.count || "0"}}）</h3>
+  <div class="list-group">
+    <div class="list-group-item question-item-margin equal" ng-repeat="question in questions.list">
+      <div class="col-sm-4 col-xs-12 check-question-left" >
+        <div class="check-question-p">
+          <a class="pull-right col-md-3 btn btn-border" ui-sref="task check question({taskId:task._id,topicId:question._id,classId:selectedClass.classId})">批改</a>
+          <div class="col-md-9 col-sm-9 ">
+            <span class="indexNum " ng-class="{'check-question-indexNum':question.statistics.submitters === question.statistics.checked,'noCheck-question-indexNum':question.statistics.submitters > question.statistics.checked}">{{$index+1}}</span>
+            <p class="text-muted">{{question.type}}</p>
+            <p>已批改（{{question.statistics.checked}}）</p>
+            <p>待批改（<span class="" ng-class="{'theme-strong':question.statistics.submitters > question.statistics.checked}">{{question.statistics.submitters - question.statistics.checked }}</span>）</p>
+            <p>正确率 <span class="theme-strong-2">{{question.statistics.rightRate}}%</span></p>
+            <p class="theme-font-16 theme-color-1" ng-if="question.statistics.submitters > question.statistics.checked">
+              等待批改
+            </p>
+            <p class="text-muted theme-font-16" ng-if="question.statistics.submitters === question.statistics.checked">
+              批改完成
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-8 col-xs-12 padding-top-15">
+        <span ng-if="question.stem" class="question-stem-box" ng-bind-html="question.stem"></span>
+        <img class="img-responsive max-width-100" ng-if="question.image.stem" ng-src="{{question.image.stem[0].dataUrl}}">
+      </div>
+    </div>
+  </div>
+</div>
+

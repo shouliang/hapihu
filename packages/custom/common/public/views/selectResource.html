@@ -1,0 +1,44 @@
+<div class="bar-color-top"></div>
+<div class="modal-header">
+  <h3 class="modal-title" >在系统内选择资源</h3>
+</div>
+<div class="modal-body">
+    <h4>知识点</h4>
+    <div class="form-group clearfix" >
+        <div select-knowledge=""  knowledge-subject="query.subject" knowledge-selected="knowledgeSelected" on-select="onSelectKnowledge(knowledge)"></div>
+    </div>
+    <div class="form-group">
+        <input type="text" ng-model="search.title" class="form-control" placeholder="标题关键字">
+    </div>
+    <div class="form-group">
+        <span class="form-control btn btn-primary" ng-click="searchResource()">搜索</span>
+    </div>
+    <div class="media-list padding-10" ng-if="resources">
+        <h4>找到（{{resources.count}}）个相关资源</h4>
+        <div class="media" ng-repeat="resource in resources.list ">
+            <div class="media-left">
+                <img media-img="" ng-url="resource.url" class="media-object resource-thumbmail"  ng-src="">
+            </div>
+            <div class="media-body t-resource-list">
+                <h4>{{resource.title}}</h4>
+                <p><span class="btn-border margin-right-1" ng-show="resource.grade">{{resource.grade}}</span><span class="btn-border margin-right-1" ng-show="resource.subject">{{resource.subject}}</span><span class="t-resource-name">{{resource.name}}</span>
+                    <span class="pull-right">
+                        <a target="_blank" href="{{resource.url}}" class="btn btn-link margin-right-1" ng-if="['.txt','.pdf','.mp4','.jpg','.png','jpeg','.gif','.flv'].indexOf(resource.url.toLowerCase()).substr(-4)!==-1">预览</a>
+                        <input type="checkbox"  ng-model="resource.selected">
+                    </span>
+                </p>
+            </div>
+
+        </div>
+    </div>
+    <div class="theme-color-1 margin-top-10 animated fadeIn" ng-show="tip">{{tip}}</div>
+</div>
+<div class="modal-footer">
+    <div class="col-xs-6 text-center">
+        <span class="btn btn-link theme-color-1"  ng-click="ok()">添加</span>
+    </div>
+    <div class="col-xs-6 text-center">
+        <span class="btn btn-link theme-color-4"  ng-click="cancel()">取消</span>
+    </div>
+</div>
+

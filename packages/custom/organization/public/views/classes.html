@@ -1,0 +1,77 @@
+<div class="" ng-controller="OrganizationClassesController as vm" ng-init="vm.init()">
+  <div class="banner-teacher-box">
+    <img class="img-responsive" src="organization/assets/img/banner.png">
+  </div>
+  <div class="row theme-equal bg-gray-1 padding-top-15">
+    <div class="col-md-2 menu-right " data-spy="affix" data-offset-top="60" data-offset-bottom="200">
+      <div ng-include="'organization/views/right-menu.html'"></div>
+    </div>
+    <div class="col-md-10 bg-white">
+      <h1 class="page-title">班级</h1>
+      <p>当前共有{{school.classes.length || 0}}个辅导班</p>
+      <table class="table theme-table-1">
+        <thead>
+          <tr>
+            <th class="col-md-3">班级名称</th>
+            <th class="col-md-2">科目</th>
+            <th class="col-md-3">状态</th>
+            <th class="col-md-4">管理</th>
+          </tr>
+        </thead>
+        <tr ng-repeat="item in school.classes">
+          <td>{{item.name}}</td>
+          <td>{{item.subject}}</td>
+          <td>{{item.status}}</td>
+          <td><span class="btn btn-default" ui-sref="organization klass({schoolId:school._id,classId:item.classId})">管理</span><span class="btn btn-default" ng-click="removeItem(item)">删除</span></td>
+        </tr>
+      </table>
+      <p>
+        <span class="btn btn-info"  ng-click="addNew()">添加班级</span>
+      </p>
+    </div>
+  </div>
+
+</div>
+<script type="text/ng-template" id="addNewClass.html">
+  <div class="bar-color-top"></div>
+  <div class="modal-header">
+    <h3 class="modal-title" >新建班级</h3>
+  </div>
+  <div class="modal-body" >
+    <div class="form-horizontal padding-10">
+      <div class="form-group">
+        学校：<strong class="">{{school.name}}</strong>
+      </div>
+      <div class="form-group">
+        <label  class="control-label col-sm-2">年级</label>
+        <div class="col-sm-10">
+          <select  class="form-control" ng-model="newClass.grade" ng-options="grade.value as grade.label for grade in GRADES">
+            <option value="" disabled="true">---选择年级---</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label  class="control-label col-sm-2">名称</label>
+        <div class="col-sm-10">
+          <input class="form-control" ng-model="newClass.name" placeholder="班级名称">
+        </div>
+      </div>
+      <div class="form-group">
+        <label  class="control-label col-sm-2">科目</label>
+        <div class="col-sm-10">
+          <select class="form-control"  ng-model="newClass.subject" placeholder="科目" ng-options="g for g in ['数学','物理','化学','语文','英语']"></select>
+        </div>
+      </div>
+      <div class="text-danger margin-top-10 animated fadeIn" ng-show="newClass.error">{{newClass.error}}</div>
+      <div class="theme-color-1 margin-top-10 animated fadeIn" ng-show="tip">{{tip}}</div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="col-xs-6 text-center">
+      <span class="btn btn-link theme-color-1"  ng-click="ok()">确定</span>
+    </div>
+    <div class="col-xs-6 text-center">
+      <span class="btn btn-link theme-color-4"  ng-click="cancel()">取消</span>
+    </div>
+  </div>
+</script>

@@ -1,0 +1,89 @@
+<div class="banner" >
+    <img class="img-responsive img-resp-banner  hidden-xs"  ng-src="{{ sysVersion.banner}}">
+    <div class="banner-body">
+        <h1 class="siteName">辅导易</h1>
+        <div class="slogan">让办学更容易</div>
+    </div>
+</div>
+<div class="login-block text-center clearfix">
+    <h2 class="login-block-title">——用户登录——</h2>
+    <form id="login_form" name="login_form"
+          class="form-bottom home-login"
+          ng-submit="">
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-wrap"
+                     ng-class="{'input-mine-normal':login_form.email.$invalid,
+                 'input-mine-active':login_form.email.$valid}">
+                    <input class="form-control" required id="email_block"
+                           type="text" name="email" placeholder="输入用户名"
+                           ng-model="vm.user.username">
+                </div>
+                <span class=""></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-wrap"
+                     ng-class="{'input-pass-normal':login_form.password.$invalid,
+                 'input-pass-active':login_form.password.$valid}">
+                    <input class="form-control" required id="password_block"
+                           name="password" type="password"
+                           placeholder="输入密码"
+                           ng-model="vm.user.password">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="button"  class="btn btn-info btn-border-round form-control" value="登 录" ng-click="vm.login()"/>
+            <div class="">
+                <a class="btn theme-btn-link-white" ui-sref='forgot-password'>忘记密码</a>
+            </div>
+            <p class="color-white" ng-show="vm.loginError">{{vm.loginError}}</p>
+        </div>
+
+        <!--<div class="form-group">-->
+            <!--<div class="col-xs-6">-->
+                <!--<a class="btn btn-link" ui-sref='forgot-password'>忘记密码</a>-->
+            <!--</div>-->
+            <!--<div class="col-xs-6">-->
+                <!--<span  class="btn btn-default form-control"> 注 册 </span>-->
+            <!--</div>-->
+        <!--</div>-->
+
+    </form>
+
+</div>
+<div class="feature-block">
+    <h2 class="feature-block-title">——产品特性——</h2>
+    <div class="container">
+        <div class="col-md-3">
+            <div class="feature-item">
+                <h3>教学透明化</h3>
+                <p>完整记录学员提高过程</p>
+                <p>让家长详细了解学员学习成效</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="feature-item">
+                <h3>测试科学化</h3>
+                <p>不同教材 不同水平测试</p>
+                <p>不同区域 不同水平测试</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="feature-item">
+                <h3>辅导个性化</h3>
+                <p>针对每个学员提供补习方案</p>
+                <p>自动生成学员自己的错题本</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="feature-item">
+                <h3>提高持续化</h3>
+                <p>持续跟踪各学员学习进度与水平</p>
+                <p>周期性检测与弥补薄弱项</p>
+            </div>
+        </div>
+    </div>
+</div>

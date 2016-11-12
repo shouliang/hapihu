@@ -1,0 +1,15 @@
+<div class="clearfix pull-right" >
+   <span class="fa fa-angle-double-up  arrow-top col-md-offset-10" id="arrowTop" ng-click="scrollTop()"></span>
+</div>
+<script>
+$(window).scroll(function() {
+   if ($(window).scrollTop() > 120) {
+      $("#arrowTop").fadeIn(1000);
+   } else {
+      $("#arrowTop").fadeOut(1000);
+   }
+});
+$("#arrowTop").click(function () {
+   $('body').animate({scrollTop:0},200);
+});
+</script>

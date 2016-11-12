@@ -1,0 +1,38 @@
+<div class="" data-ng-controller="AdminBooksController as vm">
+  <div class="loading" ng-init="vm.init()" ng-hide="books"></div>
+  <h1 class="">管理辅导书
+    <span class="pull-right">
+      <span class="btn btn-primary " ui-sref="create book">添加新书</span>
+      <span class="btn btn-success " ui-sref="book editions">教材版本</span>
+    </span>
+  </h1>
+  <hr>
+  <div>当前总共有{{books.count?books.count:0}}本书</div>
+  </br>
+  <div class="row">
+    <div class="col-sm-4 col-md-3 book-item-vendor" ng-repeat="book in books.list">
+      <div class="thumbnail">
+        <img class="img-responsive cursor-hand" title="{{book.name}}" ng-src="{{book.cover}}" alt="" ui-sref="vendor book({bookId:book._id})">
+        <div class="caption">
+          <h3 class="vendor-menu-ellipsis"><a href="" title="{{book.name}}" ui-sref="vendor book({bookId:book._id})">{{book.name}}</a> </h3>
+          <p>{{book.grade}}.{{book.subject}}</p>
+          <p>
+            <span class="text-success" ng-show="book.online==='online'">已上线</span>
+            <span class="text-danger" ng-show="book.online!=='online'">未上线</span>
+            <a href="" ui-sref="edit book({bookId:book._id})">修改</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center margin-top-10">
+    <uib-pagination
+            ng-if="books && books.count>books.pageItem"
+            total-items="books.count" ng-model="books.page" max-size="10"
+            items-per-page="books.pageItem" class="pagination-sm" boundary-link-numbers="true"
+            rotate="false" previous-text="上一页" next-text="下一页" ng-change="vm.selectPage()">
+    </uib-pagination>
+  </div>
+</div>
+

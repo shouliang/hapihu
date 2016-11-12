@@ -1,0 +1,16 @@
+<section data-ng-controller="ModulesController as vm" id="modules-tab" ng-init="vm.init()">
+   <div class="wrapper">
+       <div class="row grid-title">
+           <div class="col-md-4">系统功能</div>
+           <div class="col-md-8">链接</div>
+       </div>
+       <div class="row module" ng-repeat="module in vm.modules | orderBy:'weight'">
+           <div class="col-md-4">
+               <div class="name">{{module.title}}</div>
+               <div> <a ui-sref="{{module.link}}">设置</a></div>
+           </div>
+           <div class="col-md-8">{{module.link}}</div>
+       </div>
+   </div>
+
+</section>

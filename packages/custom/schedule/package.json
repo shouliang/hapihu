@@ -1,0 +1,14 @@
+{
+  "name": "schedule",
+  "version": "0.0.1",
+  "description": "just schedule",
+  "author": {
+    "name": "shouliang"
+  },
+  "mean": "0.5.5",
+  "dependencies": {},
+  "license": "MIT",
+  "scripts": {
+    "postinstall" : "bower install"
+  }
+}

@@ -1,0 +1,70 @@
+<div class="questions-list" id="questions-list">
+    <div class=" questions-item" ng-repeat="question in questions.list " id="q_{{question._id}}">
+        <div class="questions-item-body s-answer-body" >
+            <div class="panel panel-gray">
+                <div class="panel-heading">
+                    <span class="indexNum">{{$index+1}}</span>
+                    <span class="questionType">{{question.type}}</span>
+                </div>
+                <div class="panel-body" ng-class="{'border-danger':(!question.done && question.unAnswer)}">
+                    <div class="" ng-if="question.image.stem">
+                        <img class="img-responsive" ng-repeat="image in question.image.stem" ng-src="{{image.dataUrl}}">
+                    </div>
+                    <div ng-if="question.stem" class="question-stem-box" ng-bind-html="question.stem"></div>
+                </div>
+                <div class="panel-footer a-panel-footer" ng-if="!question.done" ng-hide="vm.user.userType==='parent'">
+                    <div class="form-inline">
+                        <div class="form-group a-answer">
+                            <label class="control-label">回答</label>
+                            <div class="input-group s-answer ">
+                                <div class="input-wrap">
+                                    <input class="form-control  s-answer-radius" required id="mobile_code_block"
+                                           type="text" name="mobile_code" placeholder="输入答案" ng-model="question.iAnswer">
+                                    <input type="button" class="form-control s-upload" ng-click="question.showUpload=true;"  value="上传答案照片">
+                                 </div>
+                            </div>
+                        </div>
+                        <div class="form-group a-submit">
+                            <!--<a type="button" class="btn btn-black btn-link padding-right-0" ng-click="question.showUpload=true;">上传答题照片</a>-->
+                            <input ng-show="question.showUpload" onchange="angular.element(this).scope().selectImg(this)"
+                            class="form-control xs-form-input" id="{{question._id}}_upload" name="upload" type="file" nv-file-select uploader="uploader" options="{questionId:question._id}">
+                            <input type="button" class="form-control s-submit"  ng-click="answerIt(question)" value="提交">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer " ng-if="question.done">
+                    <div class="row equal">
+                        <div class="col-md-6 col-xs-6 question-footer-block " ng-class="{'theme-bg-0':question.myAnswer.status!=='已批改'}">
+                            <h4>我的回答</h4>
+                            <p ng-if="question.myAnswer.myAnswer">{{question.myAnswer.myAnswer}}</p>
+                            <p ng-if="question.myAnswer.myAnswerImg && question.myAnswer.myAnswerImg.length>0">
+                                <img class="img-responsive" ng-repeat="img in question.myAnswer.myAnswerImg" pop-img pop-imgs="{{img}}"  ng-src="{{img}}">
+                            </p>
+                            <div class="" >
+                                <div class="btn-group mark-box  " ng-class="{'mark-right-box':(question.myAnswer.status==='已批改' && question.myAnswer.mark==='对'),'mark-wrong-box':(question.myAnswer.status==='已批改'  && question.myAnswer.mark==='错')}">
+                                    <span class="btn btn-mark-right" ng-class="{'btn-success':(question.myAnswer.status==='已批改' && question.myAnswer.mark==='对')}" ng-click="markQuestion(question,'对')">对</span>
+                                    <span class="btn btn-mark-wrong" ng-class="{'btn-danger':(question.myAnswer.status==='已批改'  && question.myAnswer.mark==='错')}" ng-click="markQuestion(question,'错')">错</span>
+                                </div>
+                                    <span class="" ng-show="question.myAnswer.status!=='已批改'">请赶紧自我评价一下吧</span>
+                                    <span class="col-xs-12" ng-show="question.myAnswer.mark==='对'">首次回答正确</span>
+                                    <span class="col-xs-12" ng-show="question.myAnswer.mark==='错'">首次回答错误</span>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6 col-xs-6 theme-bg-2 question-footer-block">
+                            <h4>标准答案
+                                <span ng-if="question.analysis" class="pull-right cursor-hand theme-font-14 btn-link theme-color-2" ng-click="question.showDetail=!question.showDetail" ng-init="question.showDetail=false">详解答案</span>
+                            </h4>
+                            <p><div ng-if="question.answer" class="question-answer-box" ng-bind-html="question.answer" pop-img pop-content="{{question.answer}}"></div></p>
+                            <div class="" ng-if="question.showDetail">
+                                <h4>详解答案</h4>
+                                <div ng-bind-html="question.analysis"  pop-img pop-content="{{question.analysis}}"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

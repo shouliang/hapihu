@@ -1,0 +1,91 @@
+<div class="bar-color-top"></div>
+<div class="modal-header">
+  <h3 class="modal-title" >选择知识点</h3>
+</div>
+<div class="modal-body">
+    <div class="query-condition-box">
+        <span class="btn btn-default search-condition" ng-class="{'active':selected.knowledgeSystem===knowledgeSystem}" ng-repeat="knowledgeSystem in knowledgeSystems" ng-click="selectSystem(knowledgeSystem)">{{knowledgeSystem.name}}</span>
+    </div>
+    <div class="loading text-center" ng-show="isLoading">
+        <span class="fa fa-spinner fa-pulse fa-3x fa-fw theme-color"></span>
+    </div>
+    <div ng-show="selected.knowledgeSystem">
+        <h4>选择知识点</h4>
+        <div ui-tree id="tree-root" class="menu-edit-modal">
+            <ol ui-tree-nodes ng-model="selected.knowledgeSystem.children">
+                <li bindonce ng-repeat="node in selected.knowledgeSystem.children" ui-tree-node
+                    ng-include="'selectKnowledge-knowledge.html'"></li>
+            </ol>
+        </div>
+    </div>
+    <div class="selected-list " ng-show="selected.knowledgePoints.length>0">
+        <h4>已选中知识点</h4>
+        <span class="selected-list-item" ng-repeat="item in selected.knowledgePoints">
+            {{item.title}}
+            <span class="btn-close fa fa-close" ng-click="unSelected(item)"></span>
+        </span>
+    </div>
+    <div class="theme-color-1 margin-top-10 animated fadeIn" ng-show="tip">{{tip}}</div>
+</div>
+<div class="modal-footer">
+    <div class="col-xs-6 text-center">
+        <span class="btn btn-link theme-color-1"  ng-click="ok()">添加</span>
+    </div>
+    <div class="col-xs-6 text-center">
+        <span class="btn btn-link theme-color-4"  ng-click="cancel()">取消</span>
+    </div>
+</div>
+<!--<script type="text/ng-template" id="selectKnowledge-knowledge.html">-->
+    <!--<div class="tree-node vendor-menu-ellipsis" ng-click="toggle(this)">-->
+        <!--<div class="pull-left margin-right-1" title="选中">-->
+            <!--<span class="fa fa-circle-thin"  ng-show="!this.$modelValue.iselected" ng-click="selectNode(this);$event.stopPropagation();"></span>-->
+            <!--<span class="fa fa-check-circle theme-color-2"  ng-show="this.$modelValue.iselected" ng-click="selectNode(this);$event.stopPropagation();"></span>-->
+        <!--</div>-->
+        <!--<sapn  class="tree-node-content" >-->
+            <!--<a class="cursor-hand " >-->
+                <!--{{ node.title }}-->
+            <!--</a>-->
+        <!--</sapn>-->
+        <!--<a class="fa expand-nodes"-->
+           <!--ng-if="node.children && node.children.length > 0"-->
+           <!--data-nodrag ng-click="toggle(this)">-->
+      <!--<span class=""-->
+            <!--ng-class="{ 'fa fa-caret-down': collapsed,-->
+           <!--'fa fa-caret-up': !collapsed }">-->
+      <!--</span>-->
+        <!--</a>-->
+    <!--</div>-->
+    <!--<ol ui-tree-nodes="" ng-model="node.children" ng-class="{hidden: collapsed}" >-->
+        <!--<li ng-repeat="node in node.children"-->
+            <!--ui-tree-node data-collapsed="!node.expanded"-->
+            <!--ng-include="'selectKnowledge-knowledge.html'" >-->
+        <!--</li>-->
+    <!--</ol>-->
+<!--</script>-->
+<script type="text/ng-template" id="selectKnowledge-knowledge.html">
+    <div class="tree-node vendor-menu-ellipsis" ng-click="toggle(this)">
+        <div class="pull-left margin-right-1" title="选中">
+            <span class="fa fa-circle-thin"  ng-show="!this.$modelValue.iselected" ng-click="selectNode(this);$event.stopPropagation();"></span>
+            <span class="fa fa-check-circle theme-color-2"  ng-show="this.$modelValue.iselected" ng-click="selectNode(this);$event.stopPropagation();"></span>
+        </div>
+        <span  class="tree-node-content" >
+            <a class="cursor-hand " bo-text="node.title">
+            </a>
+        </span>
+        <a class="fa expand-nodes"
+           ng-if="node.children && node.children.length > 0"
+           data-nodrag ng-click="toggle(this)">
+      <span class=""
+            ng-class="{ 'fa fa-caret-down': collapsed,
+           'fa fa-caret-up': !collapsed }">
+      </span>
+        </a>
+    </div>
+    <ol ui-tree-nodes="" ng-model="node.children" ng-class="{'hidden': collapsed}" >
+        <li bindonce ng-repeat="node in node.children"
+            ui-tree-node data-collapsed="!node.expanded"
+            ng-include="'selectKnowledge-knowledge.html'" ng-if="!collapsed">
+        </li>
+    </ol>
+</script>
+

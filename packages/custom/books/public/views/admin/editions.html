@@ -1,0 +1,50 @@
+<div class="" data-ng-controller="BookEditionsController as vm">
+  <div class="loading" ng-init="vm.init()" ng-hide="vm.editions"></div>
+  <h1 class="">教材版本管理</h1>
+  <hr>
+  <table class="table table-striped table-bordered table-hover editable-table">
+    <tr style="font-weight: bold">
+      <td style="width:35%">名称</td>
+      <td style="width:20%">限定地区</td>
+      <td style="width:20%">备注</td>
+      <td style="width:25%">管理</td>
+    </tr>
+    <tr ng-repeat="edition in vm.editions.list">
+      <td>
+        <!-- editable editionname (text with validation) -->
+        <span  editable-text="edition.title" e-name="title" e-form="rowform" onbeforesave="" e-required>
+          {{ edition.title || 'empty' }}
+        </span>
+      </td>
+      <td>
+        <!-- editable status (select-local) -->
+        <span editable-text="edition.location" e-name="location" e-form="rowform" onbeforesave="">
+          {{ edition.location   || 'empty' }}
+        </span>
+      </td>
+      <td>
+        <span editable-textarea="edition.summary" e-name="summary"  e-form="rowform" >
+          {{ edition.summary }}
+        </span>
+      </td>
+      <td style="white-space: nowrap">
+        <!-- form -->
+        <form editable-form name="rowform" onaftersave="vm.saveEdition($data, edition)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="newEdition == edition">
+          <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+            保存
+          </button>
+          <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
+            取消
+          </button>
+        </form>
+        <div class="buttons" ng-show="!rowform.$visible">
+          <button class="btn btn-primary" ng-click="rowform.$show()">修改</button>
+          <button class="btn btn-danger" ng-click="vm.removeEdition(edition,$index)">删除</button>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <button class="btn btn-default" ng-click="vm.addEdition()">添加版本</button>
+</div>
+

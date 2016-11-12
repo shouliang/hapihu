@@ -1,0 +1,35 @@
+<section data-ng-controller="SchoolEditController as vm" id="school-edit">
+   <h1 class="page-header"><span>修改学校信息</span></h1>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">学校名称</label>
+            <div class="col-sm-10">
+                <input class="form-control" ng-model="vm.school.name" placeholder="请填写学校完整名称">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">学校位置</label>
+            <div class="col-sm-10">
+                <div select-result='vm.school.address' select-class='city-selector' city-select  init-city="vm.initAddress"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">学校介绍</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" placeholder="学校介绍信息" rows="10" data-ng-model="vm.school.profile.summary"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">学校状态</label>
+            <div class="col-sm-3">
+                <select class="form-control" ng-model="vm.school.status" ng-options="status for status in ['unconfirmed','confirmed']"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input class=" btn btn-primary" type="button" value="保存修改" ng-click="vm.editSchool()">  <a class="btn btn-default" ng-click="goBack();">返回</a>
+            </div>
+        </div>
+    </div>
+
+</section>

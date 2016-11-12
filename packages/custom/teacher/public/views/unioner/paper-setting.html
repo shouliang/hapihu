@@ -1,0 +1,111 @@
+<div class="row bg-white" data-ng-controller="PaperSettingController as vm" >
+  <div class="loading" ng-init="vm.init()" ng-hide="vm.book"></div>
+  <h1 class="page-title"><span class="title-tag-1 fa fa-chevron-left" ng-click="goBack();"></span>考试设置</h1>
+  <div class="form-horizontal form-group-list">
+    <div class="form-group form-group-list-item">
+      <label  class="col-sm-3 control-label">考试标题</label>
+      <div class="col-sm-9">
+              <span id="taskTitle" >
+                {{ task.title || 'empty' }}
+              </span>
+      </div>
+    </div>
+    <div class="form-group form-group-list-item">
+      <label  class="col-sm-3 control-label">考试说明</label>
+      <div class="col-sm-9">
+        <div id="taskAim" class="cursor-hand aim-details margin-bottom-none"  e-rows="2" e-cols="40">
+          <pre class="theme-font-14">{{ task.aim || '无目标' }}</pre>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form-group-list-item">
+      <label  class="col-sm-3 control-label">考试题目</label>
+      <div class="col-sm-9 ">
+        <span class="label-item" ng-repeat="topic in topics">{{topic.title}}</span>
+      </div>
+    </div>
+    <div class="form-group form-group-list-item">
+      <label  class="col-sm-3 control-label">选中班级</label>
+      <div class="col-sm-9 ">
+        <div ng-repeat="school in classes">
+          <h4>{{school.name}}</h4>
+          <div class="label-collection">
+            <span class="label-item" ng-repeat="klass in school.classes">{{klass.name}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form-group-list-item">
+      <label  class="col-sm-3 control-label">考试日期</label>
+      <div class="col-sm-5">
+        {{task.endDate | date:'MM-dd HH:mm'}}
+      </div>
+    </div>
+  </div>
+  <div class="row-seperate"></div>
+  <h3 class="sub-title"><span class="title-tag-3"></span>阅卷老师</h3>
+  <table class="table col-sm-12 table-striped">
+    <thead>
+      <td>帐户名</td>
+      <td>姓名</td>
+      <td>阅卷题目</td>
+      <td>阅卷班级<span class="theme-color theme-font-12">(鼠标移班级上可显示该班级的学校和年级)</span></td>
+      <td>阅卷状态</td>
+      <td>操作</td>
+    </thead>
+    <tr ng-repeat="checker in task.checkers">
+      <td>{{checker.username}}</td>
+      <td>{{checker.name}}</td>
+      <td><span class="label-item" ng-repeat="topic in checker.content.topicInfos">{{topic.title}}</span></td>
+      <td><span class="label-item" ng-repeat="klass in checker.to" title="{{klass.schoolName+klass.grade+klass.name}}">{{klass.name}}</span></td>
+      <td>{{checker.status}}</td>
+      <td><span class="btn btn-default" ng-click="deleteChecker(checker)">删除</span></td>
+
+    </tr>
+  </table>
+  <div class="form-group margin-left-1">
+    <span class="btn btn-primary btn-border-round" ng-click="newChecker.show=!newChecker.show">增加阅卷人</span>
+  </div>
+  <div class="bg-1 form-horizontal" ng-if="newChecker.show">
+    <div class="form-group">
+      <label class="control-label col-md-2">阅卷人</label>
+      <div class="col-md-5">
+        <input class="form-control" type="text" ng-model="newChecker.username" placeholder="用户帐户名"/>
+      </div>
+      <div class="col-md-2">
+        <span class="btn btn-default">检查用户</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-md-2">分配题目</label>
+      <div class="col-md-10">
+        <label class="checkbox-inline">
+          <input type="checkbox" ng-model="newChecker.allTopicsSelected"  ng-change="allTopics()"> 全部
+        </label>
+        <label class="checkbox-inline" ng-repeat="(key,value) in newChecker.topics">
+          <input type="checkbox" ng-model="value"> {{getTopicTitle(key)}}
+        </label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-md-2">分配班级</label>
+      <div class="col-md-10">
+        <div ng-repeat="school in classes">
+          <div>
+            <strong class="margin-right-1">{{school.name}}</strong>
+          </div>
+          <div class="btn-collect margin-bottom-1">
+            <span class="btn border-radio-0 margin-right-1" ng-class="{'btn-success':klass.selected,'btn-default':!klass.selected}" ng-click="klass.selected=!klass.selected" ng-repeat="klass in school.classes">{{klass.name}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group padding-10 border-top-1">
+      <div class="col-md-offset-2 padding-left-20">
+        <div class="help-block" ng-if="tip">{{tip}}</div>
+        <span class="btn btn-primary " ng-click="addChecker()">确定分配</span>
+      </div>
+    </div>
+  </div>
+</div>
+

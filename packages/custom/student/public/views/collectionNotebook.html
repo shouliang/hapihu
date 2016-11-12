@@ -1,0 +1,100 @@
+<div class="bg-white row" data-ng-controller="collectionNotebookController as vm" ng-init="vm.init();">
+    <h1 class="page-title"><span class="title-tag-1"></span>错题本</h1>
+    <div class="page-note">
+        <span class="page-note-version ">基础版</span>
+        <span class="page-note-more">高级版<span class=" page-note-detail">( 暂未开放：增加一键生成错题本、筛选错题等等 )</span></span>
+        <span class="pull-right ">
+            <span class="page-note-about">关于错题本</span>
+            <span  uib-popover="{{'系统自动检测做错的题目，并生成错题本'}}"
+             popover-trigger="mouseenter" popover-placement="bottom"
+             class="glyphicon glyphicon-question-sign theme-color-1"></span>
+        </span>
+    </div>
+    <div class="notask-teacher " ng-show="questions.count===0">
+        <img class="img-responsive notask-teacher-img" src="theme/assets/img/noTask-teacher.png">
+        <h4>错题本暂无内容</h4>
+        <p>恭喜您，没有错题哦～</p>
+        <p ng-show="!user.profile.grade">您可以加入班级体验哈皮虎学习系统哦～</p>
+        <a ng-show="!user.profile.grade" class="btn btn-border" ui-sref="join class">体验一下</a>
+    </div>
+    <!--错题列表-->
+    <div ng-show="questions.list.length!==0" class="row-seperate"></div>
+    <div class="questions-list ">
+        <div class=" questions-item" ng-repeat="question in questions.list" id="q_{{question._id}}">
+            <div class="panel n-panel ">
+                <div class="panel-heading">
+                    <span class=" n-question-title text-muted">{{question.topic.subject||'科目'}}/{{question.topic.type||'题型'}}/{{question.topic.from.catalogue}}</span>
+                    <div class="text-right question-setting-margin">
+                        <span class="delete-style-block text-muted">{{question.created | limitTo: 10}}</span>
+                    </div>
+                </div>
+                <div class="panel-body s-note-border n-panel-margin">
+                    <div class="" ng-if="question.topic.image.stem">
+                        <img class="img-responsive" ng-repeat="image in question.topic.image.stem" ng-src="{{image.dataUrl}}">
+                    </div>
+                    <div ng-if="question.topic" class="question-stem-box" ng-bind-html="question.topic.stem"></div>
+                    <div class="question-add-footer border-none">
+                        <span class="v-style-level" ng-show="question.topic.level">{{question.topic.level||"难易度" }}</span>
+                        <span class="v-style-block" ng-repeat="knowledge in question.topic.knowledge"
+                           ng-show="question.topic.knowledge.length!==0 && knowledge.level>=2">{{knowledge.title||"知识点"}}</span>
+                    </div>
+                </div>
+                <div class="panel-footer n-panel-footer n-panel-margin">
+                    <div class="row">
+                        <div class="n-extentInfo cursor-hand" ng-click="question.addtionInfo=!question.addtionInfo">
+                            <span class=" ">答案信息</span>
+                            <span class="fa fa-caret-down" ng-show="!question.addtionInfo"></span>
+                            <span class="fa fa-caret-up" ng-show="question.addtionInfo"></span>
+                        </div>
+                        <div ng-show="question.addtionInfo" class="n-extend-border equal">
+                            <div ng-if="question.myAnswer" class="col-sm-4 col-xs-12">
+                                <p>我的回答</p>
+                                <p>{{question.myAnswer||'没有回答此题'}}</p>
+                            </div>
+                            <div ng-if="question.myAnswerImg && question.myAnswerImg.length>0" class="col-sm-4">
+                                <p>我的回答</p>
+                                <img  class="max-width-100 img-responsive" ng-repeat="img in  question.myAnswerImg" pop-img pop-imgs="{{img}}" ng-src="{{img}}">
+                            </div>
+                            <div class="col-sm-4 col-xs-12 n-panel-footer-border ">
+                                <div class="col-xs-6 ">
+                                    <div>正确答案</div>
+                                    <div ng-bind-html="question.topic.answer||'<p class=text-muted>暂无正确答案</p>'" pop-img pop-content="{{question.topic.answer}}"></div>
+                                </div>
+                                <div class=" col-xs-6 pull-right" >
+                                      <div class="pull-right btn btn-link theme-color-2 row " ng-if="question.topic.analysis"
+                                  ng-click="question.showAnalysis=!question.showAnalysis">详细解析</div>
+                                        <div class=" text-muted pull-right " ng-if="!question.topic.analysis" >没有详细解析</div>
+                                    <div class="arrow-box note-margin-top-50 theme-bg-2" ng-show="question.showAnalysis">
+                                        <div class="arrow"></div>
+                                        <div class="description-details"
+                                             ng-bind-html="question.topic.analysis" pop-img pop-content="{{question.topic.analysis}}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-xs-12">
+                                <div class="">
+                                    <p>推介学习</p>
+                                    <p>功能尚未开放</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--分页-->
+    <div class="text-center margin-top-10">
+        <uib-pagination
+                ng-if="questions && questions.count>questions.pageItem"
+                total-items="questions.count"
+                ng-model="questions.page" max-size="10"
+                items-per-page="questions.pageItem"
+                class="pagination-sm" boundary-link-numbers="true"
+                rotate="false" previous-text="上一页" next-text="下一页"
+                ng-change="vm.selectPage()">
+        </uib-pagination>
+    </div>
+</div>
+

@@ -1,0 +1,54 @@
+<div class="bg-white row" data-ng-controller="TrainerStudentController as vm" ng-init="vm.init();">
+    <h1 class="page-title"><span class="title-tag-1"></span>学生列表</h1>
+    <div class="condition-list">
+        <div class="form-group clearfix" >
+            <label class="control-label col-sm-1 text-center">年级</label>
+            <div class="col-sm-11">
+                <span class="search-condition"  ng-class="{'active':!query.grade}" ng-click="query.grade=null;vm.queryFetch();">全部</span>
+                <span class="search-condition"  ng-repeat="grade in grades" ng-class="{'active':query.grade===grade}" ng-click="query.grade=grade;vm.queryFetch();">{{grade}}</span>
+            </div>
+        </div>
+        <div class="form-group clearfix" >
+            <label class="control-label col-sm-1 text-center">状态</label>
+            <div class="col-sm-11">
+                <span class="search-condition"  ng-class="{'active':!query.station}" ng-click="query.station=null;vm.queryFetch();">全部</span>
+                <span class="search-condition"  ng-repeat="station in stationes" ng-class="{'active':query.station===station}" ng-click="query.station=station;vm.queryFetch();">{{station}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="row-seperate"></div>
+    <table class="table theme-table-1 ">
+        <thead>
+            <th>账号</th>
+            <th>姓名</th>
+            <th>所在年级</th>
+            <th>业务</th>
+            <th>测试</th>
+            <th>报告</th>
+            <th>历史试卷</th>
+            <th>错题本</th>
+            <th>状态</th>
+        </thead>
+        <tr ng-repeat="member in members.list | filter:myFilter">
+            <td>{{member.username}}</td>
+            <td>{{member.name||'姓名'}}</td>
+            <td><span ng-repeat="product  in  member.products">{{product.className}}</span></td>
+            <td ><span ng-repeat="product  in  member.products">{{product.product}}</span></td>
+            <td>
+                <a ui-sref="trainer student examinations({userId:member.userId})">布置测试</a>
+            </td>
+            <td>
+                <a ui-sref="trainer student statistic({userId:member.userId})">查看报告</a>
+            </td>
+            <td><a ui-sref="trainer student list({userId:member.userId})">历史试卷</a></td>
+            <td>
+                <a href="#"  ui-sref="trainer student collectionNoteBook({userId:member.userId})">错题本</a>
+            </td>
+            <td>{{student.station}}</td>
+        </tr>
+    </table>
+    <div class="text-center margin-top-10">
+        <uib-pagination ng-if="students && students.count>students.pageItem" total-items="students.count" ng-model="students.page" max-size="10" items-per-page="students.pageItem" class="pagination-sm" boundary-link-numbers="true" rotate="false" previous-text="上一页" next-text="下一页" ng-change="vm.selectPage()"></uib-pagination>
+    </div>
+</div>
+

@@ -1,0 +1,55 @@
+<div class="row bg-white" data-ng-controller="TraineeStatisticController as vm " ng-init="vm.init()">
+    <h1 class="page-title"><span class="title-tag-1 fa fa-chevron-left" ng-click="goBack();"></span>测试报告</h1>
+    <div class="margin-left-1">
+        这里是报告统计图表
+    </div>
+    <div class="row-seperate"></div>
+    <h3 class="sub-title"><span class="title-tag-2"></span>历史测试</h3>
+    <div class="task-list clearfix">
+        <div class="notask-teacher" ng-show="!tasks.count">
+            <img class="img-responsive notask-teacher-img" src="theme/assets/img/noTask-teacher.png">
+            <h4>历史试卷暂无内容</h4>
+        </div>
+        <div class="col-md-4" ng-repeat="task in tasks.list" ng-class="{'padding-right-5':$index%3===0,'padding-left-5':$index%3===2}">
+            <div class="panel panel-default task-item"  >
+                <div class="label-corner-right" ng-show="$index===0 && tasks.page===1">最新</div>
+                <div class="panel panel-heading">
+                    <a  ng-if="task.done" ui-sref="trainee taskExe({taskExeId:task.taskExe._id})">{{task.title}}</a>
+                    <a  ng-if="!task.done" ui-sref="trainee task({taskId:task._id})">{{task.title||'题目1'}}</a>
+            <span class="pull-right">
+              <span class="text-muted" ng-show="!task.done">未完成</span>
+              <span class="theme-color-1" ng-show="task.done">已完成</span>
+            </span>
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-6">
+                                <div ng-if="!task.done">
+                                    <p  ><span class="btn btn-danger">未完成</span></p>
+                                    <p class="text-muted">截至时间：{{task.endDate | date:'MM-dd'}}</p>
+                                </div>
+                                <div ng-if="task.done">
+                                    <p >正确率：<span class="btn btn-success">{{task.taskExe.statistics.rightRate || 0}}%</span> </p>
+                                    <p >总体评价：{{task.advice.mark||"暂无评价"}}</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-xs-6 text-right padding-top-10">
+                                <p>共{{task.content.topics.length||'0'}}题</p>
+                                <p ng-if="task.done">创建日期：{{task.taskExe.created | date:'MM-dd'}}</p>
+                            </div>
+                        </div>
+                        <div class="border-top-1">
+                            <a href="" class="btn btn-border btn-question-border task-subject" ui-sref="student tasks({subject:task.content.subject})">{{task.content.subject||'2016年6月班'}}</a>
+                            <div class="pull-right">
+                                <a ng-if="task.done" class="btn btn-primary-active btn-link" href="#" ui-sref="trainee task({taskExeId:task.taskExe._id})">查看报告</a>
+                                <a ng-if="!task.done" class="btn btn-black btn-link padding-right-0" href="#" ui-sref="trainee task({taskId:task._id})">查看作业</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

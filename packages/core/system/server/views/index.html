@@ -1,0 +1,16 @@
+{% extends 'layouts/default.html' %}
+{% block content %}
+  <section data-ui-view ></section>
+  <script type="text/javascript">
+    window.user = {{user|json|safe}};
+    window.modules = null;
+  </script>
+  <div class="baidutongji">
+    <script type="text/javascript">
+      //baidu tongji
+      var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+      document.write(unescape("%3Cscript src='" + _bdhmProtocol +
+              "hm.baidu.com/h.js%3F4e6d2a3f523f1f8907c3c1b01172f2d0' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+  </div>
+{% endblock %}

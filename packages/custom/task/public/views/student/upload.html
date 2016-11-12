@@ -1,0 +1,51 @@
+<div class="bg-white row" data-ng-controller="StudentUploadController as vm" ng-init="vm.init()">
+    <h1 class="page-title"><span class="title-tag-1 fa fa-chevron-left" ng-click="goBack()"></span>上传作业</h1>
+    <h4 class="padding-left-right-15 no-result" ng-if="pageImgs.length===0">
+        此作业暂不支持拍照上传
+    </h4>
+    <div class="padding-left-right-15 upload-box padding-bottom-15 clearfix" ng-if="pageImgs.length>0">
+        <h4 class="">请按以下要求对作业拍照，然后按页码上传</h4>
+        <div class="text-center col-sm-12 col-md-4" ng-repeat="page in pageImgs | orderBy:'page'" >
+            <div class="thumbnail">
+                <input class="form-control uploadFile" data-page="{{page.pageImg}}" id="upload_{{page.page}}" type="file" name="upload_{{page.page}}" onchange="angular.element(this).scope().handleFileSelect(event)"/>
+                <!--<div class="upload-page-box">-->
+                    <!--<img-crop image="page.myOriginalImg" result-image="page.myImg" result-image-size="'max'" init-max-area="true" area-type="rectangle"></img-crop>-->
+                <!--</div>-->
+                <img ng-if="page.myImg" ng-src="{{page.myImg}}">
+                <div class="caption">第{{page.page}}页</div>
+            </div>
+        </div>
+        <div class="clearfix col-xs-12"  ng-if="!uploadedSuccess ">
+            <div class="progress" style="margin-bottom: 0;" ng-if="uploader.isUploading">
+                <div class="progress-bar progress-bar-success" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+            </div>
+            <span class="btn btn-primary btn-border-round" ng-if="!uploader.isUploading" ng-click="vm.uploadAll()">全部上传</span>
+        </div>
+        <div class="clearfix col-xs-12 no-result" ng-if="uploadedSuccess">
+            上传成功，请等待批阅
+        </div>
+    </div>
+    <div class="row-seperate "></div>
+    <h2 class="sub-title"><span class="title-tag-2"></span>拍照要求</h2>
+    <div class="padding-left-right-15 photo-tip">
+        <h4>1、拍照时请保证页面正向，平整，4个角与边全部拍摄到，页面下方背景为单色，如：</h4>
+        <div class="col-md-6 margin-bottom-1">
+            <img class="img-responsive" src="/theme/assets/img/photo-standard.png">
+        </div>
+        <div class="clearfix"></div>
+        <h4>2、请避免以下拍摄方式</h4>
+        <div class="col-sm-6 col-md-3">
+            <img class="img-responsive" src="/theme/assets/img/photo-error-1.png">
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <img class="img-responsive" src="/theme/assets/img/photo-error-2.png">
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <img class="img-responsive" src="/theme/assets/img/photo-error-3.png">
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <img class="img-responsive" src="/theme/assets/img/photo-error-4.png">
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,36 @@
+<div class="bar-color-top"></div>
+<div class="modal-header">
+  <h3 class="modal-title" >添加资源</h3>
+</div>
+<div class="modal-body">
+  <div class="">
+    <div class="form-group">
+        <input class="form-control" ng-model="newAttach.title" placeholder="资源标题">
+    </div>
+      <div class="form-group">
+          <input class="form-control" ng-model="newAttach.url" placeholder="资源的网址（支持其他网站网址）">
+      </div>
+      <div class="form-group">
+          <input class="form-control" type="file" nv-file-select="" uploader="uploader">
+          <p class="help-block">本地上传：支持mp4、word、pdf、txt、excel、jpg、png等类型</p>
+      </div>
+      <div class="form-group" ng-show="uploader.queue.length>0">
+          <span class="form-control btn btn-success"  ng-click="uploader.uploadAll()">上传</span>
+      </div>
+      <div class="progress clearfix" ng-show="uploader.isUploading ">
+          <div class="progress-bar progress-bar-success" role="progressbar"
+               ng-style="{ 'width': uploader.queue[0].progress + '%' }">
+          </div>
+      </div>
+    <div class="theme-color-1 margin-top-10 animated fadeIn" ng-show="tip">{{tip}}</div>
+  </div>
+</div>
+<div class="modal-footer">
+    <div class="col-xs-6 text-center">
+        <span class="btn btn-link theme-color-1"  ng-click="ok()">添加</span>
+    </div>
+    <div class="col-xs-6 text-center">
+        <span class="btn btn-link theme-color-4"  ng-click="cancel()">取消</span>
+    </div>
+</div>
+

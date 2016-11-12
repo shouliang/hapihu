@@ -1,0 +1,168 @@
+<div class="" data-ng-controller="VendorBookController as vm">
+  <div class="loading" ng-init="vm.init()" ng-hide="vm.book"></div>
+  <div class="row" >
+    <div class="col-md-4 book-menu bg-white bottom-border-1">
+      <h1 class="page-title row">
+        <span class="title-tag-1 fa fa-chevron-left" ui-sref="vendor books"></span>
+        目录
+      </h1>
+      <div class="book-menu-btn">
+        <span ng-show="expandAll" class="btn btn-link theme-color-4"
+              ng-click="$broadcast('angular-ui-tree:collapse-all');expandAll=!expandAll;">
+          <span class="glyphicon glyphicon-resize-horizontal"></span>全部折叠
+        </span>
+        <span ng-show="!expandAll" class="btn btn-link theme-color-4"
+              ng-click="$broadcast('angular-ui-tree:expand-all');expandAll=!expandAll;">
+          <span class="glyphicon glyphicon-resize-vertical"></span>全部展开
+        </span>
+        <span class="btn btn-link theme-color-4"
+              ui-sref="book catalogue({bookId:vm.book._id})">添加目录
+        </span>
+      </div>
+      <div class="book-about" >
+        <span class="cursor-hand"  ng-class="{'theme-color':!selectedNode.node}" ng-click="selectedNode.node=null">本书概述</span>
+      </div>
+      <div ui-tree id="tree-root" data-drag-enabled="false"
+           ng-init="selectedNode={}; " >
+        <ol ui-tree-nodes ng-model="vm.book.nodes" >
+          <li ng-repeat="node in vm.book.nodes"
+              ui-tree-node data-collapsed="!node.expanded"
+              ng-include="'books/views/vendor/book-menu.html'" ng-init="node.expanded=true"></li>
+        </ol>
+      </div>
+    </div>
+    <div class="col-md-8 book-content  ">
+      <div class="row-right-body bg-white bottom-border-1 min-height-100">
+        <div class="padding-bottom-2 row" ng-if="!selectedNode.node">
+          <ol class="breadcrumb book-summary-breadcrumb">
+            <img class="img-responsive icon-img" src="books/assets/img/icons/vendor-book.png">
+            <li class="latest-change">书籍简介</li>
+            <li class="pull-right margin-top-10">
+              <a class="btn btn-border" ui-sref="edit book({bookId:vm.book._id})">修改书籍</a>
+              <a class="btn btn-border margin-left-1" ui-sref="book images({bookId:vm.book._id})">内容管理</a>
+              <a class="btn btn-border margin-left-1" ng-click="vm.synchronize()">强制同步</a>
+            </li>
+          </ol>
+          <div class="book-info">
+            <div class="col-sm-9">
+              <h1 class="book-name vendor-menu-ellipsis">{{vm.book.name}}</h1>
+              <div class="tags margin-bottom-1">
+                <span class="tag-grade">{{vm.book.grade}}</span>
+                <span class="tag-grade">{{vm.book.session}}</span>
+                <span class="tag-subject">{{vm.book.subject}}</span>
+              </div>
+              <div class="book-description"
+                   ng-if="vm.book.summary" ng-bind-html="vm.book.summary"></div>
+            </div>
+            <div class="col-sm-3">
+              <img class="img-responsive " ng-src="{{vm.book.cover}}">
+            </div>
+          </div>
+        </div>
+        <div class="time-list bg-white" ng-if="!selectedNode.node" >
+          <ol class="breadcrumb latest-line">
+            <img class="img-responsive icon-img" src="books/assets/img/icons/vendor-time.png">
+            <li class="latest-change ">修改日期</li>
+          </ol>
+          <div class="row time-padding">
+            <div  class="change-time col-xs-6 col-sm-4 col-md-3 text-muted"
+                  ng-repeat="updated in vm.book.updated |limitTo : 8 |orderBy:'-'">
+              {{updated.time | date:'yyyy-MM-dd HH:mm'}}
+            </div>
+          </div>
+        </div>
+        <div class="bg-white" ng-if="selectedNode.node">
+          <div class="bar-color row">
+            <span class="theme-bg-3"></span>
+            <span class="theme-bg-1"></span>
+            <span class="theme-bg-2"></span>
+          </div>
+          <ol class="breadcrumb title-margin" >
+            <li ng-repeat="inode in selectedNode.parents">{{inode.title}}</li>
+            <li class="">{{selectedNode.node.title}}</li>
+          </ol>
+          <h3 class="sub-title row"><span class="title-tag-3" ></span>学习目标</h3>
+            <div class="aim-details">
+              <a href="#"
+                 editable-textarea="selectedNode.node.aim" e-rows="4" e-cols="40"
+                 onbeforesave="vm.updateNode($data);">
+                <pre>{{ selectedNode.node.aim || '无目标' }}</pre>
+              </a>
+            </div>
+            <div class="row-seperate"></div>
+            <h3 class="sub-title  row"><span class="title-tag-1"></span>资源管理
+              <div class="pull-right theme-font-14">
+                  <div class="btn text-muted edit-margin-15" ng-show="false || !vm.editResource" ng-click="vm.editResource = !vm.editResource">
+                    <span class="fa-stack fa-md  fa-question-setting">
+                      <i class="fa fa-circle fa-stack-2x"></i>
+                      <i class="fa fa-stack-1x fa-pencil fa-inverse"></i>
+                    </span>
+                    编辑
+                  </div>
+                  <div class="" ng-show="vm.editResource && resources.count!==0" >
+                    <span class="btn btn-primary btn-border-round btn-padding" ng-click="vm.saveResource(true);">保存</span>
+                    <span class="btn btn-border" ng-click="vm.saveResource(false)">取消</span>
+                  </div>
+                </div>
+            </h3>
+            <div class="no-result text-muted margin-top-neg-15" ng-if="resources.count===0">
+              没有相关资源
+            </div>
+          <div class="resource-list clearfix" ng-if="!vm.editResource">
+            <div class="col-sm-4 col-md-3" ng-repeat="resource in resources">
+              <a target="_blank" href="{{resource.url}}" class="thumbnail" >
+                <img class="img-responsive " ng-url="resource.url" media-img="">
+                <div class="caption vendor-resource-title">
+                  <h4 class="text-center text-nowrap">{{resource.title }}</h4>
+                </div>
+              </a>
+            </div>
+          </div>
+            <div class="form-inline padding-bottom-15" ng-show="vm.editResource">
+              <div class="resource-list ">
+                <div class="resource-list-item clearfix" ng-repeat="resource in resources">
+                  <div class="col-sm-3 "><span class="text-nowrap">{{resource.title }}</span> </div>
+                  <div class="col-sm-6 "><span class="text-nowrap">{{resource.name }}</span> </div>
+                  <div class="col-sm-3 text-right"><span class="btn btn-link glyphicon glyphicon-arrow-up" ng-click="vm.resourceMoveUp(resource)"></span><span class="btn btn-link" ng-click="vm.deleteResource(resource)">删除</span></div>
+                </div>
+              </div>
+              <div class="form-group" >
+                <span class="form-control btn btn-primary" select-resource="" resource-selected="selectedResource" on-select="insertResource(resources)" resource-subject="vm.book.subject">在系统里选择</span>
+                <span class="form-control btn btn-success" new-attach="" add-attach="" on-success="addAttach(newAttach)">添加资源</span>
+              </div>
+
+            </div>
+            <div class="row-seperate"></div>
+            <h3 class="sub-title  row"><span class="title-tag-2"></span>题目管理（{{questions.count || "0"}}）
+             <span class="pull-right theme-font-14">
+                <span class="btn text-muted edit-margin-15" ng-show="!questions.editModal" ng-click="questions.editModal = true">
+                  <span class="fa-stack fa-md fa-question-setting">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-stack-1x fa-pencil fa-inverse"></i>
+                  </span>
+                  编辑顺序
+                </span>
+                <span class="btn btn-primary btn-border-round btn-padding" ng-show="questions.editModal" >
+                  <span class="" ng-click="saveOrder(true);">保存</span>
+                </span>
+               <span class="btn btn-border " ng-show="questions.editModal" >
+                  <span class="" ng-click="saveOrder(false);">取消</span>
+                </span>
+              </span>
+            </h3>
+            <div class="" ng-include="'books/views/vendor/questions-list.html'"></div>
+            <p>
+              <span class="btn btn-primary btn-border-round"
+                    ui-sref="create question(
+                  {bookId:vm.book._id,bookName:vm.book.name,path:vm.selectedNode.path.join(',')})">添加题目
+              </span>
+            </p>
+            <div class="alert alert-info" ng-if="questions.length===0">
+              此处内容尚未添加，如果已经有用户下载了此书，全部添加后注意执行“强制同步”
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

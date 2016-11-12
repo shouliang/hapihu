@@ -1,0 +1,202 @@
+<section id="createQuestion" class=""  data-ng-controller="QuestionCreateController as vm" ng-init="vm.init()">
+    <form name="questionForm" class="equal" role="form">
+        <div class="col-sm-12 col-md-4 bg-white padding-bottom-2 ">
+            <h1 class="page-title row">
+                <span class="title-tag-1 fa fa-chevron-left" ng-click="vm.goBack();"></span>{{question._id?"修改题目":"新建题目"}}
+                <span class="pull-right margin-right-1">
+                    <span class="btn btn-primary btn-border-round btn-padding" ng-if="!question._id" ng-click="vm.create()">保存，下一题</span>
+                    <span class="btn btn-primary btn-border-round btn-padding" ng-if="question._id" ng-click="vm.edit()">修改并返回</span>
+                    <!--<a ng-if="question.from && question.from.bookId" class="btn btn-link" href="" ui-sref="vendor book({bookId:question.from.bookId,catalogue:bookPath})">返回</a>-->
+                    <!--<a ng-if="!(question.from && question.from.bookId)" class="btn btn-link" href="" ng-click="goBack()">返回</a>-->
+                </span>
+            </h1>
+            <div  class="form-horizontal col-md-12" >
+                <div class="form-group ">
+                    <label class="control-label col-md-2">题号</label>
+                    <div class="col-md-10">
+                        <input class="form-control" type="text" ng-model="question.title" placeholder="题号（非必填）"/>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label class="control-label col-md-2">分数</label>
+                    <div class="col-md-10">
+                        <input class="form-control" type="number" ng-model="question.score" placeholder="题目分数（非必填）"/>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label for="subject" class="control-label col-md-2">科目</label>
+                    <div class="col-md-10">
+                        <select required  class="form-control" id="subject"
+                                name="subject" ng-model="question.subject"
+                                placeholder="选择年级"
+                                ng-options="subject for subject in vm.subjects">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label for="qtype" class="control-label col-md-2">题型</label>
+                    <div class="col-md-10">
+                        <select  class="form-control" id="qtype"  name="type"
+                                 ng-model="question.type" placeholder="选择版本"
+                                 ng-options="qtype for qtype in vm.qtypes" ng-change="vm.changeQtype();">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group " >
+                    <label  for="knowledge" class="col-md-2 control-label v-knowledge">知识点</label>
+                    <div class="col-md-10 theme-equal">
+                        <div>
+                            <input name="knowledge"
+                                   id="knowledge"  placeholder="知识点"
+                                   class="form-control" ng-model="question.knowledgeTitles" readonly>
+                        </div>
+                        <div  class="btn btn-success" knowledge-points="question.knowledge" knowledge-subject="{{question.subject}}" knowledge-grade="{{question.grade}}" add-knowledge="" on-success="changeKnowledge(knowledge)">选择</div>
+                    </div>
+                    <div class="">
+
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label for="qtype" class="control-label col-md-2">难易</label>
+                    <div class="col-md-10">
+                        <select  class="form-control" id="level"  name="level"
+                                 ng-model="question.level" placeholder="选择版本"
+                                 ng-options="level for level in ['容易','中等','困难','很难']" ng-init="question.level= question.level || '容易'">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label for="label"  class="col-md-2 control-label">标签</label>
+                    <div class="col-md-10">
+                        <input name="label" type="text" class="form-control"
+                               data-ng-model="question.tags" id="label"
+                               placeholder="多个标签之间用空格区分">
+                        <!--<div class="help-block">-->
+                        <!--</div>-->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="label"  class="col-md-2 control-label">资源</label>
+                    <div class="col-md-8">
+                        <a class="btn btn-border" type="file" role="button">上传资源</a>
+                        <p class="font-color-999">支持mp4视频格式</p>
+                    </div>
+                </div>
+                <div class="form-group" >
+                    <label  class="col-md-2 control-label">状态</label>
+                    <div class="col-md-10 form-group" >
+                        <span class="radio-inline" ng-click="question.online ='online'" >
+                            <span class="glyphicon" ng-class="{'glyphicon-record theme-color':question.online ==='online',
+                            'glyphicon-record font-color-999':question.online ==='unOnline'}"
+                                  ng-model="question.online" >发布
+                            </span>
+                        </span>
+                        <span class="radio-inline" ng-click="question.online ='unOnline'" >
+                            <span class="glyphicon" ng-class="{'glyphicon-record theme-color':question.online ==='unOnline',
+                            'glyphicon-record font-color-999':question.online ==='online'}"
+                                  ng-model="question.online" >不发布
+                            </span>
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-sm-12 ">
+            <div  class=" bg-white row-right-body">
+                <div class="bar-color row">
+                    <span class="theme-bg-3"></span>
+                    <span class="theme-bg-1"></span>
+                    <span class="theme-bg-2"></span>
+                </div>
+                <div class="clearfix">
+                    <div class="form-group theme-bg-2 question-img-block padding-10 margin-top-20" ng-if="question.from.bookId">
+                        <label class="theme-color-2">切图</label>
+                        <span class="pull-right form-inline padding-10">
+                            <div class="form-group">
+                                <input name="page" type="text" class="form-control"
+                                       data-ng-model="question.from.page" id="page" placeholder="请先输入页码">
+                            </div>
+                            <div class="form-group">
+                                <span class="btn btn-success" ng-click="vm.loadBookPage()">加载</span>
+                                <span class="text-muted">没页面？请先上传 <a href="#" class="btn btn-link theme-color-2" ui-sref="book images({bookId:question.from.bookId})">书籍图片</a></span>
+                            </div>
+
+                        </span>
+                        <div ng-if="vm.showCropBtn ">
+                            <span class="btn btn-info btn-border-round" ng-dataurl="dataUrl" crop-img="" on-success="getStemCrop(result)">题干</span>
+                            <div class="" ng-repeat="image in question.image.stem" ng-if="question.image.stem">
+                                <div class="cropped-box ">
+                                    <img class="img-responsive img-border-1"  ng-src="{{image.dataUrl}}">
+                                    所在页：{{image.page}}&nbsp;&nbsp;{{image.pageNum}} 宽度:{{image.position[2]-image.position[0]}}  高度:{{image.position[3]-image.position[1]}}&nbsp;&nbsp;&nbsp;&nbsp; 坐标值：[{{image.position[0]}},{{image.position[1]}}] - [{{image.position[2]}},{{image.position[3]}}]
+                                    <span class="margin-left-1 theme-color-2" ng-click="vm.removeCrop(image,question.image.stem)">删除</span>
+                                </div>
+                            </div>
+
+                            <span class="btn btn-info btn-border-round" ng-dataurl="dataUrl" crop-img="" on-success="getAnswerBlockCrop(result)">回答区</span>
+                            <div class="" ng-repeat="image in question.image.answerBlock" ng-if="question.image.answerBlock">
+                                <div class="cropped-box ">
+                                    <img class="img-responsive img-border-1"  ng-src="{{image.dataUrl}}">
+                                    所在页：{{image.page}} &nbsp;&nbsp;宽度:{{image.position[2]-image.position[0]}}  高度:{{image.position[3]-image.position[1]}}&nbsp;&nbsp;&nbsp;&nbsp; 坐标值：[{{image.position[0]}},{{image.position[1]}}] - [{{image.position[2]}},{{image.position[3]}}]
+                                    <span class="margin-left-1 theme-color-2" ng-click="vm.removeCrop(image,question.image.answerBlock)">删除</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group question-stem-block padding-10" >
+                        <label class="theme-color-1">题干</label>
+                        <div class="">
+                            <div id="_stem"  name="_stem" text-angular class="text rich-text" ng-model="question.stem" placeholder="题目"></div>
+                         </div>
+                        <div ng-show="submitted && questionForm.stem.$invalid"
+                             class="help-block">
+                            <p ng-show="questionForm.stem.$error.required">请填写题目</p>
+                        </div>
+
+                     </div>
+                    <div class="form-group question-answer-block padding-10" >
+                        <label class="theme-color-2" >答案 <span class="theme-font-16 fa fa-exchange" ng-click="vm.answerClick=!vm.answerClick"></span></label>
+                        <div ng-show="vm.answerClick">
+                            <div class="btn-group">
+                                <label class="btn btn-default" ng-class="{'btn-success':vm.questionAnswers.A}" ng-model="vm.questionAnswers.A" uib-btn-checkbox>A</label>
+                                <label class="btn btn-default" ng-class="{'btn-success':vm.questionAnswers.B}"  ng-model="vm.questionAnswers.B" uib-btn-checkbox>B</label>
+                                <label class="btn btn-default" ng-class="{'btn-success':vm.questionAnswers.C}"  ng-model="vm.questionAnswers.C" uib-btn-checkbox>C</label>
+                                <label class="btn btn-default" ng-class="{'btn-success':vm.questionAnswers.D}"  ng-model="vm.questionAnswers.D" uib-btn-checkbox>D</label>
+                                <label class="btn btn-default" ng-class="{'btn-success':vm.questionAnswers.E}"  ng-model="vm.questionAnswers.E" uib-btn-checkbox>E</label>
+                                <label class="btn btn-default" ng-class="{'btn-success':vm.questionAnswers.F}"  ng-model="vm.questionAnswers.F" uib-btn-checkbox>F</label>
+                                <label class="btn btn-default" ng-class="{'btn-success':vm.questionAnswers.G}"  ng-model="vm.questionAnswers.G" uib-btn-checkbox>G</label>
+                            </div>
+                        </div>
+                        <div ng-show="!vm.answerClick">
+                            <div text-angular id="_answer" name="_answer" class="text rich-text" ng-model="question.answer" placeholder="答案"></div>
+                        </div>
+                    </div>
+                    <div class="form-group question-analysis-block padding-10" >
+                        <label class="theme-color-3" >详解</label>
+                        <div class="">
+                            <div text-angular id="_analysis" name="_analysis" class="text rich-text" ng-model="question.analysis" placeholder="详解"></div>
+                       </div>
+                        <div ng-show="submitted && questionForm.analysis.$invalid"
+                             class="help-block">
+                            <p ng-show="questionForm.analysis.$error.required">请填写详解</p>
+                        </div>
+
+                    </div>
+                    <div class="form-group question-summary-block padding-10" >
+                        <label class="theme-color-4">备注</label>
+                        <div class="">
+                            <textarea rows="8" ng-model="question.summary" class="form-control" placeholder="题目说明"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="row-seperate"></div>
+    <div class="bg-white padding-10 text-center">
+        <span class="btn btn-lg btn-primary btn-border-round btn-padding" ng-if="!question._id" ng-click="vm.create()">保存，然后新建下一题</span>
+        <span class="btn btn-lg btn-primary btn-border-round btn-padding" ng-if="question._id" ng-click="vm.edit()">修改，然后返回</span>
+        <span class="btn btn-lg btn-primary btn-border-round btn-padding" ng-if="question._id" ng-click="vm.edit('next')">修改，然后至下一题</span>
+    </div>
+</section>

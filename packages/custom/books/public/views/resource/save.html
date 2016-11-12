@@ -1,0 +1,129 @@
+<section data-ng-controller="ResourceSaveController as vm" ng-init="vm.init()">
+    <form name="resourceForm" role="form" class="a-resource equal">
+        <div class="col-sm-12 col-md-4 bg-white padding-none margin-bottom-1">
+            <h1 class="page-title">
+                <span class="title-tag-1 fa fa-chevron-left" ng-click="goBack()"></span>
+                {{resource._id?"修改资源":"添加资源"}}
+                <div class="pull-right theme-font-16 margin-right-1">
+                    <span class="btn btn-primary btn-border-round btn-padding" ng-if="!resource._id"
+                          ng-click="vm.saveResource()">保存，并返回</span>
+                    <span class="btn btn-primary btn-border-round btn-padding"
+                          ng-if="resource._id" ng-click="vm.saveResource()">保存，并返回</span>
+                </div>
+
+            </h1>
+            <div class="form-horizontal col-md-12 a-label-title" >
+                <div class="form-group">
+                    <label mean-token="'create-title'"
+                           class="col-xs-2 control-label">标题
+                    </label>
+                    <div class="col-xs-10 v-input">
+                        <input name="title" type="text" class="form-control"
+                               data-ng-model="resource.title" id="title"
+                               placeholder="Title" required>
+                    </div>
+                </div>
+                <div class="form-group" >
+                    <label for="grade" class="control-label col-xs-2">年级</label>
+                    <div class="col-xs-10 v-input">
+                        <select required  class="form-control" id="grade"  name="grade"
+                                ng-model="resource.grade" placeholder="选择年级"
+                                ng-options="grade for grade in vm.grades">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" >
+                    <label for="subject" class="control-label col-xs-2">科目</label>
+                    <div class="col-xs-10 v-input">
+                        <select  class="form-control" id="subject"  name="subject"
+                                 ng-model="resource.subject" placeholder="选择科目"
+                                 ng-options="subject for subject in vm.subjects">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group " >
+                    <label  for="knowledge" class="col-xs-2 control-label v-knowledge">知识点</label>
+                    <div class="col-xs-10 theme-equal a-knowledge">
+                        <div>
+                            <input name="knowledge"
+                                   id="knowledge"  placeholder="知识点"
+                                   class="form-control" ng-model="resource.knowledgeTitles" readonly>
+                        </div>
+                        <div  class="btn btn-success" knowledge-points="resource.knowledge" knowledge-subject="{{resource.subject}}" knowledge-grade="{{resource.grade}}" add-knowledge="" on-success="changeKnowledge(knowledge)">选择</div>
+                    </div>
+                    <div class="">
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="label" mean-token="'create-title'"
+                           class="col-xs-2 control-label">标签</label>
+                    <div class="col-xs-10 v-input">
+                        <input name="label" type="text" class="form-control"
+                               data-ng-model="resource.tags" id="label" placeholder="标签">
+                        <div class="help-block">
+                            <p >多个标签之间用空格区分</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-if="vm.isAdmin">
+                    <label  class="col-xs-2 control-label">状态</label>
+                    <div class="col-xs-10 v-input" >
+                        <select class="form-control" ng-model="resource.status" ng-options="status for status in ['发布','草稿','删除']">
+                            <option class="disabled" disabled value="">请设定状态</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8 col-sm-12">
+            <div class="row-right-body bg-white">
+                <div class="bar-color row">
+                    <span class="theme-bg-3"></span>
+                    <span class="theme-bg-1"></span>
+                    <span class="theme-bg-2"></span>
+                </div>
+                <div class="clearfix padding-top-15 padding-bottom-15 equal">
+                    <div class="col-md-6 theme-bg-2 min-height-5 a-resource-content">
+                        <label  class="theme-color-2 theme-font-24">资源地址</label>
+                        <input class="form-control" type="text" ng-model="resource.url" placeholder="资源网址（支持其他网站网址）">
+                        <label  class="margin-top-10 ">本地上传</label>
+                        <div class="">
+                            <input class="form-control" name="upload" type="file"
+                                   nv-file-select="" uploader="vm.uploader">
+                            <div class="text-center">
+                                <span class="btn btn-primary btn-border-round" ng-show="vm.uploader.queue.length>0"
+                                      ng-click="vm.uploader.uploadAll()">上传</span>
+                            </div>
+                            <div class="resourcecover" ng-show="resource.cover" class="margin-top-10">
+                                <img class="img-responsive" ng-src="{{resource.cover}}">
+                            </div>
+                            <div class="progress" ng-show="vm.uploader.isUploading ">
+                                <div class="progress-bar" role="progressbar"
+                                     ng-style="{ 'width': vm.uploader.queue[0].progress + '%' }">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" col-md-6 theme-bg-0 min-height-5 a-resource-content">
+                        <label mean-token="'create-content'" for="content"
+                               class="theme-color theme-font-24">简介</label>
+                        <div class="">
+                           <textarea name="content" data-ng-model="resource.summary"
+                             id="content" cols="30" rows="10" placeholder="资源简介"
+                                     class="form-control" required ></textarea>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="row-seperate"></div>
+    <div class="bg-white padding-10 text-center">
+        <span class="btn btn-primary btn-border-round btn-padding" ng-if="!resource._id"
+              ng-click="vm.saveResource('next')">保存，并继续添加</span>
+    </div>
+</section>

@@ -1,0 +1,45 @@
+<div class="bg-white row" data-ng-controller="CharacterExeController as vm" ng-init="vm.init()">
+    <div class="bg-white">
+        <h1 class="page-title">
+            <span class="title-tag-1 fa fa-chevron-left" ng-click="goBack()"></span>个性化练习
+        </h1>
+        <div class="aim-details padding-left-right-15" >
+            <p>本次作业某某学生的{{}}综合得分为<span class="theme-color">{{recommendations.statistics.rightRate || 0}}</span>  分</p>
+            <p>针对您学生的作业情况，我们推介以下个性化练习。</p>
+        </div>
+    </div>
+    <div class="row-seperate "></div>
+    <div class="col-xs-12 bg-white bottom-border-1 r-recommend" >
+        <div class="r-title">
+            <p class="r-subtitle">辅导易向您推荐以下练习</p>
+            <div class="style-block"></div>
+        </div>
+        <div class="notask-teacher" ng-if="questions.count===0">
+            <img class="img-responsive notask-teacher-img" src="theme/assets/img/noTask-teacher.png">
+            <h4>暂无推介内容</h4>
+            <p>赶快领取您的作业吧～</p>
+            <!--<a class="btn btn-border" ui-sref="student tasks">去做作业</a>-->
+        </div>
+        <div class="questions-list" id="questions-list">
+            <div class=" questions-item" ng-repeat="question in questions.list " id="q_{{question._id}}">
+                <div class="questions-item-body s-answer-body" >
+                    <div class="panel panel-gray">
+                        <div class="panel-heading">
+                            <span class="indexNum">{{$index+1}}</span>
+                        </div>
+                        <div class="panel-body" ng-class="{'border-danger':(!question.done && question.unAnswer)}">
+                            <div class="" ng-if="question.image.stem">
+                                <img class="img-responsive" ng-repeat="image in question.image.stem" ng-src="{{image.dataUrl}}">
+                            </div>
+                            <div ng-if="question.stem" class="question-stem-box" ng-bind-html="question.stem"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row-seperate "></div>
+</div>
+

@@ -1,0 +1,75 @@
+<div class="" ng-controller="OrganizationController as vm" ng-init="vm.init()">
+  <div class="banner-teacher-box">
+    <img class="img-responsive" src="organization/assets/img/banner.png">
+  </div>
+  <div class="row theme-equal bg-gray-1 padding-top-15">
+    <div class="col-md-2 menu-right " data-spy="affix" data-offset-top="60" data-offset-bottom="200">
+      <div ng-include="'organization/views/right-menu.html'"></div>
+    </div>
+    <div class="col-md-10" ng-if="!school">
+      <div class="margin-bottom-1" >
+        <span class="btn btn-primary btn-border-round btn-lg" add-school new-school="vm.selectedSchool" on-success="addNewSchool(newSchool);"><i class="fa fa-plus"></i>添加学校</span>
+      </div>
+    </div>
+    <div class="col-md-10 bg-white" ng-if="school">
+      <h1 class="page-title">{{school.name}}</h1>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="panel panel-info">
+            <div class="panel-heading">学员</div>
+            <div class="panel-body">
+              <p>当前共有{{school.profile.trainees.length || 0}}名在校学生</p>
+              <p>
+                <span class="btn btn-default" ui-sref="organization trainees({schoolId:school._id})">学员管理</span>
+                <span class="btn btn-default" ui-sref="organization trainees({schoolId:school._id})">添加学员</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="panel panel-info">
+            <div class="panel-heading">老师</div>
+            <div class="panel-body">
+              <p>当前共有{{school.profile.trainers.length || 0}}名任课老师</p>
+              <p>
+                <span class="btn btn-default" ui-sref="organization trainers({schoolId:school._id})">老师管理</span>
+                <span class="btn btn-default" ui-sref="organization trainers({schoolId:school._id})">添加老师</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="panel panel-info">
+            <div class="panel-heading">班级</div>
+            <div class="panel-body">
+              <p>当前共有{{school.classes.length || 0}}个上课班级</p>
+              <p>
+                <span class="btn btn-default" ui-sref="organization classes({schoolId:school._id})">班级管理</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="panel panel-info">
+            <div class="panel-heading">业务</div>
+            <div class="panel-body">
+              <p ng-if="school.profile.products.length>0">
+                <span class="label label-success margin-right-1" ng-repeat="product in school.profile.products">{{product.name}}</span>
+              </p>
+              <p class="text-danger" ng-if="!school.profile.products || school.profile.products.length===0">
+                  你还没有设置业务类型
+              </p>
+              <p>
+                <span class="btn btn-default" ui-sref="organization products({schoolId:school._id})">业务管理</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,189 @@
+<div class="bg-white row" data-ng-controller="ExamQuestionListController as vm">
+    <div class="loading" ng-init="vm.init()" ng-hide="vm.resources"></div>
+    <h1 class="page-title"><span class="title-tag-1"></span>题目列表
+        <div class="pull-right">
+            <a class="btn btn-primary btn-lg btn-border-round btn-padding margin-right-1" ui-sref="groupExam create">添加题目</a>
+        </div>
+    </h1>
+
+    <div class="">
+        <div class="form-group clearfix" ng-if="vm.subjects">
+            <label class="control-label col-sm-1 text-center">科目</label>
+            <div class="col-sm-11">
+                <span class="search-condition"  ng-class="{'active':!search.subject}" ng-click="search.subject=null;changeSubject();">全部</span>
+                <span class="search-condition" ng-repeat="subject in vm.subjects" ng-class="{'active':search.subject==subject}" ng-click="search.subject=subject;changeSubject();">{{subject}}</span>
+            </div>
+        </div>
+        <div class="form-group clearfix" >
+            <label class="control-label col-sm-1 text-center">知识点</label>
+            <div class="col-sm-11">
+                <div select-knowledge=""  knowledge-subject="search.subject" knowledge-selected="knowledgeSelected" on-select="onSelectKnowledge(knowledge)"></div>
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="control-label col-sm-1 text-center">标题</label>
+            <div class="col-sm-11 form-inline">
+                <div class="form-group">
+                    <input class="form-control" type="text" ng-model="search.title" placeholder="资源标题">
+                </div>
+                <div class="form-group">
+                    <span class="form-control btn btn-primary" ng-click="loadData();">搜索</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row-seperate"></div>
+    <h3 class="sub-title"><span class="title-tag-2"></span>题目列表（{{ questionsPri.count}}）<span class="pull-right margin-right-1">已选中题目：{{questionCount||'0'}}</span></h3>
+    <form name="outerForm" class="tab-form-demo">
+        <uib-tabset active="activeForm">
+            <uib-tab index="0"  heading="我的题库" ng-click="profiles='private';loadData()">
+                <div class="no-result" ng-if="questionPri.list.length===0">
+                    没有匹配的内容
+                </div>
+                <div class="questions-list col-md-12">
+                    <div class=" questions-item"
+                         ng-repeat="question in questionsPri.list" >
+                        <div class="panel panel-gray">
+                            <div class="panel-heading">
+                                <span class="theme-color fa check-question" ng-class="{'fa-circle-thin':!question.selected,'fa-check-circle':question.selected}" ng-init="question.selected=false;" ng-click="question.selected=!question.selected"></span>
+                                <span class="indexNum">{{$index+1}}</span>
+                                <span class="questionType">{{question.type}}</span>
+                                <span class="">({{question.score}}分)</span>
+                                <div class="text-right question-setting-margin">
+                                    <a href="" class=" change-style-block"
+                                       ui-sref="edit groupExam({topicId:question._id,question:question})">
+                                        修改
+                                    </a>
+                                    <a class="  delete-style-block "
+                                       ng-click="selectQuestion(question);">组卷
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="panel-body" >
+                                <div class="" ng-if="question.image.stem">
+                                    <img class="img-responsive" ng-repeat="image in question.image.stem" ng-src="{{image.dataUrl}}">
+                                </div>
+                                <div ng-if="question.stem" class="question-stem-box" ng-bind-html="question.stem"></div>
+                            </div>
+                            <div class="panel-footer panel-footer-border">
+                                <div class="row">
+                                    <div class="question-add-footer">
+                                        <span class="v-style-level" ng-show="question.level">{{question.level }}</span>
+                                        <span class="" knowledge-hierarchy knowledge-points="question.knowledge"></span>
+                                        <!--<span class="v-style-block" ng-repeat="knowledge in question.knowledge" ng-show="question.knowledge.length===1 || knowledge.level>=2">{{knowledge.title}}</span>-->
+                                    </div>
+                                    <div class="col-md-5 v-right-answer" ><label>正确答案：</label><div ng-if="question.answer" class="question-answer-box" ng-bind-html="question.answer" pop-img pop-content="{{question.answer}}"></div></div>
+                                    <div class="col-md-7 v-question-analysis" >
+                                        <div class="text-right">
+                            <span class="pull-right btn btn-link theme-color-2 row"
+                                  ng-if="question.analysis"
+                                  ng-click="question.showAnalysis=!question.showAnalysis">
+                                详细解析</span>
+                                            <span class="pull-right text-muted padding-top-label" ng-if="!question.analysis" >没有详细解析</span>
+                                        </div>
+                                        <div class="arrow-box theme-bg-2" ng-show="question.showAnalysis">
+                                            <div class="arrow"></div>
+                                            <div class="description-details"
+                                                 ng-bind-html="question.analysis"  pop-img pop-content="{{question.analysis}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="text-center margin-top-10">
+                    <uib-pagination  ng-if="questionsPri && questionsPri.count>questionsPri.pageItem"
+                            total-items="questionsPri.count"
+                            ng-model="questionsPri.page" max-size="10"
+                            items-per-page="questionsPri.pageItem"
+                            class="pagination-sm" boundary-link-numbers="true"
+                            rotate="false" previous-text="上一页" next-text="下一页"
+                            ng-change="vm.selectPagePri()">
+                    </uib-pagination>
+                </div>
+            </uib-tab>
+            <uib-tab index="1" heading="公共题库"  ng-click="profiles='public';loadData()">
+                <div class="questions-list col-md-12">
+                    <div class=" questions-item"
+                         ng-repeat="question in questionsPub.list" >
+                        <div class="panel panel-gray">
+                            <div class="panel-heading">
+                                <span class="theme-color fa check-question" ng-class="{'fa-circle-thin':!question.selected,'fa-check-circle':question.selected}" ng-init="question.selected=false;" ng-click="question.selected=!question.selected"></span>
+                                <span class="indexNum">{{$index+1}}</span>
+                                <span class="questionType">{{question.type}}</span>
+                                <span class="">({{question.score}}分)</span>
+                                <div class="text-right question-setting-margin">
+                                    <div ng-show="questions.editModal" class="btn-group">
+                        <span  class="btn  btn-link v-move-left"  title="上移一位"
+                               ng-click="moveUp(question);">
+                            <span class="glyphicon glyphicon-arrow-up"></span>
+                        </span>
+                        <span class="btn  btn-link v-move-right"  title="下移一位"
+                              ng-click="moveDown(question);">
+                            <span class="glyphicon glyphicon-arrow-down"></span>
+                        </span>
+                                    </div>
+                                    <a href="" class=" change-style-block"
+                                       ui-sref="edit question({topicId:question._id,question:question})">
+                                        修改
+                                    </a>
+                                    <a class="  delete-style-block "
+                                       ng-click="deleteQuestion(question);">删除
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="panel-body" >
+                                <div class="" ng-if="question.image.stem">
+                                    <img class="img-responsive" ng-repeat="image in question.image.stem" ng-src="{{image.dataUrl}}">
+                                </div>
+                                <div ng-if="question.stem" class="question-stem-box" ng-bind-html="question.stem"></div>
+                            </div>
+                            <div class="panel-footer panel-footer-border">
+                                <div class="row">
+                                    <div class="question-add-footer">
+                                        <span class="v-style-level" ng-show="question.level">{{question.level }}</span>
+                                        <span class="" knowledge-hierarchy knowledge-points="question.knowledge"></span>
+                                        <!--<span class="v-style-block" ng-repeat="knowledge in question.knowledge" ng-show="question.knowledge.length===1 || knowledge.level>=2">{{knowledge.title}}</span>-->
+                                    </div>
+                                    <div class="col-md-5 v-right-answer" ><label>正确答案：</label><div ng-if="question.answer" class="question-answer-box" ng-bind-html="question.answer" pop-img pop-content="{{question.answer}}"></div></div>
+                                    <div class="col-md-7 v-question-analysis" >
+                                        <div class="text-right">
+                            <span class="pull-right btn btn-link theme-color-2 row"
+                                  ng-if="question.analysis"
+                                  ng-click="question.showAnalysis=!question.showAnalysis">
+                                详细解析</span>
+                                            <span class="pull-right text-muted padding-top-label" ng-if="!question.analysis" >没有详细解析</span>
+                                        </div>
+                                        <div class="arrow-box theme-bg-2" ng-show="question.showAnalysis">
+                                            <div class="arrow"></div>
+                                            <div class="description-details"
+                                                 ng-bind-html="question.analysis"  pop-img pop-content="{{question.analysis}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="text-center margin-top-10">
+                    <uib-pagination
+                            ng-if="questionsPub && questionsPub.count>questionsPub.pageItem"
+                            total-items="questionsPub.count"
+                            ng-model="questionsPub.page" max-size="10"
+                            items-per-page="questionsPub.pageItem"
+                            class="pagination-sm" boundary-link-numbers="true"
+                            rotate="false" previous-text="上一页" next-text="下一页"
+                            ng-change="vm.selectPagePub()">
+                    </uib-pagination>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </form>
+</div>

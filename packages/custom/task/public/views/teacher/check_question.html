@@ -1,0 +1,95 @@
+<div class="" data-ng-controller="CheckQuestionController as vm"
+     ng-init="vm.init()">
+    <div class="row bg-white margin-bottom-1">
+        <h1 class="page-title"><span class="title-tag-1 fa fa-chevron-left" ui-sref="task check({taskId:task._id,classId:selectedClassId})"></span>单题批改
+            <div class="pull-right margin-right-1">
+                <div class="btn-group " uib-dropdown>
+                      <span  class="btn btn-primary btn-padding" uib-dropdown-toggle>
+                        {{selectedClass.name}}
+                        <span class="glyphicon glyphicon-triangle-bottom"></span>
+                      </span>
+                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-single-button">
+                        <li ng-repeat="klass in task.to"><a href="#" ui-sref="task check question({taskId:task._id,topicId:question._id,classId:klass.classId})">{{klass.name}}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </h1>
+        <div class="padding-left-right-15 padding-bottom-15">
+            <h4 class="">
+                <span class="indexNum">{{$index+1}}</span>
+                <span class="questionType">{{question.type}}</span>
+            </h4>
+            <div class="padding-top-15">
+                <img class="img-responsive" ng-if="question.image.stem" ng-src="{{question.image.stem[0].dataUrl}}">
+                <div ng-if="question.stem" class="question-stem-box" ng-bind-html="question.stem"></div>
+            </div>
+            <div class="equal theme-bg-2 line-height-30">
+                <div class="col-md-5"><label>正确答案：</label><span ng-bind-html="question.answer" pop-img pop-content="{{question.answer}}" ></span></div>
+                <div class="col-md-7" >
+                    <div class="text-right">
+                        <span class="pull-right btn btn-link theme-color-2 row" ng-if="question.analysis" ng-click="question.showAnalysis=!question.showAnalysis">详细解析</span>
+                    </div>
+                    <div class="arrow-box theme-bg-2" ng-show="question.showAnalysis">
+                        <div class="arrow"></div>
+                        <div class="description-details"
+                             ng-bind-html="question.analysis" pop-img pop-content="{{question.analysis}}">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9  bg-white row-left">
+            <h3 class="sub-title row"><span class="title-tag-3">
+              </span>学生回答<span>（{{question.myAnswers.length}}）</span>
+            </h3>
+            <div class="check-question-member theme-equal margin-bottom-1" ng-repeat="answer in question.myAnswers">
+                <div class="ianswer flex-auto theme-border-box margin-right-1">
+                    <div class="theme-vertical padding-10">
+                        <div class="flex-auto">
+                            {{answer.myAnswer}}
+                            <div ng-if="answer.myAnswerImg && answer.myAnswerImg.length>0">
+                                <img class="max-width-100" ng-repeat="img in answer.myAnswerImg" pop-img pop-imgs="{{img}}" ng-src="{{img}}">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="btn-group mark-box " ng-class="{'mark-right-box':(answer.status==='已批改' && answer.mark==='对'),'mark-wrong-box':(answer.status==='已批改'  && answer.mark==='错')}">
+                                <span id="markRight" class="btn btn-mark-right " ng-class="{'btn-success':(answer.status==='已批改' && answer.mark==='对')}" ng-click="markQuestion(answer,'对')">对</span>
+                                <span id="markWrong" class="btn btn-mark-wrong " ng-class="{'btn-danger':(answer.status==='已批改'  && answer.mark==='错')}" ng-click="markQuestion(answer,'错')">错</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="padding-10 col-md-2 theme-bg-gray text-center">
+                    <!--<a target="_blank" class="theme-color-4" ui-sref="home">{{answer.user.name || answer.user.username}}</a>-->
+                    <a target="_blank" class="theme-color-4" ui-sref="taskExe({taskExeId:answer.user.taskExe._id})">{{answer.user.name || answer.user.username}}</a>
+                    <span class="theme-color-4">查看详情</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 ">
+            <div class="bg-white row-right-body"  >
+                <h3 class="sub-title row"><span class="title-tag-2"></span>正确率</h3>
+                <div class="rightRate-box">
+                    <canvas id="doughnut" class="chart chart-doughnut" chart-colors="['#83e3c3', '#FFA98B']" chart-data="chartData" chart-labels="chartLabels">
+                    </canvas>
+                    <div class="rightRate theme-color-1">{{chartData[0]}}%</div>
+                </div>
+                <div class="row-seperate"></div>
+                <div class="bg-white row">
+                    <div class="col-sm-6 col-btn">
+                        <a class="btn btn-lg btn-default btn-block" ng-show="task.preQuestion" ui-sref="task check question({taskId:task._id,topicId:task.preQuestion,classId:selectedClass.classId})">上一题</a>
+                        <div><a class="btn btn-lg btn-default btn-block disabled" ng-show="!task.preQuestion">上一题</a></div>
+                    </div>
+                    <div class="col-sm-6 col-btn">
+                        <a class="btn btn-lg btn-success btn-block" ng-show="task.nextQuestion"  ui-sref="task check question({taskId:task._id,topicId:task.nextQuestion,classId:selectedClass.classId})">下一题</a>
+                        <div><a class="btn btn-lg btn-default btn-block disabled" ng-show="!task.nextQuestion">下一题</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
